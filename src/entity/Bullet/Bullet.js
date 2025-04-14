@@ -42,21 +42,19 @@ panicCity.entity.Bullet = function (player) {
 
     var y = this.player.y + 17;
     var x = this.player.x + 13;
-    var height;
-    var width;
-    if(this.player.direction === "UP" || this.player.direction === "DOWN"){
-        height = 5;
-        width = 2;
-    }
-    else{
-        height = 2;
-        width = 5;
-    }
-    this.direction = this.player.direction;
-    rune.display.Sprite.call(this, x, y, width, height, null);
-    this.backgroundColor = "#FFFFFF";
+     
+    var bulletTexture = "image_Bullet";
 
-    this.hitbox.set(0, 0, width, height);
+   
+    this.direction = this.player.direction;
+    rune.display.Sprite.call(this, x, y, 3, 5, bulletTexture);
+
+    if(this.player.direction === "RIGHT" || this.player.direction === "LEFT"){
+        this.rotation = 90;
+        this.hitbox.set(0, 0, 5, 3);
+    }else{
+        this.hitbox.set(0, 0, 3, 5);
+    }
 };
 panicCity.entity.Bullet.prototype = Object.create(rune.display.Sprite.prototype);
 panicCity.entity.Bullet.prototype.constructor = panicCity.entity.Bullet;
