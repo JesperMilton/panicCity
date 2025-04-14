@@ -3,8 +3,10 @@
 //------------------------------------------------------------------------------
 
 
-panicCity.entity.PlayerJesper = function (x, y, width, height, texture) {
+panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game) {
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
+    this.game = game;
+    this.direction = "UP";
 };
 
 panicCity.entity.PlayerJesper.prototype = Object.create(panicCity.entity.Entity.prototype);
@@ -23,15 +25,24 @@ panicCity.entity.PlayerJesper.prototype.update = function (step) {
 
 panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
     if (this.keyboard.pressed("up")) {
+        this.direction = "UP";
         this.moveUp();
     } else if (this.keyboard.pressed("down")) {
+        this.direction = "DOWN";
         this.moveDown();
     }
 
     if (this.keyboard.pressed("right")) {
+        this.direction = "RIGHT";
         this.moveRight();
     } else if (this.keyboard.pressed("left")) {
+        this.direction = "LEFT";
         this.moveLeft();
+    }
+    if(this.keyboard.justPressed("P")){
+        var bullet = new panicCity.entity.Bullet(this);
+        this.game.stage.addChild(bullet);
+        this.game.bullets.push(bullet);
     }
 };
 

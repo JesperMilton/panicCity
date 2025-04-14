@@ -3,8 +3,10 @@
 //------------------------------------------------------------------------------
 
 
-panicCity.entity.PlayerHibba = function (x, y, width, height, texture) {
+panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game) {
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
+    this.game = game;
+    this.direction = "UP";
 };
 
 panicCity.entity.PlayerHibba.prototype = Object.create(panicCity.entity.Entity.prototype);
@@ -23,15 +25,25 @@ panicCity.entity.PlayerHibba.prototype.update = function (step) {
 
 panicCity.entity.PlayerHibba.prototype.m_updateInput = function (step) {
     if (this.keyboard.pressed("W")) {
+        this.direction = "UP";
         this.moveUp();
     } else if (this.keyboard.pressed("S")) {
+        this.direction = "DOWN";
         this.moveDown();
     }
 
     if (this.keyboard.pressed("D")) {
+        this.direction = "RIGHT";
         this.moveRight();
     } else if (this.keyboard.pressed("A")) {
+        this.direction = "LEFT";
         this.moveLeft();
+    }
+
+    if(this.keyboard.justPressed("Q")){
+        var bullet = new panicCity.entity.Bullet(this);
+        this.game.stage.addChild(bullet);
+        this.game.bullets.push(bullet);
     }
 };
 

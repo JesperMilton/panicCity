@@ -16,9 +16,10 @@ panicCity.scene.Game.prototype.init = function() {
     rune.scene.Scene.prototype.init.call(this);
 
     this.m_initBackground();
+    this.bullets = [];
 
-    this.playerJesper = new panicCity.entity.PlayerJesper(100, 100, 27, 26, "Player1-Sheet");
-    this.playerHibba = new panicCity.entity.PlayerHibba(250, 100, 27, 26, "Player2-Sheet");
+    this.playerJesper = new panicCity.entity.PlayerJesper(250, 100, 27, 26, "Player1-Sheet", this);
+    this.playerHibba = new panicCity.entity.PlayerHibba(100, 100, 27, 26, "Player2-Sheet", this);
 
     this.zombieSpawner = new panicCity.managers.ZombieSpawner(this);
     this.base = new panicCity.entity.Base(this.application.screen.center.x, this.application.screen.center.y, 60, 60, "image_BaseBigger");
@@ -54,3 +55,13 @@ panicCity.scene.Game.prototype.m_initBackground = function() {
     
     this.stage.addChild(this.m_background);
 };
+
+panicCity.scene.Game.prototype.m_checkBoundsBullet = function(){
+    for (var i = 0; i < this.bullets.length; i++) {
+        if(this.bullets[i].y < 0 || this.bullets[i].y > 225 || this.bullets[i].x < 0 || this.bullets[i].x > 400){
+            this.stage.removeChild(this.bullets[i]);
+            this.bullets.splice(i, 1);
+            i--;
+        }
+    }
+}

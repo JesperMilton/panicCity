@@ -14,7 +14,7 @@ panicCity.managers.ZombieSpawner.prototype.m_spawnZombie = function () {
     var randomNum = Math.floor(Math.random() * 4);
 
     if (ran == 1) {
-        var zombie = new panicCity.entity.Zombie(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "Zombie-Sheet");
+        var zombie = new panicCity.entity.Zombie(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "Zombie-Sheet", this.game);
 
         zombie.targets = [
             this.game.playerJesper,
