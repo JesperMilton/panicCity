@@ -25,11 +25,11 @@ panicCity.system.Main = function() {
         developer: "com.paniccity",
         app: "panicCity",
         build: "0.0.0",
-        scene: panicCity.scene.Game,
+        scene: panicCity.scene.Menu,
         resources: panicCity.data.Requests,
         useGamepads:true,
         useKeyboard:true,
-        framerate: 30,
+        framerate: 60,
         debug: true
     });
 };
