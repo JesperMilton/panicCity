@@ -93,4 +93,6 @@ panicCity.entity.Zombie.prototype.m_takeDamage = function (damage) {
 
 panicCity.entity.Zombie.prototype.m_die = function () {
     this.game.stage.removeChild(this);
+    this.game.points += 100;
+    this.game.updateScoretext();
 }

@@ -9,7 +9,7 @@ panicCity.managers.ZombieSpawner.prototype.update = function () {
 };
 
 panicCity.managers.ZombieSpawner.prototype.m_spawnZombie = function () {
-    var ran = Math.floor(Math.random() * 150) + 1;
+    var ran = Math.floor(Math.random() * 100) + 1;
 
     var randomNum = Math.floor(Math.random() * 4);
 
