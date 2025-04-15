@@ -98,7 +98,3 @@ panicCity.entity.Bullet.prototype.m_moveLeft = function () {
 panicCity.entity.Bullet.prototype.m_moveRight = function () {
     this.x += this.m_speed;
 }
-
-panicCity.entity.Bullet.prototype.dispose = function(game){
-    game.stage.removeChild(this);
-}

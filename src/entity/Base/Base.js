@@ -8,6 +8,7 @@ panicCity.entity.Base = function (x, y, width, height, texture) {
     this.debug = true;
     this.hitbox.debug = true;
     this.immovable = true;
+    this.health = 100;
 };
 
 panicCity.entity.Base.prototype = Object.create(rune.display.Sprite.prototype);
@@ -20,7 +21,6 @@ panicCity.entity.Base.prototype.init = function () {
 
 panicCity.entity.Base.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
-    this.m_updateAnimations(step);
 };
 
 
@@ -30,6 +30,18 @@ panicCity.entity.Base.prototype.m_initAnimations = function (step) {
 };
 
 
-panicCity.entity.Base.prototype.m_updateAnimations = function (step) {
-    
-};
+panicCity.entity.Base.prototype.takeDamage = function (damage) {
+    // this.flicker.start(250);
+    // this.health -= damage;
+    // if (this.health <= 0) {
+    //     this.m_die();
+    // }
+}
+
+panicCity.entity.Base.prototype.m_die = function () {
+    // this.game.enemies.removeMember(this, true);
+    // this.game.points += 100;
+    // this.game.updateScoretext();
+
+    // // this.game.stage.removeChild(this);
+}

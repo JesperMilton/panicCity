@@ -41,8 +41,7 @@ panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
     }
     if(this.keyboard.justPressed("P")){
         var bullet = new panicCity.entity.Bullet(this);
-        this.game.stage.addChild(bullet);
-        this.game.bullets.push(bullet);
+        this.game.bullets.addMember(bullet);
     }
 };
 
