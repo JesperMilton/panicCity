@@ -17,6 +17,7 @@ panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;
 
 panicCity.entity.Base.prototype.init = function () {
     this.m_initAnimations();
+    this.m_initHealthBar();
 };
 
 
@@ -27,13 +28,13 @@ panicCity.entity.Base.prototype.update = function (step) {
 
 panicCity.entity.Base.prototype.m_initAnimations = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
-    
 };
 
 
 panicCity.entity.Base.prototype.takeDamage = function (damage) {
     // this.flicker.start(250);
     this.health -= damage;
+    this.healthBar.progress = (this.health / 500);
     if (this.health <= 0) {
      this.m_die();
     }
@@ -41,4 +42,12 @@ panicCity.entity.Base.prototype.takeDamage = function (damage) {
 
 panicCity.entity.Base.prototype.m_die = function () {
     this.game.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
+}
+
+panicCity.entity.Base.prototype.m_initHealthBar = function() {
+    this.healthBar = new rune.ui.Progressbar(this.width, 10, "gray", "red");
+    this.healthBar.progress = (this.health / 500);
+    this.healthBar.x = this.x;
+    this.healthBar.y = this.y + 65;
+    this.game.stage.addChild(this.healthBar);
 }
