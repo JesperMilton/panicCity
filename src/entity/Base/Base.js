@@ -3,12 +3,13 @@
 //------------------------------------------------------------------------------
 
 
-panicCity.entity.Base = function (x, y, width, height, texture) {
+panicCity.entity.Base = function (x, y, width, height, texture, game) {
     rune.display.Sprite.call(this, x, y, width, height, texture);
     this.debug = true;
     this.hitbox.debug = true;
     this.immovable = true;
-    this.health = 100;
+    this.health = 500;
+    this.game = game;
 };
 
 panicCity.entity.Base.prototype = Object.create(rune.display.Sprite.prototype);
@@ -32,16 +33,12 @@ panicCity.entity.Base.prototype.m_initAnimations = function (step) {
 
 panicCity.entity.Base.prototype.takeDamage = function (damage) {
     // this.flicker.start(250);
-    // this.health -= damage;
-    // if (this.health <= 0) {
-    //     this.m_die();
-    // }
+    this.health -= damage;
+    if (this.health <= 0) {
+     this.m_die();
+    }
 }
 
 panicCity.entity.Base.prototype.m_die = function () {
-    // this.game.enemies.removeMember(this, true);
-    // this.game.points += 100;
-    // this.game.updateScoretext();
-
-    // // this.game.stage.removeChild(this);
+    this.game.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
 }

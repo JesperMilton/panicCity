@@ -44,7 +44,7 @@ panicCity.entity.Zombie.prototype.m_updateAnimations = function () {
 
 panicCity.entity.Zombie.prototype.attack = function (attacking) {
     if (attacking) {
-        console.log(this," is attacking ", attacking);
+        //console.log(this," is attacking ", attacking);
     }
 };
 
@@ -58,6 +58,5 @@ panicCity.entity.Zombie.prototype.takeDamage = function (damage) {
 
 panicCity.entity.Zombie.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
-    this.game.points += 100;
-    this.game.updateScoretext();
+    this.game.updateScoretext(5);
 }

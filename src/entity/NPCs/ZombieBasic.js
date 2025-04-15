@@ -5,6 +5,7 @@
 panicCity.entity.ZombieBasic = function (x, y, width, height, texture, game) {
     panicCity.entity.Zombie.call(this, x, y, width, height, texture, game);
     this.health = 20;
+    this.damage = 10;
     this.targets = [];
 };
 

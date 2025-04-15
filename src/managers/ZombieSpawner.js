@@ -23,7 +23,7 @@ panicCity.managers.ZombieSpawner.prototype.m_spawnZombie = function () {
             this.game.playerHibba
         ];
 
-        console.log(zombieBasic);
+        //console.log(zombieBasic);
 
         this.game.enemies.addMember(zombieBasic);
     }

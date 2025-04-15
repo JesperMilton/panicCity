@@ -21,6 +21,7 @@ panicCity.managers.CollisionManager.prototype.m_enemies = function () {
 
     this.game.enemies.hitTestAndSeparateGroup(this.game.baseSta, function(enemy, base) {
         enemy.attack(base);
+        base.takeDamage(enemy.damage);
     },this); 
 };
 
