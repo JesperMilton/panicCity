@@ -10,6 +10,14 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
     this.immovable = true;
     this.health = 500;
     this.game = game;
+    this.time = 3000;
+
+    this.game.timers.create({
+        duration: this.time,
+        onComplete: function () {
+          this.m_baseTimer();
+        }.bind(this),
+      });
 };
 
 panicCity.entity.Base.prototype = Object.create(rune.display.Sprite.prototype);
@@ -30,7 +38,6 @@ panicCity.entity.Base.prototype.m_initAnimations = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
 };
 
-
 panicCity.entity.Base.prototype.takeDamage = function (damage) {
     // this.flicker.start(250);
     this.health -= damage;
@@ -50,4 +57,21 @@ panicCity.entity.Base.prototype.m_initHealthBar = function() {
     this.healthBar.x = this.x;
     this.healthBar.y = this.y + 65;
     this.game.stage.addChild(this.healthBar);
+}
+
+panicCity.entity.Base.prototype.healBase = function(health){
+    if(this.health > 0 && this.health < 500){
+        this.health += health;
+        this.healthBar.progress = (this.health / 500);
+    }
+}
+
+panicCity.entity.Base.prototype.m_baseTimer = function(){
+    this.takeDamage(15);
+    this.game.timers.create({
+        duration: this.time,
+        onComplete: function () {
+          this.m_baseTimer();
+        }.bind(this),
+      });
 }

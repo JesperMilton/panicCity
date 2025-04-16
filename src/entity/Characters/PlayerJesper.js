@@ -60,3 +60,12 @@ panicCity.entity.PlayerJesper.prototype.m_updateAnimations = function (step) {
         this.animation.gotoAndPlay("idle");
     }
 };
+panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
+    // this.flicker.start(250);
+    // this.health -= damage;
+    // this.healthBar.progress = (this.health / 500);
+    // if (this.health <= 0) {
+    //  this.m_die();
+    // }
+    console.log("Jesper took damage from a zombie");
+}

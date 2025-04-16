@@ -21,7 +21,6 @@ panicCity.managers.CollisionManager.prototype.m_enemies = function () {
 
     this.game.enemies.hitTestAndSeparateGroup(this.game.baseSta, function(enemy, base) {
         enemy.attack(base);
-        base.takeDamage(enemy.damage);
     },this); 
 };
 
@@ -35,7 +34,7 @@ panicCity.managers.CollisionManager.prototype.m_bullets = function () {
     },this); 
     if(tempel) {
         tempel.forEach(function(bullet) {
-            this.game.bullets.removeMember(bullet);
+            this.game.bullets.removeMember(bullet, true);
         }, this);
         // tempel = null;
     } 
