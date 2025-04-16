@@ -52,15 +52,6 @@ panicCity.entity.PlayerJesper.prototype.m_initAnimations = function (step) {
     this.animation.create("idle", [0, 1, 2]  , 6, true);
 };
 
-
-panicCity.entity.PlayerJesper.prototype.m_updateAnimations = function (step) {
-    if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
-        this.animation.gotoAndPlay("walk");
-    } else {
-        this.animation.gotoAndPlay("idle");
-    }
-};
-
 panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
     // this.flicker.start(250);
     // this.health -= damage;
