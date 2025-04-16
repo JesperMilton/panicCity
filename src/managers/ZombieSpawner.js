@@ -1,8 +1,6 @@
 panicCity.managers.ZombieSpawner = function (game) {
     this.spawnPoints = [{x:-50, y:150}, {x:-50, y:50}, {x:450, y:150}, {x:450, y:50}];
-
     this.game = game;
-    this.stage = this.game.stage;
 };
 
 panicCity.managers.ZombieSpawner.prototype.update = function () {

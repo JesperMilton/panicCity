@@ -20,24 +20,39 @@ panicCity.entity.PlayerHibba.prototype.init = function () {
 panicCity.entity.PlayerHibba.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_updateInput(step);
-    this.m_updateAnimations(step);
+    //this.m_updateAnimations(step);
+};
+
+panicCity.entity.PlayerHibba.prototype.m_initAnimations = function (step) {
+    this.animation.create("walkUp", [12, 13, 14, 15, 16], 5, true);
+    this.animation.create("walkDown", [17, 18, 19, 20, 21], 8, true);
+    this.animation.create("walkSide", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+    this.animation.create("idle", [0, 1, 2]  , 6, true);
 };
 
 panicCity.entity.PlayerHibba.prototype.m_updateInput = function (step) {
     if (this.keyboard.pressed("W")) {
         this.direction = "UP";
         this.moveUp();
-    } else if (this.keyboard.pressed("S")) {
+        this.animation.gotoAndPlay("walkSide");
+    }
+
+    if (this.keyboard.pressed("S")) {
         this.direction = "DOWN";
         this.moveDown();
+        this.animation.gotoAndPlay("walkDown");
     }
 
     if (this.keyboard.pressed("D")) {
         this.direction = "RIGHT";
         this.moveRight();
-    } else if (this.keyboard.pressed("A")) {
+        this.animation.gotoAndPlay("walkSide");
+    }
+    
+    if (this.keyboard.pressed("A")) {
         this.direction = "LEFT";
         this.moveLeft();
+        this.animation.gotoAndPlay("walkSide");
     }
 
     if(this.keyboard.justPressed("Q")){
@@ -46,18 +61,20 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function (step) {
     }
 };
 
-panicCity.entity.PlayerHibba.prototype.m_initAnimations = function (step) {
-    panicCity.entity.Entity.prototype.update.call(this, step);
-    this.animation.create("walkUp", [12, 13, 14, 15, 16, 17], 8, true)
-    this.animation.create("walk", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
-    this.animation.create("idle", [0, 1, 2]  , 6, true);
-};
+// panicCity.entity.PlayerHibba.prototype.m_updateAnimations = function (step) {
+//     if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
+//         this.animation.gotoAndPlay("walk");
+//     } else {
+//         this.animation.gotoAndPlay("idle");
+//     }
+// };
 
-
-panicCity.entity.PlayerHibba.prototype.m_updateAnimations = function (step) {
-    if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
-        this.animation.gotoAndPlay("walk");
-    } else {
-        this.animation.gotoAndPlay("idle");
-    }
-};
+panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
+    // this.flicker.start(250);
+    // this.health -= damage;
+    // this.healthBar.progress = (this.health / 500);
+    // if (this.health <= 0) {
+    //  this.m_die();
+    // }
+    console.log("Hibba took damage from a zombie");
+}
