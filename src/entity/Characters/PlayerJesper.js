@@ -3,10 +3,11 @@
 //------------------------------------------------------------------------------
 
 
-panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game) {
+panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, gamepadIndex) {
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
     this.game = game;
     this.direction = "UP";
+    this.gamepadIndex = gamepadIndex;
 };
 
 panicCity.entity.PlayerJesper.prototype = Object.create(panicCity.entity.Entity.prototype);
@@ -20,26 +21,37 @@ panicCity.entity.PlayerJesper.prototype.init = function () {
 panicCity.entity.PlayerJesper.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_updateInput(step);
-    this.m_updateAnimations(step);
+    // this.m_updateAnimations(step);
 };
 
 panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
-    if (this.keyboard.pressed("up")) {
+    this.gamepad = this.game.gamepads.get(this.gamepadIndex);
+    
+    if (this.keyboard.pressed("UP") || this.gamepad.stickLeftUp) {
         this.direction = "UP";
         this.moveUp();
-    } else if (this.keyboard.pressed("down")) {
+        this.animation.gotoAndPlay("walkUp");
+    }
+    
+    if (this.keyboard.pressed("DOWN") || this.gamepad.stickLeftDown) {
         this.direction = "DOWN";
         this.moveDown();
+        this.animation.gotoAndPlay("walkDown");
     }
-
-    if (this.keyboard.pressed("right")) {
+    
+    if (this.keyboard.pressed("RIGHT") || this.gamepad.stickLeftRight) {
         this.direction = "RIGHT";
         this.moveRight();
-    } else if (this.keyboard.pressed("left")) {
+        this.animation.gotoAndPlay("walkSide");
+    }
+    
+    if (this.keyboard.pressed("LEFT") || this.gamepad.stickLeftLeft) {
         this.direction = "LEFT";
         this.moveLeft();
+        this.animation.gotoAndPlay("walkSide");
     }
-    if(this.keyboard.justPressed("P")){
+    
+    if (this.keyboard.justPressed("P") || this.gamepad.justPressed(2)) {
         var bullet = new panicCity.entity.Bullet(this);
         this.game.bullets.addMember(bullet);
     }
@@ -47,8 +59,9 @@ panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
 
 panicCity.entity.PlayerJesper.prototype.m_initAnimations = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
-    this.animation.create("walkUp", [12, 13, 14, 15, 16], 8, true)
-    this.animation.create("walk", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+    this.animation.create("walkUp", [12, 13, 14, 15, 16], 5, true);
+    this.animation.create("walkDown", [17, 18, 19, 20, 21], 8, true);
+    this.animation.create("walkSide", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
     this.animation.create("idle", [0, 1, 2]  , 6, true);
 };
 

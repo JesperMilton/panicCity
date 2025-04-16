@@ -24,7 +24,7 @@ panicCity.entity.Bullet = function (player) {
      * @type {number}
      * @default 20
      */
-    this.damage = 10.0;
+    this.damage = 5.0;
 
     //--------------------------------------------------------------------------
     // Protected properties

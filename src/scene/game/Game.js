@@ -28,8 +28,8 @@ panicCity.scene.Game.prototype.init = function() {
     this.baseSta = this.groups.create(this.stage);
 
 
-    this.playerJesper = new panicCity.entity.PlayerJesper(250, 100, 27, 26, "Player1-Sheet", this);
-    this.playerHibba = new panicCity.entity.PlayerHibba(100, 100, 27, 26, "Player2-Sheet", this);
+    this.playerJesper = new panicCity.entity.PlayerJesper(250, 100, 27, 26, "Player1-Sheet", this, 0);
+    this.playerHibba = new panicCity.entity.PlayerHibba(100, 100, 27, 26, "Player2-Sheet", this, 1);
     this.zombieSpawner = new panicCity.managers.ZombieSpawner(this);
     this.base = new panicCity.entity.Base(this.application.screen.center.x, this.application.screen.center.y, 60, 60, "image_Base", this);
 

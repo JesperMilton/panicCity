@@ -1,5 +1,5 @@
 panicCity.managers.ZombieSpawner = function (game) {
-    this.spawnPoints = [{x:-50, y:150}, {x:-50, y:50}, {x:450, y:150}, {x:450, y:50}];
+    this.spawnPoints = [{x:-50, y:150}, {x:75, y:240}, {x:450, y:150}, {x:350, y:240}];
     this.game = game;
 };
 
@@ -8,7 +8,7 @@ panicCity.managers.ZombieSpawner.prototype.update = function () {
 };
 
 panicCity.managers.ZombieSpawner.prototype.m_spawnZombie = function () {
-    var ran = Math.floor(Math.random() * 100) + 1;
+    var ran = Math.floor(Math.random() * 70) + 1;
 
     var randomNum = Math.floor(Math.random() * 4);
 
@@ -26,12 +26,23 @@ panicCity.managers.ZombieSpawner.prototype.m_spawnZombie = function () {
         this.game.enemies.addMember(zombieBasic);
     }
 
-    if (ran == 1) {
+    if (ran == 2) {
         var zombieHunter = new panicCity.entity.ZombieHunter(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "newZombie-Sheet", this.game);
 
         zombieHunter.targets = [
             this.game.playerJesper,
             this.game.playerHibba,
+            this.game.base
+        ];
+
+        this.game.enemies.addMember(zombieHunter);
+    }
+    if (ran == 3) {
+        var zombieHunter = new panicCity.entity.ZombieHunter(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "newZombie-Sheet", this.game);
+
+        zombieHunter.targets = [
+            this.game.playerHibba,
+            this.game.playerJesper,
             this.game.base
         ];
 
