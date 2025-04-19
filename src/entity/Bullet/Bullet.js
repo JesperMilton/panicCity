@@ -47,7 +47,7 @@ panicCity.entity.Bullet = function (player) {
 
    
     this.direction = this.player.direction;
-    rune.display.Sprite.call(this, x, y, 3, 5, bulletTexture);
+    rune.display.Graphic.call(this, x, y, 3, 5, bulletTexture);
 
     if(this.player.direction === "RIGHT" || this.player.direction === "LEFT"){
         this.rotation = 90;
@@ -56,7 +56,7 @@ panicCity.entity.Bullet = function (player) {
         this.hitbox.set(0, 0, 3, 5);
     }
 };
-panicCity.entity.Bullet.prototype = Object.create(rune.display.Sprite.prototype);
+panicCity.entity.Bullet.prototype = Object.create(rune.display.Graphic.prototype);
 panicCity.entity.Bullet.prototype.constructor = panicCity.entity.Bullet;
 
 /**

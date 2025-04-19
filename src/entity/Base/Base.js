@@ -31,6 +31,9 @@ panicCity.entity.Base.prototype.init = function () {
 
 panicCity.entity.Base.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
+    if(this.keyboard.justPressed("K")) {
+        this.healBase(30);
+    };
 };
 
 
@@ -52,10 +55,10 @@ panicCity.entity.Base.prototype.m_die = function () {
 }
 
 panicCity.entity.Base.prototype.m_initHealthBar = function() {
-    this.healthBar = new rune.ui.Progressbar(this.width, 10, "gray", "red");
+    this.healthBar = new rune.ui.Progressbar(this.width, 6, "gray", "red");
     this.healthBar.progress = (this.health / 500);
     this.healthBar.x = this.x;
-    this.healthBar.y = this.y + 65;
+    this.healthBar.y = this.y + 50;
     this.game.stage.addChild(this.healthBar);
 }
 

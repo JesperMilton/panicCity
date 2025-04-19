@@ -21,7 +21,6 @@ panicCity.entity.PlayerHibba.prototype.init = function () {
 panicCity.entity.PlayerHibba.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_updateInput(step);
-    //this.m_updateAnimations(step);
 };
 
 panicCity.entity.PlayerHibba.prototype.m_updateInput = function (step) {
@@ -63,14 +62,6 @@ panicCity.entity.PlayerHibba.prototype.m_initAnimations = function (step) {
     this.animation.create("walkSide", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
     this.animation.create("idle", [0, 1, 2]  , 6, true);
 };
-
-// panicCity.entity.PlayerHibba.prototype.m_updateAnimations = function (step) {
-//     if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
-//         this.animation.gotoAndPlay("walk");
-//     } else {
-//         this.animation.gotoAndPlay("idle");
-//     }
-// };
 
 panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
     // this.flicker.start(250);

@@ -21,7 +21,6 @@ panicCity.entity.PlayerJesper.prototype.init = function () {
 panicCity.entity.PlayerJesper.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_updateInput(step);
-    // this.m_updateAnimations(step);
 };
 
 panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {

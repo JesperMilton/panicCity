@@ -5,9 +5,9 @@
 panicCity.entity.Entity = function(x, y, width, height, texture) {
     rune.display.Sprite.call(this, x, y, width, height, texture);
 
-    this.acceleration = 1.2;
+    this.acceleration = 1.6;
    
-    this.speed = 1.5;
+    this.speed = 1.8;
 
     this.debug = true;
     this.hitbox.debug = true;
