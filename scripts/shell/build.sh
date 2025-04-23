@@ -9,8 +9,23 @@ npx google-closure-compiler \
 --js "./../../lib/rune.js" \
 --js "./../../src/scope/Manifest.js" \
 --js "./../../src/data/resource/Requests.js" \
---js "./../../src/scene/game/Game.js" \
+--js "./../../src/scene/menu/Menu.js" \
+--js "./../../src/entity/Entity.js" \
 --js "./../../src/entity/Bullet/Bullet.js" \
+--js "./../../src/entity/Bullet/Stone.js" \
+--js "./../../src/entity/Base/Base.js" \
+--js "./../../src/entity/NPCs/Zombie.js" \
+--js "./../../src/entity/NPCs/ZombieBasic.js" \
+--js "./../../src/entity/NPCs/ZombieHunter.js" \
+--js "./../../src/entity/NPCs/ZombieBoss.js" \
+--js "./../../src/managers/ZombieSpawner.js" \
+--js "./../../src/managers/RescueeSpawner.js" \
+--js "./../../src/managers/WaveManager.js" \
+--js "./../../src/managers/CollisionManager.js" \
+--js "./../../src/entity/Characters/PlayerJesper.js" \
+--js "./../../src/entity/Characters/PlayerHibba.js" \
+--js "./../../src/scene/game/Game.js" \
+--js "./../../src/scene/game/Gameover.js" \
 --js "./../../src/system/Main.js" \
 --js "./../../src/scope/Alias.js" \
 --js_output_file "./../../dist/panicCity.js";

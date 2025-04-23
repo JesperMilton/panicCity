@@ -21,8 +21,8 @@ panicCity.entity.ZombieBasic.prototype.m_initStats = function () {
 };
 
 panicCity.entity.ZombieBasic.prototype.m_updateInput = function () {
-    var dX = this.targets[0].x - this.x;
-    var dY = this.targets[0].y - this.y;
+    var dX = this.targets.x - this.x;
+    var dY = this.targets.y - this.y;
 
     if (!this.isAttacking) {
         if (dY * dY > dX * dX) {

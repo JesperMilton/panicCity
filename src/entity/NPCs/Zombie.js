@@ -5,10 +5,10 @@
 panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
     this.game = game;
-    this.coolDown = false;
     this.targets = [];
     this.newTarget;
     this.isAttacking = false;
+    this.coolDown = false;
 };
 
 panicCity.entity.Zombie.prototype = Object.create(panicCity.entity.Entity.prototype);
@@ -24,8 +24,6 @@ panicCity.entity.Zombie.prototype.update = function (step) {
     this.m_updateAnimations();
     this.m_findClosestPlayer();
     this.m_updateInput();
-
-    // this.m_checkColl(step);
 };
 
 panicCity.entity.Zombie.prototype.m_updateInput = function () {
@@ -49,17 +47,15 @@ panicCity.entity.Zombie.prototype.m_updateAnimations = function () {
 
 panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
     this.closetPlayer = Infinity;
-    this.targets.forEach(target => {
+    this.targets.forEachMember(function (target) {
         var dX = target.x - this.x;
         var dY = target.y - this.y;
-
         var distance = dY * dY + dX * dX;
-
         if (this.closetPlayer > distance) {
             this.closetPlayer = distance;
             this.newTarget = target;
         }
-    });
+    }, this);
 }
 
 panicCity.entity.Zombie.prototype.attack = function (target) {
@@ -68,7 +64,7 @@ panicCity.entity.Zombie.prototype.attack = function (target) {
         this.isAttacking = true;
         this.coolDown = true;
         target.takeDamage(this.damage);
-        
+
         this.game.timers.create({
             duration: 3000,
             onComplete: function () {

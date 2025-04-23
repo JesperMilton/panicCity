@@ -8,6 +8,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     this.game = game;
     this.direction = "UP";
     this.gamepadIndex = gamepadIndex;
+    this.health = 100;
 };
 
 panicCity.entity.PlayerJesper.prototype = Object.create(panicCity.entity.Entity.prototype);
@@ -15,12 +16,14 @@ panicCity.entity.PlayerJesper.prototype.constructor = panicCity.entity.PlayerJes
 
 panicCity.entity.PlayerJesper.prototype.init = function () {
     this.m_initAnimations();
+    this.m_initHealthBar();
 };
 
 
 panicCity.entity.PlayerJesper.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_updateInput(step);
+    this.m_updateHealthbar();
 };
 
 panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
@@ -64,12 +67,25 @@ panicCity.entity.PlayerJesper.prototype.m_initAnimations = function (step) {
     this.animation.create("idle", [0, 1, 2]  , 6, true);
 };
 
+panicCity.entity.PlayerJesper.prototype.m_initHealthBar = function() {
+    this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "red");
+    this.game.stage.addChild(this.healthBar);
+}
+
+panicCity.entity.PlayerJesper.prototype.m_updateHealthbar = function() {
+    this.healthBar.progress = (this.health / 100);
+    this.healthBar.x = this.x;
+    this.healthBar.y = this.y - 2;
+}
+
 panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
-    // this.flicker.start(250);
-    // this.health -= damage;
-    // this.healthBar.progress = (this.health / 500);
-    // if (this.health <= 0) {
-    //  this.m_die();
-    // }
-    console.log("Jesper took damage from a zombie");
+    this.flicker.start(250);
+    this.health -= damage;
+    if (this.health <= 0) {
+        this.m_die();
+    }
+}
+
+panicCity.entity.PlayerJesper.prototype.m_die = function () {
+    this.game.players.removeMember(this, true);
 }
