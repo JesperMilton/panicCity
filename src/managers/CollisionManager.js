@@ -41,23 +41,14 @@ panicCity.managers.CollisionManager.prototype.m_stones = function () {
         base.takeDamage(stone.damage);
         this.game.stones.removeMember(stone, true);
     }, this);
-
-    // var tempel = [];
-    // this.game.bullets.hitTest(this.game.enemies, function(bullet, enemy) {
-    //     enemy.takeDamage(bullet.damage);
-    //     tempel.push(bullet);
-    //     // this.game.bullets.removeMember(bullet);
-    //     console.log(this.game.bullets.numMembers);
-    // },this); 
-    // if(tempel) {
-    //     tempel.forEach(function(bullet) {
-    //         this.game.bullets.removeMember(bullet, true);
-    //     }, this);
-    //     // tempel = null;
-    // } 
 };
 panicCity.managers.CollisionManager.prototype.m_items = function () {
     this.game.items.hitTest(this.game.players, function(item, player){
-        item.heal(this.game.base);
+        if(item.type === "MEDKIT"){
+            item.heal(this.game.players);
+        }
+        else{
+            item.heal(this.game.baseSta);
+        }
     }, this);
 }
