@@ -24,11 +24,12 @@ panicCity.entity.ZombieBoss.prototype.constructor = panicCity.entity.ZombieBoss;
 panicCity.entity.ZombieBoss.prototype.init = function () {
     this.m_initAnimations();
     this.m_initStats();
+    this.m_initHealthBar();
 };
 
 panicCity.entity.ZombieBoss.prototype.m_initStats = function () {
     this.hitbox.set(10, 20, 60, 50);
-    this.health = 300;
+    this.health = 500;
     this.damage = 15;
 
     this.acceleration = 0.6;
@@ -42,6 +43,7 @@ panicCity.entity.ZombieBoss.prototype.update = function (step) {
     this.m_findClosestPlayer();
     this.m_updateInput();
     this.m_throwAttack();
+    this.m_updateHealthbar();
 };
 
 panicCity.entity.ZombieBoss.prototype.m_updateInput = function () {
@@ -113,6 +115,17 @@ panicCity.entity.ZombieBoss.prototype.m_initAnimations = function () {
     this.animation.create("attack", [9, 10, 11, 12, 13], 3, true);
 };
 
+panicCity.entity.ZombieBoss.prototype.m_initHealthBar = function() {
+    this.healthBar = new rune.ui.Progressbar(200, 6, "gray", "red");
+    this.game.stage.addChild(this.healthBar);
+}
+
+panicCity.entity.ZombieBoss.prototype.m_updateHealthbar = function() {
+    this.healthBar.progress = (this.health / 500);
+    this.healthBar.x = 100;
+    this.healthBar.y = 20;
+}
+
 panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
     this.flicker.start(250);
     this.health -= damage;
@@ -123,5 +136,6 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
 
 panicCity.entity.ZombieBoss.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
+    this.game.stage.removeChild(this.healthBar);
     this.game.updateScoretext(50);
 };
