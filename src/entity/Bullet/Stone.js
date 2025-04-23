@@ -1,3 +1,22 @@
+//------------------------------------------------------------------------------
+// Constructor scope
+//------------------------------------------------------------------------------
+
+/**
+ * ...
+ *
+ * @constructor
+ * @extends rune.display.Graphic
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {object} boss - The Boss object
+ * @param {object} target - The Target object
+ * @param {object} game - The Game object
+ * 
+ * ...
+ */
 panicCity.entity.Stone = function (boss, target, game) {
     this.game = game;
     this.damage = 30.0;

@@ -2,6 +2,24 @@
 // Constructor scope
 //------------------------------------------------------------------------------
 
+/**
+ * ...
+ *
+ * @constructor
+ * @extends rune.display.Graphic
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @param {number} width - Width
+ * @param {number} height - Height
+ * @param {string} texture - texture resource
+ * @param {object} game - The Game object
+ * 
+ * ...
+ */
 panicCity.entity.Items = function (x, y, width, height, texture, game) {
     this.game = game;
     rune.display.Graphic.call(this, x, y, width, height, texture);

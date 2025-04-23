@@ -24,6 +24,12 @@ npx google-closure-compiler \
 --js "./../../src/managers/CollisionManager.js" \
 --js "./../../src/entity/Characters/PlayerJesper.js" \
 --js "./../../src/entity/Characters/PlayerHibba.js" \
+--js "./../../src/managers/ItemSpawner.js" \
+--js "./../../src/entity/Items/Items.js" \
+--js "./../../src/entity/Items/Food.js" \
+--js "./../../src/entity/Items/Plank.js" \
+--js "./../../src/entity/Items/Medkit.js" \
+--js "./../../src/entity/Items/Water.js" \
 --js "./../../src/scene/game/Game.js" \
 --js "./../../src/scene/game/Gameover.js" \
 --js "./../../src/system/Main.js" \

@@ -1,3 +1,19 @@
+//------------------------------------------------------------------------------
+// Constructor scope
+//------------------------------------------------------------------------------
+
+/**
+ * ...
+ *
+ * @constructor
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {object} game - The Game object
+ * 
+ * ...
+ */
 panicCity.managers.WaveManager = function (game) {
     this.game = game;
     this.currentWave = 0;

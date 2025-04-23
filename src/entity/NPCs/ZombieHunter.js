@@ -2,6 +2,23 @@
 // Constructor scope
 //------------------------------------------------------------------------------
 
+/**
+ * ...
+ *
+ * @constructor
+ * @extends panicCity.entity.Zombie
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @param {number} width - Width
+ * @param {number} height - Height
+ * @param {string} texture - texture resource
+ * @param {object} game - The Game object
+ * ...
+ */
 panicCity.entity.ZombieHunter = function (x, y, width, height, texture, game) {
     panicCity.entity.Zombie.call(this, x, y, width, height, texture, game);
 };

@@ -1,16 +1,18 @@
+//------------------------------------------------------------------------------
+// Constructor scope
+//------------------------------------------------------------------------------
+
 /**
- * Creates a new object.
+ * ...
  *
  * @constructor
- * @extends panicCity.entity.Body
- *
- * @param {number} x ...
- * @param {number} y ...
+ * @extends rune.display.Graphic
  *
  * @class
  * @classdesc
  * 
- * Represents a bullet.
+ * @param {object} player - The player object
+ * ...
  */
 panicCity.entity.Bullet = function (player) {
 
@@ -22,7 +24,7 @@ panicCity.entity.Bullet = function (player) {
      * The amount of damage the bullet causes.
      *
      * @type {number}
-     * @default 20
+     * @default 10
      */
     this.damage = 10.0;
 
@@ -42,17 +44,17 @@ panicCity.entity.Bullet = function (player) {
 
     var y = this.player.y + 17;
     var x = this.player.x + 13;
-     
+
     var bulletTexture = "image_Bullet";
 
-   
+
     this.direction = this.player.direction;
     rune.display.Graphic.call(this, x, y, 3, 5, bulletTexture);
 
-    if(this.player.direction === "RIGHT" || this.player.direction === "LEFT"){
+    if (this.player.direction === "RIGHT" || this.player.direction === "LEFT") {
         this.rotation = 90;
         this.hitbox.set(0, 0, 5, 3);
-    }else{
+    } else {
         this.hitbox.set(0, 0, 3, 5);
     }
 };

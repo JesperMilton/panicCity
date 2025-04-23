@@ -2,7 +2,25 @@
 // Constructor scope
 //------------------------------------------------------------------------------
 
-
+/**
+ * ...
+ *
+ * @constructor
+ * @extends panicCity.entity.Entity
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @param {number} width - Width
+ * @param {number} height - Height
+ * @param {string} texture - texture resource
+ * @param {object} game - The Game object
+ * @param {number} gamepadIndex - GamepadIndex
+ * 
+ * ...
+ */
 panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gamepadIndex) {
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
     this.game = game;

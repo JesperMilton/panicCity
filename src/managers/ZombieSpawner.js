@@ -1,3 +1,19 @@
+//------------------------------------------------------------------------------
+// Constructor scope
+//------------------------------------------------------------------------------
+
+/**
+ * ...
+ *
+ * @constructor
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {object} game - The Game object
+ * 
+ * ...
+ */
 panicCity.managers.ZombieSpawner = function (game) {
     this.spawnPoints = [{ x: -50, y: 150 }, { x: 75, y: 240 }, { x: 450, y: 150 }, { x: 350, y: 240 }];
     this.game = game;

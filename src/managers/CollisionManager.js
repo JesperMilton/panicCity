@@ -1,3 +1,19 @@
+//------------------------------------------------------------------------------
+// Constructor scope
+//------------------------------------------------------------------------------
+
+/**
+ * ...
+ *
+ * @constructor
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {object} game - The Game object
+ * 
+ * ...
+ */
 panicCity.managers.CollisionManager = function (game) {
     this.game = game;
 };

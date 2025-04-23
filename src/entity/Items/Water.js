@@ -1,3 +1,22 @@
+//------------------------------------------------------------------------------
+// Constructor scope
+//------------------------------------------------------------------------------
+
+/**
+ * ...
+ *
+ * @constructor
+ * @extends panicCity.entity.Items
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @param {object} game - The Game object.
+ * 
+ * ...
+ */
 panicCity.entity.Water = function (x, y, game) {
     var texture = null;
     var width = 5;

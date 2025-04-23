@@ -2,7 +2,24 @@
 // Constructor scope
 //------------------------------------------------------------------------------
 
-
+/**
+ * ...
+ *
+ * @constructor
+ * @extends rune.display.Sprite
+ *
+ * @class
+ * @classdesc
+ * 
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @param {number} width - Width
+ * @param {number} height - Height
+ * @param {string} texture - texture resource
+ * @param {object} game - The Game object
+ * 
+ * ...
+ */
 panicCity.entity.Base = function (x, y, width, height, texture, game) {
     rune.display.Sprite.call(this, x, y, width, height, texture);
     this.debug = true;
