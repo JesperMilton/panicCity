@@ -7,6 +7,7 @@ panicCity.managers.CollisionManager.prototype.update = function () {
     this.m_enemies();
     this.m_bullets();
     this.m_stones();
+    this.m_items();
 };
 
 panicCity.managers.CollisionManager.prototype.m_players = function () {
@@ -40,4 +41,23 @@ panicCity.managers.CollisionManager.prototype.m_stones = function () {
         base.takeDamage(stone.damage);
         this.game.stones.removeMember(stone, true);
     }, this);
+
+    // var tempel = [];
+    // this.game.bullets.hitTest(this.game.enemies, function(bullet, enemy) {
+    //     enemy.takeDamage(bullet.damage);
+    //     tempel.push(bullet);
+    //     // this.game.bullets.removeMember(bullet);
+    //     console.log(this.game.bullets.numMembers);
+    // },this); 
+    // if(tempel) {
+    //     tempel.forEach(function(bullet) {
+    //         this.game.bullets.removeMember(bullet, true);
+    //     }, this);
+    //     // tempel = null;
+    // } 
 };
+panicCity.managers.CollisionManager.prototype.m_items = function () {
+    this.game.items.hitTest(this.game.players, function(item, player){
+        item.heal(this.game.base);
+    }, this);
+}

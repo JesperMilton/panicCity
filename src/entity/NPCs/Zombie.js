@@ -86,4 +86,6 @@ panicCity.entity.Zombie.prototype.takeDamage = function (damage) {
 panicCity.entity.Zombie.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
     this.game.updateScoretext(5);
+    var item = new panicCity.entity.Items(this, this.game);
+    this.game.items.addMember(item);
 }
