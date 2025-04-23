@@ -67,6 +67,9 @@ panicCity.entity.Base.prototype.heal = function(health){
         this.health += health;
         this.healthBar.progress = (this.health / 500);
     }
+    if(this.health > 500){
+        this.health = 500;
+    }
 }
 
 panicCity.entity.Base.prototype.m_baseTimer = function(){

@@ -2,12 +2,9 @@
 // Constructor scope
 //------------------------------------------------------------------------------
 
-panicCity.entity.Items = function (zombie, game) {
+panicCity.entity.Items = function (x, y, width, height, texture, game) {
     this.game = game;
-    this.hp = 50;
-    this.x = zombie.x;
-    this.y = zombie.y;
-    rune.display.Graphic.call(this, this.x, this.y, 5, 5, null);
+    rune.display.Graphic.call(this, x, y, width, height, texture);
     this.backgroundColor = "white";
 };
 panicCity.entity.Items.prototype = Object.create(rune.display.Graphic.prototype);
@@ -22,8 +19,10 @@ panicCity.entity.Items.prototype.init = function () {
     });
 };
 
-panicCity.entity.Items.prototype.heal = function (target){
-    target.heal(this.hp);
+panicCity.entity.Items.prototype.heal = function (target) {
+    target.forEachMember(function (target){
+        target.heal(this.hp);
+    }, this);
     this.m_delete();
 }
 

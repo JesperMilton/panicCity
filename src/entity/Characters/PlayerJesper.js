@@ -86,6 +86,15 @@ panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
     }
 }
 
+panicCity.entity.PlayerJesper.prototype.heal = function (health){
+    if(this.health > 0 && this.health < 100){
+        this.health += health;
+    }
+    if(this.health > 100){
+        this.health = 100;
+    }
+}
+
 panicCity.entity.PlayerJesper.prototype.m_die = function () {
     this.game.players.removeMember(this, true);
 }

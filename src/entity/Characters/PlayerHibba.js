@@ -84,6 +84,14 @@ panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
         this.m_die();
     }
 }
+panicCity.entity.PlayerHibba.prototype.heal = function (health){
+    if(this.health > 0 && this.health < 100){
+        this.health += health;
+    }
+    if(this.health > 100){
+        this.health = 100;
+    }
+}
 
 panicCity.entity.PlayerHibba.prototype.m_die = function () {
     this.game.players.removeMember(this, true);
