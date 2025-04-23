@@ -6,7 +6,7 @@ panicCity.managers.CollisionManager.prototype.update = function () {
     this.m_players();
     this.m_enemies();
     this.m_bullets();
-
+    this.m_items();
 };
 
 panicCity.managers.CollisionManager.prototype.m_players = function () {
@@ -43,3 +43,8 @@ panicCity.managers.CollisionManager.prototype.m_bullets = function () {
     //     // tempel = null;
     // } 
 };
+panicCity.managers.CollisionManager.prototype.m_items = function () {
+    this.game.items.hitTest(this.game.players, function(item, player){
+        item.heal(this.game.base);
+    }, this);
+}

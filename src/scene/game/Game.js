@@ -26,6 +26,7 @@ panicCity.scene.Game.prototype.init = function () {
     this.enemies = this.groups.create(this.stage);
     this.bullets = this.groups.create(this.stage);
     this.baseSta = this.groups.create(this.stage);
+    this.items = this.groups.create(this.stage);
 
 
     this.playerJesper = new panicCity.entity.PlayerJesper(250, 100, 27, 26, "Player1-Sheet", this, 0);

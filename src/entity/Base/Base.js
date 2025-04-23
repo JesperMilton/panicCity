@@ -62,7 +62,7 @@ panicCity.entity.Base.prototype.m_initHealthBar = function() {
     this.game.stage.addChild(this.healthBar);
 }
 
-panicCity.entity.Base.prototype.healBase = function(health){
+panicCity.entity.Base.prototype.heal = function(health){
     if(this.health > 0 && this.health < 500){
         this.health += health;
         this.healthBar.progress = (this.health / 500);
