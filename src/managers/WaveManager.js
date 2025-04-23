@@ -42,11 +42,11 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     this.currentWave++;
     this.currentZombies = 0;
 
-    if (this.currentWave == 1) {
-        this.zombieSpawner.spawnZombieBoss();
-        this.currentZombies++;
-        this.spawnComplete = true;
-    }
+    // if (this.currentWave == 1) {
+    //     this.zombieSpawner.spawnZombieBoss();
+    //     this.currentZombies++;
+    //     this.spawnComplete = true;
+    // }
 
     this.text.text = "Wave: " + this.currentWave;
     this.text.x = this.game.application.screen.width - this.text.width - 5;
@@ -54,18 +54,18 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
 };
 
 panicCity.managers.WaveManager.prototype.m_callSpawner = function () {
-    // if (!this.coldDown && (this.waveAmount > this.currentZombies)) {
-    //     this.coldDown = true;
-    //     this.game.timers.create({
-    //         duration: 800,
-    //         onComplete: function () {
-    //             this.zombieSpawner.spawnZombie();
-    //             this.currentZombies++;
-    //             this.coldDown = false;
-    //             if (this.currentZombies >= this.waveAmount) {
-    //                 this.spawnComplete = true;
-    //             }
-    //         }.bind(this)
-    //     });
-    // }
+    if (!this.coldDown && (this.waveAmount > this.currentZombies)) {
+        this.coldDown = true;
+        this.game.timers.create({
+            duration: 800,
+            onComplete: function () {
+                this.zombieSpawner.spawnZombie();
+                this.currentZombies++;
+                this.coldDown = false;
+                if (this.currentZombies >= this.waveAmount) {
+                    this.spawnComplete = true;
+                }
+            }.bind(this)
+        });
+    }
 };

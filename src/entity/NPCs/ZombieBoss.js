@@ -37,8 +37,8 @@ panicCity.entity.ZombieBoss.prototype.m_initStats = function () {
     this.velocity.max.y = 1;
 };
 
-panicCity.entity.ZombieBoss.prototype.update = function () {
-    panicCity.entity.Entity.prototype.update.call(this);
+panicCity.entity.ZombieBoss.prototype.update = function (step) {
+    panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_findClosestPlayer();
     this.m_updateInput();
     this.m_throwAttack();
@@ -109,8 +109,8 @@ panicCity.entity.ZombieBoss.prototype.attack = function (target) {
 };
 
 panicCity.entity.ZombieBoss.prototype.m_initAnimations = function () {
-    this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
-    this.animation.create("attack", [9, 10, 11, 12, 13], 8, true);
+    this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 3, true);
+    this.animation.create("attack", [9, 10, 11, 12, 13], 3, true);
 };
 
 panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {

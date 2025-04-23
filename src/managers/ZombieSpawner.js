@@ -11,7 +11,7 @@ panicCity.managers.ZombieSpawner.prototype.spawnZombie = function () {
     if (ran == 1) {
         var zombieBasic = new panicCity.entity.ZombieBasic(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "newZombie-Sheet", this.game);
 
-        zombieBasic.targets = this.game.base; //not using the group
+        zombieBasic.targets = this.game.baseSta; //not using the group
 
         this.game.enemies.addMember(zombieBasic);
     }
