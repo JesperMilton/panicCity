@@ -22,7 +22,13 @@
  */
 
 panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+
     panicCity.entity.Entity.call(this, x, y, width, height, texture, game);
+
     this.game = game;
 
     this.throwColdown = false;
@@ -35,7 +41,13 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     this.newTarget;
 
     this.immovable = true;
+    this.attackTimer;
+    this.throwTimer;
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
 
 panicCity.entity.ZombieBoss.prototype = Object.create(panicCity.entity.Entity.prototype);
 panicCity.entity.ZombieBoss.prototype.constructor = panicCity.entity.ZombieBoss;
@@ -68,7 +80,6 @@ panicCity.entity.ZombieBoss.prototype.update = function (step) {
 panicCity.entity.ZombieBoss.prototype.m_updateInput = function () {
     if (this.x <= 10) {
         this.animation.gotoAndPlay("walk");
-        console.log(this.animation)
         this.moveRight();
     }
 };
@@ -99,10 +110,10 @@ panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
         this.animation.gotoAndPlay("attack");
         this.isThrowing = true;
         this.throwColdown = true;
-        var stone = new panicCity.entity.Stone(this, this.newTarget, this.game);
+        var stone = new panicCity.entity.Stone(15, 15, this, this.newTarget, this.game);
         this.game.stones.addMember(stone);
 
-        this.game.timers.create({
+        this.throwTimer = this.game.timers.create({
             duration: 2000,
             onComplete: function () {
                 this.throwColdown = false;
@@ -119,7 +130,7 @@ panicCity.entity.ZombieBoss.prototype.attack = function (target) {
         this.coolDown = true;
         target.takeDamage(this.damage);
 
-        this.game.timers.create({
+        this.attackTimer = this.game.timers.create({
             duration: 800,
             onComplete: function () {
                 this.coolDown = false;
@@ -136,7 +147,7 @@ panicCity.entity.ZombieBoss.prototype.m_initAnimations = function () {
 
 panicCity.entity.ZombieBoss.prototype.m_initHealthBar = function() {
     this.healthBar = new rune.ui.Progressbar(200, 6, "gray", "red");
-    this.game.stage.addChild(this.healthBar);
+    this.game.cameras.getCameraAt(1).addChild(this.healthBar);
 }
 
 panicCity.entity.ZombieBoss.prototype.m_updateHealthbar = function() {
@@ -155,6 +166,12 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
 
 panicCity.entity.ZombieBoss.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
-    this.game.stage.removeChild(this.healthBar);
+    if(this.attackTimer) {
+        this.attackTimer.disposed = true;
+    }
+    if(this.throwTimer) {
+        this.throwTimer.disposed = true;
+    }
+    this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
     this.game.updateScoretext(50);
 };

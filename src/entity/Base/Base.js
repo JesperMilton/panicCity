@@ -21,9 +21,15 @@
  * ...
  */
 panicCity.entity.Base = function (x, y, width, height, texture, game) {
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+
     rune.display.Sprite.call(this, x, y, width, height, texture);
-    this.debug = true;
-    this.hitbox.debug = true;
+
+    // this.debug = true;
+    // this.hitbox.debug = true;
     this.immovable = true;
     this.health = 500;
     this.game = game;
@@ -36,6 +42,10 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
         }.bind(this),
       });
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
 
 panicCity.entity.Base.prototype = Object.create(rune.display.Sprite.prototype);
 panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;

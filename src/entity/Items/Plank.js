@@ -18,13 +18,22 @@
  * ...
  */
 panicCity.entity.Plank = function (x, y, game) {
-    var texture = null;
-    var width = 5;
-    var height = 5;
+    var texture = "Planks-Sheet";
+    var width = 20;
+    var height = 20;
     this.hp = 5;
     this.type = "PLANK";
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+    
     panicCity.entity.Items.call(this, x, y, width, height, texture, game);
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
 
 panicCity.entity.Plank.prototype = Object.create(panicCity.entity.Items.prototype);
 panicCity.entity.Plank.prototype.constructor = panicCity.entity.Plank;

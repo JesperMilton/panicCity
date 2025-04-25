@@ -17,7 +17,7 @@
  * 
  * ...
  */
-panicCity.entity.Stone = function (boss, target, game) {
+panicCity.entity.Stone = function (width, height, boss, target, game) {
     this.game = game;
     this.damage = 30.0;
     
@@ -33,10 +33,15 @@ panicCity.entity.Stone = function (boss, target, game) {
 
     var StoneTexture = "image_Stone";
 
-    rune.display.Graphic.call(this, x, y, 15, 15, StoneTexture);
+    rune.display.Graphic.call(this, x, y, width, height, StoneTexture);
 
     this.hitbox.set(0, 0, 15, 15);
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
+
 panicCity.entity.Stone.prototype = Object.create(rune.display.Graphic.prototype);
 panicCity.entity.Stone.prototype.constructor = panicCity.entity.Stone;
 

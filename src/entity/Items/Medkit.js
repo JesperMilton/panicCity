@@ -18,13 +18,22 @@
  * ...
  */
 panicCity.entity.Medkit = function (x, y, game) {
-    var texture = null;
-    var width = 5;
-    var height = 5;
+    var texture = "Medkit-Sheet";
+    var width = 18;
+    var height = 18;
     this.hp = 35;
     this.type = "MEDKIT";
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+    
     panicCity.entity.Items.call(this, x, y, width, height, texture, game);
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
 
 panicCity.entity.Medkit.prototype = Object.create(panicCity.entity.Items.prototype);
 panicCity.entity.Medkit.prototype.constructor = panicCity.entity.Medkit;

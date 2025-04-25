@@ -20,8 +20,17 @@
  * ...
  */
 panicCity.entity.ZombieHunter = function (x, y, width, height, texture, game) {
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+    
     panicCity.entity.Zombie.call(this, x, y, width, height, texture, game);
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
 
 panicCity.entity.ZombieHunter.prototype = Object.create(panicCity.entity.Zombie.prototype);
 panicCity.entity.ZombieHunter.prototype.constructor = panicCity.entity.ZombieHunter;

@@ -11,28 +11,29 @@
  * @classdesc
  * 
  * @param {object} game - The Game object
+ * @param {object} cameras - The Cameras object
  * 
  * ...
  */
-panicCity.managers.WaveManager = function (game) {
+panicCity.managers.WaveManager = function (game, cameras) {
     this.game = game;
     this.currentWave = 0;
     this.waveAmount = 5;
     this.currentZombies = 0;
     this.coldDown = false;
     this.spawnComplete = false;
+    this.m_cameras = cameras;
 
     this.zombieSpawner = new panicCity.managers.ZombieSpawner(this.game);
 
     this.text = new rune.text.BitmapField();
     this.text.autoSize = true;
-    this.game.stage.addChild(this.text);
+    this.m_cameras.getCameraAt(1).addChild(this.text);
 
     this.m_startnewWave();
 };
 
 panicCity.managers.WaveManager.prototype.updateSpawner = function () {
-    console.log(this.game.enemies.numMembers);
     if (this.spawnComplete && this.game.enemies.numMembers == 0) {
         this.spawnComplete = false;
         this.m_startWaveCountdown();
@@ -44,9 +45,8 @@ panicCity.managers.WaveManager.prototype.updateSpawner = function () {
 };
 
 panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
-    console.log("Started Countdown");
     this.game.timers.create({
-        duration: 8000,
+        duration: 5000,
         onComplete: function () {
             this.m_startnewWave();
         }.bind(this)
@@ -57,6 +57,12 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     this.waveAmount += 5;
     this.currentWave++;
     this.currentZombies = 0;
+
+    if (this.currentWave % 3 == 0) {
+        this.zombieSpawner.spawnZombieBoss();
+        this.currentZombies++;
+        this.spawnComplete = true;
+    }
 
     // if (this.currentWave == 1) {
     //     this.zombieSpawner.spawnZombieBoss();
@@ -70,7 +76,7 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
 };
 
 panicCity.managers.WaveManager.prototype.m_callSpawner = function () {
-    if (!this.coldDown && (this.waveAmount > this.currentZombies)) {
+    if (!this.coldDown && (this.waveAmount > this.currentZombies) && this.currentWave % 3 != 0) {
         this.coldDown = true;
         this.game.timers.create({
             duration: 800,

@@ -22,12 +22,22 @@
  * ...
  */
 panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gamepadIndex) {
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
     this.game = game;
     this.direction = "UP";
     this.gamepadIndex = gamepadIndex;
     this.health = 100;
+    this.mass = 10;
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
 
 panicCity.entity.PlayerHibba.prototype = Object.create(panicCity.entity.Entity.prototype);
 panicCity.entity.PlayerHibba.prototype.constructor = panicCity.entity.PlayerHibba;

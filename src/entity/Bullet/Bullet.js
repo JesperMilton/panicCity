@@ -41,14 +41,15 @@ panicCity.entity.Bullet = function (player) {
     this.m_speed = 5;
 
     this.player = player;
-
     var y = this.player.y + 17;
     var x = this.player.x + 13;
-
     var bulletTexture = "image_Bullet";
-
-
     this.direction = this.player.direction;
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+    
     rune.display.Graphic.call(this, x, y, 3, 5, bulletTexture);
 
     if (this.player.direction === "RIGHT" || this.player.direction === "LEFT") {
@@ -58,12 +59,14 @@ panicCity.entity.Bullet = function (player) {
         this.hitbox.set(0, 0, 3, 5);
     }
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
+
 panicCity.entity.Bullet.prototype = Object.create(rune.display.Graphic.prototype);
 panicCity.entity.Bullet.prototype.constructor = panicCity.entity.Bullet;
 
-/**
- * @inheritDoc
- */
 panicCity.entity.Bullet.prototype.update = function (step) {
     this.m_updateMotion(step);
 };

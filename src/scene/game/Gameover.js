@@ -2,6 +2,11 @@ panicCity.scene.Gameover = function(game){
     rune.scene.Scene.call(this);
     this.game = game;
 }
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
+
 panicCity.scene.Gameover.prototype = Object.create(rune.scene.Scene.prototype);
 panicCity.scene.Gameover.prototype.constructor = panicCity.scene.Gameover;
 

@@ -35,21 +35,10 @@ panicCity.entity.Entity = function (x, y, width, height, texture) {
      */
     this.speed = 1.8;
 
-    /**
-     * ...
-     *
-     * @type {boolean}
-      */
-    this.debug = true;
-    
-    /**
-     * ...
-     *
-     * @type {boolean}
-      */
-    this.hitbox.debug = true;
-
     this.hitbox.set(0, 0, 27, 26);
+
+    // this.debug = true;
+    // this.hitbox.debug = true;
 
     this.m_initVelocity();
 };
@@ -66,31 +55,19 @@ panicCity.entity.Entity.prototype.constructor = panicCity.entity.Entity;
 //------------------------------------------------------------------------------
 
 
-/**
- * @inheritDoc
- */
 panicCity.entity.Entity.prototype.moveUp = function () {
     this.velocity.y -= this.acceleration;
 };
 
-/**
- * @inheritDoc
- */
 panicCity.entity.Entity.prototype.moveRight = function () {
     this.velocity.x += this.acceleration;
     this.flippedX = true;
 };
 
-/**
- * @inheritDoc
- */
 panicCity.entity.Entity.prototype.moveDown = function () {
     this.velocity.y += this.acceleration;
 };
 
-/**
- * @inheritDoc
- */
 panicCity.entity.Entity.prototype.moveLeft = function () {
     this.velocity.x -= this.acceleration;
     this.flippedX = false;

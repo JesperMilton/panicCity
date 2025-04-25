@@ -17,10 +17,10 @@ panicCity.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     this.m_initBackground();
+    this.m_initCamera();
     this.m_initScore();
 
     this.collisionControl = new panicCity.managers.CollisionManager(this);
-
 
     this.players = this.groups.create(this.stage);
     this.enemies = this.groups.create(this.stage);
@@ -34,12 +34,14 @@ panicCity.scene.Game.prototype.init = function () {
     this.playerHibba = new panicCity.entity.PlayerHibba(100, 100, 27, 26, "Player2-Sheet", this, 1);
     this.base = new panicCity.entity.Base(this.application.screen.center.x, this.application.screen.center.y, 45, 45, "image_Base", this);
 
+    this.cameras.getCameraAt(1).targets.add(this.playerJesper);
+    this.cameras.getCameraAt(1).targets.add(this.playerHibba);
 
     this.players.addMember(this.playerJesper);
     this.players.addMember(this.playerHibba);
     this.baseSta.addMember(this.base);
 
-    this.waveManager = new panicCity.managers.WaveManager(this);
+    this.waveManager = new panicCity.managers.WaveManager(this, this.cameras);
 
     this.timers.create({
         duration: this.scoreTime,
@@ -66,15 +68,26 @@ panicCity.scene.Game.prototype.m_initScore = function () {
     this.counter.x = this.application.screen.width - this.counter.width;
     this.counter.value = this.score;
 
-    this.stage.addChild(this.counter);
+    this.cameras.getCameraAt(1).addChild(this.counter);
 }
+
+panicCity.scene.Game.prototype.m_initCamera = function () {
+    this.m_camera = this.cameras.addCamera(this.cameras.createCamera());
+    this.m_camera.bounderies = new rune.geom.Rectangle(
+        0,
+        0,
+        475,
+        300
+    );
+};
+
 panicCity.scene.Game.prototype.m_initBackground = function () {
     this.m_background = new rune.display.Graphic(
         0,
         0,
-        400,
-        225,
-        "image_Background"
+        475,
+        300,
+        "backgroundPlaceholder"
     );
 
     this.stage.addChild(this.m_background);

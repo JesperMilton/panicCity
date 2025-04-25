@@ -10,14 +10,26 @@
  * @class
  * @classdesc
  * 
- * @param {object} game - The Game object
+ * @param {object} game - The Game object.
  * 
  * ...
  */
 panicCity.managers.CollisionManager = function (game) {
+    /**
+     * Reference to the Game object.
+     *
+     * @type {object}
+     * 
+     */
     this.game = game;
 };
 
+/**
+ * Calls the private methods to control collision.
+ *
+ * @return {undefined}
+ * 
+ */
 panicCity.managers.CollisionManager.prototype.update = function () {
     this.m_players();
     this.m_enemies();
@@ -26,20 +38,43 @@ panicCity.managers.CollisionManager.prototype.update = function () {
     this.m_items();
 };
 
+/**
+ * Controls the collision for the players DisplayGroup.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.CollisionManager.prototype.m_players = function () {
     this.game.players.hitTestAndSeparateGroup(this.game.baseSta);
 };
 
+/**
+ * Controls the collision for the enemies DisplayGroup.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.CollisionManager.prototype.m_enemies = function () {
     this.game.enemies.hitTestAndSeparateGroup(this.game.players, function (enemy, player) {
+        enemy.isAttacking = true;
         enemy.attack(player);
     }, this);
 
     this.game.enemies.hitTestAndSeparateGroup(this.game.baseSta, function (enemy, base) {
+        enemy.isAttacking = true;
         enemy.attack(base);
     }, this);
 };
 
+/**
+ * Controls the collision for the bullets DisplayGroup.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.CollisionManager.prototype.m_bullets = function () {
     this.game.bullets.hitTest(this.game.enemies, function (bullet, enemy) {
         enemy.takeDamage(bullet.damage);
@@ -47,6 +82,13 @@ panicCity.managers.CollisionManager.prototype.m_bullets = function () {
     }, this);
 };
 
+/**
+ * Controls the collision for the stones DisplayGroup.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.CollisionManager.prototype.m_stones = function () {
     this.game.stones.hitTest(this.game.players, function (stone, player) {
         player.takeDamage(stone.damage);
@@ -58,12 +100,20 @@ panicCity.managers.CollisionManager.prototype.m_stones = function () {
         this.game.stones.removeMember(stone, true);
     }, this);
 };
+
+/**
+ * Controls the collision for the items DisplayGroup.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.CollisionManager.prototype.m_items = function () {
-    this.game.items.hitTest(this.game.players, function(item, player){
-        if(item.type === "MEDKIT"){
+    this.game.items.hitTest(this.game.players, function (item, player) {
+        if (item.type === "MEDKIT") {
             item.heal(this.game.players);
         }
-        else{
+        else {
             item.heal(this.game.baseSta);
         }
     }, this);

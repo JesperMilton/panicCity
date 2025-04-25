@@ -21,14 +21,26 @@
  * ...
  */
 panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
+
     this.game = game;
     this.targets = [];
     this.newTarget;
-    this.isAttacking = false;
+    this.isAttacking;
     this.coolDown = false;
+    this.attackTimer;
+    this.mass = 0;
     this.itemSpawner = new panicCity.managers.ItemSpawner(this.game);
 };
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
 
 panicCity.entity.Zombie.prototype = Object.create(panicCity.entity.Entity.prototype);
 panicCity.entity.Zombie.prototype.constructor = panicCity.entity.Zombie;
@@ -59,7 +71,10 @@ panicCity.entity.Zombie.prototype.m_initStats = function () {
 
 
 panicCity.entity.Zombie.prototype.m_updateAnimations = function () {
-    if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
+    if (this.isAttacking) {
+        this.animation.gotoAndPlay("attack");
+        this.isAttacking = false;
+    } else if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
         this.animation.gotoAndPlay("walk");
     }
 };
@@ -79,16 +94,16 @@ panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
 
 panicCity.entity.Zombie.prototype.attack = function (target) {
     this.animation.gotoAndPlay("attack");
-    if (target && !this.coolDown) {
-        this.isAttacking = true;
-        this.coolDown = true;
-        target.takeDamage(this.damage);
 
-        this.game.timers.create({
+    if (target && !this.coolDown) {
+
+        target.takeDamage(this.damage);
+        this.coolDown = true;
+
+        this.attackTimer = this.game.timers.create({
             duration: 3000,
             onComplete: function () {
                 this.coolDown = false;
-                this.isAttacking = false;
             }.bind(this)
         });
     }
@@ -104,6 +119,9 @@ panicCity.entity.Zombie.prototype.takeDamage = function (damage) {
 
 panicCity.entity.Zombie.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
+    if(this.attackTimer) {
+        this.attackTimer.disposed = true;
+    }
     this.game.updateScoretext(5);
     this.itemSpawner.spawnItem(this.x, this.y);
 }
