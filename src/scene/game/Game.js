@@ -32,7 +32,6 @@ panicCity.scene.Game.prototype.init = function () {
     this.playerJesper = new panicCity.entity.PlayerJesper(340, 128, 27, 26, "Player1-Sheet", this, 0);
     this.playerHibba = new panicCity.entity.PlayerHibba(140, 128, 27, 26, "Player2-Sheet", this, 1);
     this.base = new panicCity.entity.Base(240, 128, 45, 45, "image_Base", this);
-    this.human = new panicCity.entity.Human(250, 100, this);
 
     this.cameras.getCameraAt(1).targets.add(this.playerJesper);
     this.cameras.getCameraAt(1).targets.add(this.playerHibba);
@@ -40,15 +39,21 @@ panicCity.scene.Game.prototype.init = function () {
     this.players.addMember(this.playerJesper);
     this.players.addMember(this.playerHibba);
     this.baseSta.addMember(this.base);
-    this.humans.addMember(this.human);
 
     this.collisionControl = new panicCity.managers.CollisionManager(this);
     this.waveManager = new panicCity.managers.WaveManager(this, this.cameras);
+    this.rescueeSpawner = new panicCity.managers.RescueeSpawner(this);
 
     this.timers.create({
         duration: this.scoreTime,
         onComplete: function () {
             this.m_addScore();
+        },
+    });
+    this.timers.create({
+        duration: 2000,
+        onComplete: function () {
+            this.spawnHuman();
         },
     });
 };
@@ -118,6 +123,16 @@ panicCity.scene.Game.prototype.m_addScore = function () {
         duration: this.scoreTime,
         onComplete: function () {
             this.m_addScore();
+        },
+    });
+}
+
+panicCity.scene.Game.prototype.spawnHuman = function (){
+    this.rescueeSpawner.spawnRescuee();
+    this.timers.create({
+        duration: 2000,
+        onComplete: function () {
+            this.spawnHuman();
         },
     });
 }
