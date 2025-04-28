@@ -32,7 +32,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     this.direction = "UP";
     this.gamepadIndex = gamepadIndex;
     this.health = 100;
-    this.mass = 10;
+    this.mass = 20;
 };
 
 //------------------------------------------------------------------------------
@@ -87,6 +87,13 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function (step) {
     }
 };
 
+/**
+ * Method to initialize the animations.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.m_initAnimations = function (step) {
     this.animation.create("walkUp", [12, 13, 14, 15, 16], 5, true);
     this.animation.create("walkDown", [17, 18, 19, 20, 21], 8, true);
@@ -94,6 +101,13 @@ panicCity.entity.PlayerHibba.prototype.m_initAnimations = function (step) {
     this.animation.create("idle", [0, 1, 2]  , 6, true);
 };
 
+/**
+ * Method to initialize the healthbar.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.m_initHealthBar = function() {
     this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "red");
     this.game.stage.addChild(this.healthBar);
@@ -121,7 +135,14 @@ panicCity.entity.PlayerHibba.prototype.heal = function (health){
     }
 }
 
+/**
+ * Method to dispose of the PlayerHibba and its Timers.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.m_die = function () {
     this.game.players.removeMember(this, true);
-    this.game.stage.removeChild(this.healthBar);
+    this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
 }

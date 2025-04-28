@@ -22,6 +22,18 @@ panicCity.managers.CollisionManager = function (game) {
      * 
      */
     this.game = game;
+
+    this.m_walls = [
+        this.leftWall = new rune.display.DisplayObject(-10, -5, 10, 485),
+        this.topWall = new rune.display.DisplayObject(-5, -10, 310, 10),
+        this.bottomWall = new rune.display.DisplayObject(-5, 300, 310, 10),
+        this.rightWall = new rune.display.DisplayObject(475, -5, 10, 485)
+    ];
+
+    this.m_walls.forEach(function (wall) {
+        wall.immovable = true;
+        this.game.walls.addMember(wall);
+    }, this);
 };
 
 /**
@@ -47,6 +59,7 @@ panicCity.managers.CollisionManager.prototype.update = function () {
  */
 panicCity.managers.CollisionManager.prototype.m_players = function () {
     this.game.players.hitTestAndSeparateGroup(this.game.baseSta);
+    this.game.players.hitTestAndSeparateGroup(this.game.walls)
 };
 
 /**
@@ -78,6 +91,10 @@ panicCity.managers.CollisionManager.prototype.m_enemies = function () {
 panicCity.managers.CollisionManager.prototype.m_bullets = function () {
     this.game.bullets.hitTest(this.game.enemies, function (bullet, enemy) {
         enemy.takeDamage(bullet.damage);
+        this.game.bullets.removeMember(bullet, true);
+    }, this);
+
+    this.game.bullets.hitTest(this.game.walls, function (bullet) {
         this.game.bullets.removeMember(bullet, true);
     }, this);
 };

@@ -20,19 +20,17 @@ panicCity.scene.Game.prototype.init = function () {
     this.m_initCamera();
     this.m_initScore();
 
-    this.collisionControl = new panicCity.managers.CollisionManager(this);
-
     this.players = this.groups.create(this.stage);
     this.enemies = this.groups.create(this.stage);
     this.bullets = this.groups.create(this.stage);
     this.baseSta = this.groups.create(this.stage);
     this.stones = this.groups.create(this.stage);
     this.items = this.groups.create(this.stage);
+    this.walls = this.groups.create(this.stage);
 
-
-    this.playerJesper = new panicCity.entity.PlayerJesper(250, 100, 27, 26, "Player1-Sheet", this, 0);
-    this.playerHibba = new panicCity.entity.PlayerHibba(100, 100, 27, 26, "Player2-Sheet", this, 1);
-    this.base = new panicCity.entity.Base(this.application.screen.center.x, this.application.screen.center.y, 45, 45, "image_Base", this);
+    this.playerJesper = new panicCity.entity.PlayerJesper(340, 128, 27, 26, "Player1-Sheet", this, 0);
+    this.playerHibba = new panicCity.entity.PlayerHibba(140, 128, 27, 26, "Player2-Sheet", this, 1);
+    this.base = new panicCity.entity.Base(240, 128, 45, 45, "image_Base", this);
 
     this.cameras.getCameraAt(1).targets.add(this.playerJesper);
     this.cameras.getCameraAt(1).targets.add(this.playerHibba);
@@ -41,6 +39,7 @@ panicCity.scene.Game.prototype.init = function () {
     this.players.addMember(this.playerHibba);
     this.baseSta.addMember(this.base);
 
+    this.collisionControl = new panicCity.managers.CollisionManager(this);
     this.waveManager = new panicCity.managers.WaveManager(this, this.cameras);
 
     this.timers.create({
@@ -51,12 +50,24 @@ panicCity.scene.Game.prototype.init = function () {
     });
 };
 
+/**
+ * Updates the zombie each frame by running the base update logic.
+ *
+ * @param {number} step - steps for the update-loop
+ *
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
     this.collisionControl.update();
     this.waveManager.updateSpawner();
 };
 
+/**
+ * This method is used for discarding references and removing object thats no longer in use. In the purpose of freeing up memory.
+ *
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };
@@ -97,16 +108,6 @@ panicCity.scene.Game.prototype.updateScoretext = function (points) {
     this.score += points;
     this.counter.value = this.score;
 }
-
-// panicCity.scene.Game.prototype.m_checkBoundsBullet = function(){
-//     for (var i = 0; i < this.bullets.length; i++) {
-//         if(this.bullets[i].y < 0 || this.bullets[i].y > 225 || this.bullets[i].x < 0 || this.bullets[i].x > 400){
-//             this.stage.removeChild(this.bullets[i]);
-//             this.bullets.splice(i, 1);
-//             i--;
-//         }
-//     }
-// }
 
 panicCity.scene.Game.prototype.m_addScore = function () {
     this.updateScoretext(1);

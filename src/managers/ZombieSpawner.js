@@ -25,15 +25,15 @@ panicCity.managers.ZombieSpawner.prototype.spawnZombie = function () {
     var randomNum = Math.floor(Math.random() * 4);
 
     if (ran == 1) {
-        var zombieBasic = new panicCity.entity.ZombieBasic(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "newZombie-Sheet", this.game);
+        var zombieBasic = new panicCity.entity.ZombieBasic(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "ZombieAttack-Sheet", this.game);
 
-        zombieBasic.targets = this.game.baseSta; //not using the group
+        zombieBasic.targets = this.game.baseSta;
 
         this.game.enemies.addMember(zombieBasic);
     }
 
     if (ran == 2) {
-        var zombieHunter = new panicCity.entity.ZombieHunter(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "newZombie-Sheet", this.game);
+        var zombieHunter = new panicCity.entity.ZombieHunter(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "ZombieAttack-Sheet", this.game);
 
         zombieHunter.targets = this.game.players;
 

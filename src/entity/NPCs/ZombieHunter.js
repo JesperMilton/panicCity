@@ -54,21 +54,36 @@ panicCity.entity.ZombieHunter.prototype.m_updateInput = function () {
         if (dY * dY > dX * dX) {
             if (dY > 0) {
                 this.moveDown();
+                this.direction = "DOWN";
             } else if (dY < 0) {
                 this.moveUp();
+                this.direction = "UP";
             }
         } else {
             if (dX > 0) {
                 this.moveRight();
+                this.direction = "SIDE";
             } else if (dX < 0) {
                 this.moveLeft();
+                this.direction = "SIDE";
             }
         }
     }
 };
 
+/**
+ * Method to initialize the animations.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieHunter.prototype.m_initAnimations = function () {
     panicCity.entity.Zombie.prototype.m_initAnimations.call(this);
     this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
     this.animation.create("attack", [9, 10, 11, 12, 13], 8, true);
+    this.animation.create("walkDown", [14, 15, 16, 17, 18], 8, true);
+    this.animation.create("attackDown", [19, 20, 21, 22], 8, true);
+    this.animation.create("walkUp", [23, 24, 25, 26, 27], 8, true);
+    this.animation.create("attackUp", [28, 29, 30, 31, 32], 8, true);
 };

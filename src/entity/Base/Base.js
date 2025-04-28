@@ -63,7 +63,13 @@ panicCity.entity.Base.prototype.update = function (step) {
     };
 };
 
-
+/**
+ * Method to initialize the animations.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.Base.prototype.m_initAnimations = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
 };

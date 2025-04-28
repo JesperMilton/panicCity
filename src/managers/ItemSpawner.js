@@ -19,7 +19,7 @@ panicCity.managers.ItemSpawner = function (game) {
 };
 
 panicCity.managers.ItemSpawner.prototype.spawnItem = function(x, y){
-    var ran = Math.floor(Math.random() * 20) + 1;
+    var ran = Math.floor(Math.random() * 15) + 1;
     var item;
     if (ran == 1) {
         item = new panicCity.entity.Medkit(x, y, this.game);

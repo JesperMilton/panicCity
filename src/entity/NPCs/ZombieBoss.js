@@ -58,6 +58,13 @@ panicCity.entity.ZombieBoss.prototype.init = function () {
     this.m_initHealthBar();
 };
 
+/**
+ * Method to initialize the ZombieBoss statistics.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.m_initStats = function () {
     this.hitbox.set(10, 20, 60, 50);
     this.health = 500;
@@ -140,11 +147,25 @@ panicCity.entity.ZombieBoss.prototype.attack = function (target) {
     }
 };
 
+/**
+ * Method to initialize the animations.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.m_initAnimations = function () {
     this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 3, true);
     this.animation.create("attack", [9, 10, 11, 12, 13], 3, true);
 };
 
+/**
+ * Method to initialize the healthbar.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.m_initHealthBar = function() {
     this.healthBar = new rune.ui.Progressbar(200, 6, "gray", "red");
     this.game.cameras.getCameraAt(1).addChild(this.healthBar);
@@ -164,6 +185,13 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
     }
 };
 
+/**
+ * Method to dispose of the ZombieBoss and its Timers.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
     if(this.attackTimer) {

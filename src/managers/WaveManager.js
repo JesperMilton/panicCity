@@ -44,6 +44,13 @@ panicCity.managers.WaveManager.prototype.updateSpawner = function () {
     }
 };
 
+/**
+ * Starts the cooldown between waves.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
     this.game.timers.create({
         duration: 5000,
@@ -53,6 +60,13 @@ panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
     });
 };
 
+/**
+ * Starts a new wave, with new values.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     this.waveAmount += 5;
     this.currentWave++;
@@ -61,6 +75,10 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     if (this.currentWave % 3 == 0) {
         this.zombieSpawner.spawnZombieBoss();
         this.currentZombies++;
+        for (var i = 0; i < 10; i++) {
+            this.zombieSpawner.spawnZombie();
+            this.currentZombies++; 
+        }
         this.spawnComplete = true;
     }
 
@@ -75,6 +93,13 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     this.text.y = 15;
 };
 
+/**
+ * Spawns the number of zombies based on this.waveAmount.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.WaveManager.prototype.m_callSpawner = function () {
     if (!this.coldDown && (this.waveAmount > this.currentZombies) && this.currentWave % 3 != 0) {
         this.coldDown = true;

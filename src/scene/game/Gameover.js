@@ -21,25 +21,22 @@ panicCity.scene.Gameover.prototype.init = function() {
 };
 
 /**
- * This method is automatically executed once per "tick". The method is used for 
- * calculations such as application logic.
+ * Updates the zombie each frame by running the base update logic.
  *
- * @param {number} step Fixed time step.
+ * @param {number} step - steps for the update-loop
  *
  * @returns {undefined}
  */
  panicCity.scene.Gameover.prototype.update = function(step) {
     rune.scene.Scene.prototype.update.call(this, step);
-    if (this.keyboard.justPressed("SPACE")) {
+    var gamepad = this.gamepads.get(0);
+    if (this.keyboard.justPressed("SPACE") || gamepad.justPressed(2)) {
         this.application.scenes.load([new panicCity.scene.Menu()]);
     }
 };
 
 /**
- * This method is automatically called once just before the scene ends. Use 
- * the method to reset references and remove objects that no longer need to 
- * exist when the scene is destroyed. The process is performed in order to 
- * avoid memory leaks.
+ * This method is used for discarding references and removing object thats no longer in use. In the purpose of freeing up memory.
  *
  * @returns {undefined}
  */
