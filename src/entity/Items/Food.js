@@ -18,17 +18,35 @@
  * ...
  */
 panicCity.entity.Food = function (x, y, game) {
-    var texture = "Food-Sheet";
-    var width = 16;
-    var height = 22;
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type (number)
+     * @public
+     */
     this.hp = 15;
+    
+    /**
+     * The category of the item
+     * 
+     * @type (string)
+     * @public
+     */
     this.type = "FOOD";
-
+    
+    /**
+     * Total amount of points to be added to score
+     * 
+     * @type (number)
+     * @public
+     */
+    this.pointValue = 10;
+    
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
 
-    panicCity.entity.Items.call(this, x, y, width, height, texture, game);
+    panicCity.entity.Items.call(this, x, y, 16, 22, "Food-Sheet", game);
 };
 
 //------------------------------------------------------------------------------

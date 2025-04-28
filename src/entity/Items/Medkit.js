@@ -4,7 +4,8 @@
 
 /**
  * ...
- *
+ *  The item Medkit
+ * 
  * @constructor
  * @extends panicCity.entity.Items
  *
@@ -18,17 +19,35 @@
  * ...
  */
 panicCity.entity.Medkit = function (x, y, game) {
-    var texture = "Medkit-Sheet";
-    var width = 18;
-    var height = 18;
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type (number)
+     * @public
+     */
     this.hp = 35;
+
+    /**
+     * The category of the item
+     * 
+     * @type (string)
+     * @public
+     */
     this.type = "MEDKIT";
 
+    /**
+     * Total amount of points to be added to score
+     * 
+     * @type (number)
+     * @public
+     */
+    this.pointValue = 15;
+    
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
-    
-    panicCity.entity.Items.call(this, x, y, width, height, texture, game);
+
+    panicCity.entity.Items.call(this, x, y, 18, 18, "Medkit-Sheet", game);
 };
 
 //------------------------------------------------------------------------------

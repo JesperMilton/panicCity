@@ -155,3 +155,8 @@ panicCity.entity.PlayerJesper.prototype.m_die = function () {
     this.game.players.removeMember(this, true);
     this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
 }
+panicCity.entity.PlayerJesper.prototype.pickupNPC = function(human, base){
+    if (this.keyboard.justPressed("O")) {
+        human.getSaved(base);
+    }
+}

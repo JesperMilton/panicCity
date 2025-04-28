@@ -145,4 +145,11 @@ panicCity.entity.PlayerHibba.prototype.heal = function (health){
 panicCity.entity.PlayerHibba.prototype.m_die = function () {
     this.game.players.removeMember(this, true);
     this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
+    this.game.stage.removeChild(this.healthBar);
+}
+
+panicCity.entity.PlayerHibba.prototype.pickupNPC = function(human, base){
+    if (this.keyboard.justPressed("E")) {
+        human.getSaved(base);
+    }
 }

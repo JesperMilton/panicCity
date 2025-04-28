@@ -48,6 +48,7 @@ panicCity.managers.CollisionManager.prototype.update = function () {
     this.m_bullets();
     this.m_stones();
     this.m_items();
+    this.m_rescuees();
 };
 
 /**
@@ -133,5 +134,11 @@ panicCity.managers.CollisionManager.prototype.m_items = function () {
         else {
             item.heal(this.game.baseSta);
         }
+    }, this);
+}
+
+panicCity.managers.CollisionManager.prototype.m_rescuees = function () {
+    this.game.humans.hitTest(this.game.players, function (human, player) {
+        player.pickupNPC(human,this.game.baseSta);
     }, this);
 }
