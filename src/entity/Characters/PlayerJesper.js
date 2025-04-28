@@ -126,3 +126,8 @@ panicCity.entity.PlayerJesper.prototype.heal = function (health){
 panicCity.entity.PlayerJesper.prototype.m_die = function () {
     this.game.players.removeMember(this, true);
 }
+panicCity.entity.PlayerJesper.prototype.pickupNPC = function(human, base){
+    if (this.keyboard.justPressed("O")) {
+        human.getSaved(base);
+    }
+}

@@ -4,9 +4,10 @@
 
 /**
  * ...
- *
+ *  The base class for all items. Responsible for  all base functions such as delete and heal.
+ * 
  * @constructor
- * @extends rune.display.Graphic
+ * @extends rune.display.Sprite
  *
  * @class
  * @classdesc
@@ -21,6 +22,12 @@
  * ...
  */
 panicCity.entity.Items = function (x, y, width, height, texture, game) {
+    /**
+     * The Game object
+     * 
+     * @type (Object)
+     * @public
+     */
     this.game = game;
 
     //--------------------------------------------------------------------------
@@ -28,8 +35,6 @@ panicCity.entity.Items = function (x, y, width, height, texture, game) {
     //--------------------------------------------------------------------------
 
     rune.display.Sprite.call(this, x, y, width, height, texture);
-
-
     // this.hitbox.debug = true;
 };
 
@@ -59,6 +64,7 @@ panicCity.entity.Items.prototype.heal = function (target) {
     target.forEachMember(function (target){
         target.heal(this.hp);
     }, this);
+    this.game.updateScoretext(this.pointValue);
     this.m_delete();
 }
 

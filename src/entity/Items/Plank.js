@@ -4,7 +4,8 @@
 
 /**
  * ...
- *
+ *  The item Plank
+ * 
  * @constructor
  * @extends panicCity.entity.Items
  *
@@ -18,17 +19,35 @@
  * ...
  */
 panicCity.entity.Plank = function (x, y, game) {
-    var texture = "Planks-Sheet";
-    var width = 20;
-    var height = 20;
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type (number)
+     * @public
+     */
     this.hp = 5;
+
+    /**
+     * The category of the item
+     * 
+     * @type (string)
+     * @public
+     */
     this.type = "PLANK";
+
+    /**
+     * Total amount of points to be added to score
+     * 
+     * @type (number)
+     * @public
+     */
+    this.pointValue = 1;
 
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
-    
-    panicCity.entity.Items.call(this, x, y, width, height, texture, game);
+
+    panicCity.entity.Items.call(this, x, y, 20, 20, "Planks-Sheet", game);
 };
 
 //------------------------------------------------------------------------------

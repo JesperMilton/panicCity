@@ -125,3 +125,9 @@ panicCity.entity.PlayerHibba.prototype.m_die = function () {
     this.game.players.removeMember(this, true);
     this.game.stage.removeChild(this.healthBar);
 }
+
+panicCity.entity.PlayerHibba.prototype.pickupNPC = function(human, base){
+    if (this.keyboard.justPressed("E")) {
+        human.getSaved(base);
+    }
+}
