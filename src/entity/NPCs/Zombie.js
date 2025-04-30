@@ -29,7 +29,6 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
 
     this.game = game;
-    this.targets = [];
     this.newTarget;
     this.isAttacking;
     this.coolDown = false;
