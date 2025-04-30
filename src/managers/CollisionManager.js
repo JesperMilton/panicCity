@@ -60,7 +60,11 @@ panicCity.managers.CollisionManager.prototype.update = function () {
  */
 panicCity.managers.CollisionManager.prototype.m_players = function () {
     this.game.players.hitTestAndSeparateGroup(this.game.baseSta);
-    this.game.players.hitTestAndSeparateGroup(this.game.walls)
+    this.game.players.hitTestAndSeparateGroup(this.game.walls);
+
+    this.game.players.hitTest(this.game.players, function(player1, player2) {
+        player1.res(player2);
+    })
 };
 
 /**

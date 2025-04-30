@@ -36,6 +36,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     this.attackTimer;
     this.mass = 0;
     this.direction;
+    this.animationCounter = 0;
     this.itemSpawner = new panicCity.managers.ItemSpawner(this.game);
 };
 
@@ -72,24 +73,30 @@ panicCity.entity.Zombie.prototype.m_initStats = function () {
 
 
 panicCity.entity.Zombie.prototype.m_updateAnimations = function () {
-    if (this.isAttacking) {
-        if (this.direction == "SIDE") {
-            this.animation.gotoAndPlay("attack");
-            this.isAttacking = false;
-        } else if (this.direction == "UP") {
-            this.animation.gotoAndPlay("attackUp");
-            this.isAttacking = false;
-        } else if (this.direction == "DOWN") {
-            this.animation.gotoAndPlay("attackDown");
-            this.isAttacking = false;
-        }
-    } else if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
-        if (this.direction == "SIDE") {
-            this.animation.gotoAndPlay("walk");
-        } else if (this.direction == "UP") {
-            this.animation.gotoAndPlay("walkUp");
-        } else if (this.direction == "DOWN") {
-            this.animation.gotoAndPlay("walkDown");
+    this.animationCounter++;
+    
+    if (this.animationCounter >= 20) {
+        this.animationCounter = 0; 
+        
+        if (this.isAttacking) {
+            if (this.direction == "SIDE") {
+                this.animation.gotoAndPlay("attack");
+                this.isAttacking = false;
+            } else if (this.direction == "UP") {
+                this.animation.gotoAndPlay("attackUp");
+                this.isAttacking = false;
+            } else if (this.direction == "DOWN") {
+                this.animation.gotoAndPlay("attackDown");
+                this.isAttacking = false;
+            }
+        } else if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
+            if (this.direction == "SIDE") {
+                this.animation.gotoAndPlay("walk");
+            } else if (this.direction == "UP") {
+                this.animation.gotoAndPlay("walkUp");
+            } else if (this.direction == "DOWN") {
+                this.animation.gotoAndPlay("walkDown");
+            }
         }
     }
 
@@ -99,7 +106,6 @@ panicCity.entity.Zombie.prototype.m_updateAnimations = function () {
     // } else if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
     //     this.animation.gotoAndPlay("walk");
     // }
-
 };
 
 panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {

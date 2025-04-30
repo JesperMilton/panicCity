@@ -17,9 +17,9 @@
  * 
  * ...
  */
-panicCity.entity.Stone = function (width, height, boss, target, game) {
+panicCity.entity.Stone = function (width, height, boss, target, damage, game) {
     this.game = game;
-    this.damage = 30.0;
+    this.damage = damage;
     
     this.tY = target.y;
     this.tX = target.x;

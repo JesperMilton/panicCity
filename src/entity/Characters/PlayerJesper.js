@@ -33,6 +33,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     this.gamepadIndex = gamepadIndex;
     this.health = 100;
     this.mass = 20;
+    this.isDowned = false;
 };
 
 //------------------------------------------------------------------------------
@@ -61,6 +62,10 @@ panicCity.entity.PlayerJesper.prototype.update = function (step) {
 };
 
 panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
+    if (this.isDowned) {
+        return;
+    }
+
     this.gamepad = this.game.gamepads.get(this.gamepadIndex);
     
     if (this.keyboard.pressed("UP") || this.gamepad.stickLeftUp) {
@@ -105,7 +110,8 @@ panicCity.entity.PlayerJesper.prototype.m_initAnimations = function (step) {
     this.animation.create("walkUp", [12, 13, 14, 15, 16], 5, true);
     this.animation.create("walkDown", [17, 18, 19, 20, 21], 8, true);
     this.animation.create("walkSide", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
-    this.animation.create("idle", [0, 1, 2]  , 6, true);
+    this.animation.create("idle", [0, 1, 2], 6, true);
+    this.animation.create("downed", [0], 1, true);
 };
 
 /**
@@ -128,6 +134,9 @@ panicCity.entity.PlayerJesper.prototype.m_updateHealthbar = function() {
 
 
 panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
+    if(this.isDowned) {
+        return;
+    }
     this.flicker.start(250);
     this.health -= damage;
     if (this.health <= 0) {
@@ -152,11 +161,35 @@ panicCity.entity.PlayerJesper.prototype.heal = function (health){
  * 
  */
 panicCity.entity.PlayerJesper.prototype.m_die = function () {
-    this.game.players.removeMember(this, true);
-    this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
+    this.isDowned = true;
+    this.animation.gotoAndPlay("downed");
+    this.rotation = 90;
+    this.flipped
+    this.health = 0;
+    
+    // this.game.players.removeMember(this, true);
+    // this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
+    // this.game.stage.removeChild(this.healthBar);
+
 }
+
 panicCity.entity.PlayerJesper.prototype.pickupNPC = function(human, base){
     if (this.keyboard.justPressed("O")) {
         human.getSaved(base);
     }
+}
+
+panicCity.entity.PlayerJesper.prototype.res = function(player){
+    if (this.keyboard.justPressed("I")) {
+        player.getRessed();
+    }
+}
+
+panicCity.entity.PlayerJesper.prototype.getRessed = function(){
+    if(!this.isDowned) {
+        return;
+    }
+    this.isDowned = false;
+    this.rotation = 0;
+    this.health = 100;
 }

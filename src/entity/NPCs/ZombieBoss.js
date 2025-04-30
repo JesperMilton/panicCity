@@ -85,39 +85,62 @@ panicCity.entity.ZombieBoss.prototype.update = function (step) {
 };
 
 panicCity.entity.ZombieBoss.prototype.m_updateInput = function () {
-    if (this.x <= 10) {
-        this.animation.gotoAndPlay("walk");
-        this.moveRight();
+    var dX = this.targets[0].getMemberAt(0).x - this.x;
+    var dY = this.targets[0].getMemberAt(0).y - this.y;
+
+    var currentPosition = new rune.geom.Point(this.centerX, this.centerY);
+    var targetPosition = new rune.geom.Point(this.targets[0].getMemberAt(0).centerX, this.targets[0].getMemberAt(0).centerY);
+
+    var distance = currentPosition.distance(targetPosition);
+
+    var threshold = 190.0;
+
+    if (!this.isAttacking && distance > threshold) {
+        if (dY * dY > dX * dX) {
+            if (dY > 0) {
+                this.moveDown();
+                this.direction = "DOWN";
+            } else if (dY < 0) {
+                this.moveUp();
+                this.direction = "UP";
+            }
+        } else {
+            if (dX > 0) {
+                this.moveRight();
+                this.direction = "SIDE";
+            } else if (dX < 0) {
+                this.moveLeft();
+                this.direction = "SIDE";
+            }
+        }
     }
 };
 
-panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function() {
+panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function () {
     this.closetPlayer = Infinity;
     this.newTarget = null;
-    
-    var checkTarget = function(target) {
+
+    var checkTarget = function (target) {
         var dX = target.x - this.x;
         var dY = target.y - this.y;
         var distance = dX * dX + dY * dY;
-        
+
         if (distance < this.closetPlayer) {
             this.closetPlayer = distance;
             this.newTarget = target;
         }
     };
-    
+
     this.game.players.forEachMember(checkTarget, this);
-    console.log(this.newTarget);
     this.game.baseSta.forEachMember(checkTarget, this);
-    console.log(this.newTarget);
 };
 
 panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
-    if (this.velocity.x == 0.0 && !this.throwColdown) {
+    if (this.velocity.x == 0.0 && !this.throwColdown && this.newTarget.isDowned == false) {
         this.animation.gotoAndPlay("attack");
         this.isThrowing = true;
         this.throwColdown = true;
-        var stone = new panicCity.entity.Stone(15, 15, this, this.newTarget, this.game);
+        var stone = new panicCity.entity.Stone(15, 15, this, this.newTarget, 30, this.game);
         this.game.stones.addMember(stone);
 
         this.throwTimer = this.game.timers.create({
@@ -166,12 +189,12 @@ panicCity.entity.ZombieBoss.prototype.m_initAnimations = function () {
  * @private
  * 
  */
-panicCity.entity.ZombieBoss.prototype.m_initHealthBar = function() {
+panicCity.entity.ZombieBoss.prototype.m_initHealthBar = function () {
     this.healthBar = new rune.ui.Progressbar(200, 6, "gray", "red");
     this.game.cameras.getCameraAt(1).addChild(this.healthBar);
 }
 
-panicCity.entity.ZombieBoss.prototype.m_updateHealthbar = function() {
+panicCity.entity.ZombieBoss.prototype.m_updateHealthbar = function () {
     this.healthBar.progress = (this.health / 500);
     this.healthBar.x = 100;
     this.healthBar.y = 20;
@@ -194,10 +217,10 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
  */
 panicCity.entity.ZombieBoss.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
-    if(this.attackTimer) {
+    if (this.attackTimer) {
         this.attackTimer.disposed = true;
     }
-    if(this.throwTimer) {
+    if (this.throwTimer) {
         this.throwTimer.disposed = true;
     }
     this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
