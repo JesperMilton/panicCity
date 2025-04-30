@@ -37,6 +37,7 @@
     this.acceleration = 0.5;
     this.velocity.max.x = 0.7;
     this.velocity.max.y = 0.7;
+    this.inPosition = false;
     this.itemSpawner = new panicCity.managers.ItemSpawner(this.game);
 };
 
@@ -96,6 +97,7 @@ panicCity.entity.Human.prototype.m_updateInput = function () {
         }
     }
     else{
+        this.inPosition = true;
         this.initTimer();
         this.m_updateTimerbar();
     }

@@ -143,6 +143,8 @@ panicCity.managers.CollisionManager.prototype.m_items = function () {
 
 panicCity.managers.CollisionManager.prototype.m_rescuees = function () {
     this.game.humans.hitTest(this.game.players, function (human, player) {
-        player.pickupNPC(human,this.game.baseSta);
+        if(human.inPosition){
+            player.pickupNPC(human,this.game.baseSta);
+        }
     }, this);
 }
