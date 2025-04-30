@@ -4,7 +4,7 @@ panicCity.scene.Game = function () {
     this.zombie = null;
     this.score = 0;
     this.scoreTime = 4000;
-    this.rescueeTime = 5000;
+    this.rescueeTime = 10000;
 };
 
 //------------------------------------------------------------------------------
