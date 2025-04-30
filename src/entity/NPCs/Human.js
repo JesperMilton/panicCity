@@ -27,7 +27,7 @@
     //--------------------------------------------------------------------------
     this.x = x;
     this.y = y;
-    panicCity.entity.Entity.call(this, this.x, this.y, 27, 26, "newZombie-Sheet");
+    panicCity.entity.Entity.call(this, this.x, this.y, 27, 26, "image_BaseHuman");
 
     this.despawnTime = 5000;
     this.game = game;
