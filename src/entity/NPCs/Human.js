@@ -50,7 +50,6 @@ panicCity.entity.Human.prototype.init = function () {
 panicCity.entity.Human.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_updateAnimations();
-    this.m_updateTimerbar();
     this.m_updateInput();
 };
 
@@ -66,8 +65,14 @@ panicCity.entity.Human.prototype.m_updateAnimations = function () {
 panicCity.entity.Human.prototype.m_updateInput = function () {
     var dX = this.target.getMemberAt(0).x - this.x;
     var dY = this.target.getMemberAt(0).y - this.y;
+    var currentPosition = new rune.geom.Point(this.centerX, this.centerY);
+    var targetPosition = new rune.geom.Point(this.target.getMemberAt(0).centerX, this.target.getMemberAt(0).centerY);
 
-    if (!this.isAttacking) {
+    var distance = currentPosition.distance(targetPosition);
+
+    var threshold = 120.0;
+
+    if (distance > threshold) {
         if (dY * dY > dX * dX) {
             if (dY > 0) {
                 this.moveDown();
@@ -85,6 +90,9 @@ panicCity.entity.Human.prototype.m_updateInput = function () {
                 this.direction = "SIDE";
             }
         }
+    }
+    else{
+        this.m_updateTimerbar();
     }
 };
 

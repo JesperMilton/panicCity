@@ -4,6 +4,7 @@ panicCity.scene.Game = function () {
     this.zombie = null;
     this.score = 0;
     this.scoreTime = 4000;
+    this.rescueeTime = 15000;
 };
 
 //------------------------------------------------------------------------------
@@ -51,7 +52,7 @@ panicCity.scene.Game.prototype.init = function () {
         },
     });
     this.timers.create({
-        duration: 2000,
+        duration: this.rescueeTime,
         onComplete: function () {
             this.spawnHuman();
         },
@@ -108,7 +109,6 @@ panicCity.scene.Game.prototype.m_initBackground = function () {
         300,
         "backgroundPlaceholder"
     );
-
     this.stage.addChild(this.m_background);
 };
 
@@ -130,7 +130,7 @@ panicCity.scene.Game.prototype.m_addScore = function () {
 panicCity.scene.Game.prototype.spawnHuman = function (){
     this.rescueeSpawner.spawnRescuee();
     this.timers.create({
-        duration: 2000,
+        duration: this.rescueeTime,
         onComplete: function () {
             this.spawnHuman();
         },
