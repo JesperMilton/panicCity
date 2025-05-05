@@ -68,7 +68,7 @@ panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
  * 
  */
 panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
-    this.waveAmount += 5;
+    this.waveAmount += 5;  //For two-players: 20
     this.currentWave++;
     this.currentZombies = 0;
 
@@ -104,7 +104,7 @@ panicCity.managers.WaveManager.prototype.m_callSpawner = function () {
     if (!this.coldDown && (this.waveAmount > this.currentZombies) && this.currentWave % 3 != 0) {
         this.coldDown = true;
         this.game.timers.create({
-            duration: 800,
+            duration: 500,
             onComplete: function () {
                 this.zombieSpawner.spawnZombie();
                 this.currentZombies++;

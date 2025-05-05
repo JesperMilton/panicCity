@@ -136,10 +136,11 @@ panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function () {
 };
 
 panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
-    if (this.velocity.x == 0.0 && !this.throwColdown && this.newTarget.isDowned == false) {
+    if (this.velocity.x == 0.0 && !this.throwColdown) {
         this.animation.gotoAndPlay("attack");
         this.isThrowing = true;
         this.throwColdown = true;
+        console.log("closest target", this.newTarget);
         var stone = new panicCity.entity.Stone(15, 15, this, this.newTarget, 30, this.game);
         this.game.stones.addMember(stone);
 
