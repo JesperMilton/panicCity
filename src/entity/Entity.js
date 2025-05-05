@@ -26,14 +26,14 @@ panicCity.entity.Entity = function (x, y, width, height, texture) {
      *
      * @type {number}
      */
-    this.acceleration = 1.6;
+    this.acceleration = 1;
 
     /**
      * ...
      *
      * @type {number}
      */
-    this.speed = 1.8;
+    this.speed = 1.1;
 
     this.hitbox.set(0, 0, 27, 26);
 

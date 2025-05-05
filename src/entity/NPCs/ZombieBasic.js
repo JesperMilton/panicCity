@@ -37,11 +37,11 @@ panicCity.entity.ZombieBasic.prototype.constructor = panicCity.entity.ZombieBasi
 
 panicCity.entity.ZombieBasic.prototype.m_initStats = function () {
     panicCity.entity.Zombie.prototype.m_initStats.call(this);
-    this.health = 20;
+    this.health = 40;
     this.damage = 10;
 
-    this.acceleration = 0.5;
-    this.speed = 0.5;
+    this.acceleration = 0.4;
+    this.speed = 0.3;
     this.velocity.max.x = 0.7;
     this.velocity.max.y = 0.7;
 };
@@ -80,7 +80,6 @@ panicCity.entity.ZombieBasic.prototype.m_updateInput = function () {
  */
 panicCity.entity.ZombieBasic.prototype.m_initAnimations = function () {
     panicCity.entity.Zombie.prototype.m_initAnimations.call(this);
-    console.log("hello fron initAnimations");
     this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
     this.animation.create("attack", [9, 10, 11, 12, 13], 8, true);
     this.animation.create("walkDown", [14, 15, 16, 17, 18], 8, true);

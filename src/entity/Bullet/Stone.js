@@ -70,5 +70,5 @@ panicCity.entity.Stone.prototype.m_followTarget = function () {
     this.x += dirX * this.m_speed;
     this.y += dirY * this.m_speed;
 
-    this.rotation += 2;
+    this.rotation += 5;
 };

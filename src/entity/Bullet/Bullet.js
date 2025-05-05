@@ -50,14 +50,8 @@ panicCity.entity.Bullet = function (player) {
     // Super call
     //--------------------------------------------------------------------------
     
-    rune.display.Graphic.call(this, x, y, 3, 5, bulletTexture);
-
-    if (this.player.direction === "RIGHT" || this.player.direction === "LEFT") {
-        this.rotation = 90;
-        this.hitbox.set(0, 0, 5, 3);
-    } else {
-        this.hitbox.set(0, 0, 3, 5);
-    }
+    rune.display.Graphic.call(this, x, y, 5, 5, bulletTexture);
+    this.hitbox.set(0, 0, 5, 5);
 };
 
 //------------------------------------------------------------------------------
@@ -85,11 +79,23 @@ panicCity.entity.Bullet.prototype.m_updateMotion = function (step) {
         case "LEFT":
             this.m_moveLeft();
             break;
+        case "UP-LEFT":
+            this.m_moveUpLeft();
+            break;
+        case "UP-RIGHT":
+            this.m_moveUpRight();
+            break;
+        case "DOWN-LEFT":
+            this.m_moveDownLeft();
+            break;
+        case "DOWN-RIGHT":
+            this.m_moveDownRight();
+            break;
         default:
-            this.m_moveUp();
+            this.m_moveUp(); // fallback
             break;
     }
-};
+}
 
 panicCity.entity.Bullet.prototype.m_moveUp = function () {
     this.y -= this.m_speed;
@@ -101,5 +107,22 @@ panicCity.entity.Bullet.prototype.m_moveLeft = function () {
     this.x -= this.m_speed;
 }
 panicCity.entity.Bullet.prototype.m_moveRight = function () {
+    this.x += this.m_speed;
+}
+
+panicCity.entity.Bullet.prototype.m_moveUpLeft = function () {
+    this.y -= this.m_speed;
+    this.x -= this.m_speed;
+}
+panicCity.entity.Bullet.prototype.m_moveDownLeft = function () {
+    this.y += this.m_speed;
+    this.x -= this.m_speed;
+}
+panicCity.entity.Bullet.prototype.m_moveUpRight = function () {
+    this.x += this.m_speed;
+    this.y -= this.m_speed;
+}
+panicCity.entity.Bullet.prototype.m_moveDownRight = function () {
+    this.y += this.m_speed;
     this.x += this.m_speed;
 }

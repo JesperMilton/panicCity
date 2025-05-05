@@ -37,6 +37,10 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     this.direction;
     this.animationCounter = 0;
     this.itemSpawner = new panicCity.managers.ItemSpawner(this.game);
+
+    this.testEmitter = new rune.particle.Emitter(0, 0, 0, 0);
+    this.game.stage.addChild(this.testEmitter);
+    
 };
 
 //------------------------------------------------------------------------------
@@ -110,6 +114,9 @@ panicCity.entity.Zombie.prototype.m_updateAnimations = function () {
 panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
     this.closetPlayer = Infinity;
     this.targets.forEachMember(function (target) {
+        if (target.isDowned) {
+            return;
+        }
         var dX = target.x - this.x;
         var dY = target.y - this.y;
         var distance = dY * dY + dX * dX;
@@ -138,6 +145,12 @@ panicCity.entity.Zombie.prototype.attack = function (target) {
 panicCity.entity.Zombie.prototype.takeDamage = function (damage) {
     this.flicker.start(250);
     this.health -= damage;
+    if (this.testEmitter) {
+        console.log("BLOOD!!")
+        this.testEmitter.x = this.x;
+        this.testEmitter.y = this.y;
+        this.testEmitter.emit(10);
+    }
     if (this.health <= 0) {
         this.m_die();
     }
