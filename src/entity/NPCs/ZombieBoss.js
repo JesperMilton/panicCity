@@ -29,22 +29,62 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
 
     panicCity.entity.Entity.call(this, x, y, width, height, texture, game);
 
+    /**
+     * The Game object.
+     * 
+     * @type (Object)
+     * @public
+     */
     this.game = game;
 
-    this.throwColdown = false;
-
     this.isAttacking = false;
-    this.coolDown = false;
 
+    /**
+     * Array of the zombiesBosses targets.
+     * 
+     * @type (Array)
+     * @public
+     */
     this.targets = [];
+
+    /**
+     * The closet player.
+     * 
+     * @type (panicCity.entity.Entity)
+     * @public
+     */
     this.newTarget;
 
+    /**
+     * Makes the zombieBoss immovable.
+     * 
+     * @type (boolean)
+     * @public
+     */
     this.immovable = true;
-    this.attackTimer;
-    this.throwTimer;
 
+    /**
+     * Controls the delayed attack pattern of the zombieBoss.
+     * 
+     * @type (number)
+     * @public
+     */
     this.lastShot = 0;
+
+    /**
+     * Controls the delayed of the thorw attack.
+     * 
+     * @type (number)
+     * @public
+     */
     this.lastThow = 0;
+
+    /**
+     * Cooldown for the zombieBoss attacks.
+     * 
+     * @type (number)
+     * @public
+     */
     this.coolDown = 2000;
 };
 
@@ -55,6 +95,9 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
 panicCity.entity.ZombieBoss.prototype = Object.create(panicCity.entity.Entity.prototype);
 panicCity.entity.ZombieBoss.prototype.constructor = panicCity.entity.ZombieBoss;
 
+/**
+ * @inheritdoc
+ */
 panicCity.entity.ZombieBoss.prototype.init = function () {
     this.m_initAnimations();
     this.m_initStats();
@@ -79,6 +122,9 @@ panicCity.entity.ZombieBoss.prototype.m_initStats = function () {
     this.velocity.max.y = 1;
 };
 
+/**
+ * @inheritdoc
+ */
 panicCity.entity.ZombieBoss.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_findClosestPlayer();
@@ -87,6 +133,13 @@ panicCity.entity.ZombieBoss.prototype.update = function (step) {
     this.m_updateHealthbar();
 };
 
+/**
+ * Updates the zombieBosses movement.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.m_updateInput = function () {
     var dX = this.targets[0].getMemberAt(0).x - this.x;
     var dY = this.targets[0].getMemberAt(0).y - this.y;
@@ -119,12 +172,19 @@ panicCity.entity.ZombieBoss.prototype.m_updateInput = function () {
     }
 };
 
+/**
+ * Finds the closest player to the zombieBoss.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function () {
     this.closetPlayer = Infinity;
     this.newTarget = null;
 
     var checkTarget = function (target) {
-        if(target.isDowned) {
+        if (target.isDowned) {
             return;
         }
         var dX = target.x - this.x;
@@ -141,6 +201,13 @@ panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function () {
     this.game.baseSta.forEachMember(checkTarget, this);
 };
 
+/**
+ * Does a throwing attack to the closest target to the ZombieBoss.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
     var now = Date.now();
     if (this.velocity.x == 0.0 && now > this.lastThow) {
@@ -152,6 +219,15 @@ panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
     }
 };
 
+/**
+ * Attacks a target.
+ * 
+ * @param {Object} target The closest player.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.attack = function (target) {
     var now = Date.now();
     if (target && now > this.lastShot) {
@@ -185,12 +261,28 @@ panicCity.entity.ZombieBoss.prototype.m_initHealthBar = function () {
     this.game.cameras.getCameraAt(1).addChild(this.healthBar);
 }
 
+/**
+ * Updates the ZombieBoss healthbar.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.m_updateHealthbar = function () {
     this.healthBar.progress = (this.health / 500);
     this.healthBar.x = 100;
     this.healthBar.y = 20;
 }
 
+/**
+ * Damages the ZombieBoss.
+ * 
+ * @param {number} damage The amount to be damaged.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
     this.flicker.start(250);
     this.health -= damage;
@@ -200,7 +292,7 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
 };
 
 /**
- * Method to dispose of the ZombieBoss and its Timers.
+ * Method to remove the ZombieBoss from the enemies groups.
  *
  * @return {undefined}
  * @private
@@ -208,12 +300,6 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
  */
 panicCity.entity.ZombieBoss.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
-    if (this.attackTimer) {
-        this.attackTimer.disposed = true;
-    }
-    if (this.throwTimer) {
-        this.throwTimer.disposed = true;
-    }
     this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
     this.game.updateScoretext(50);
 };

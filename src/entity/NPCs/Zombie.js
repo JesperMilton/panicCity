@@ -261,7 +261,7 @@ panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
 }
 
 /**
- * Finds the closest player to the zombie.
+ * Attacks a target.
  * 
  * @param {Object} target The closest player.
  *

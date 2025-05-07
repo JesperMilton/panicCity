@@ -26,7 +26,11 @@
     // Super call
     //--------------------------------------------------------------------------
 
-    panicCity.entity.Entity.call(this, this.x, this.y, 27, 35, "Human-Sheet");
+    this.arr = ["Human-Sheet-A", "Human-Sheet-B"]
+
+    var ran = Math.floor(Math.random() * 2);
+
+    panicCity.entity.Entity.call(this, this.x, this.y, 27, 35, this.arr[ran]);
 
     /**
      * Specified x-Value.
@@ -216,7 +220,7 @@ panicCity.entity.Human.prototype.m_updateTimerbar = function(){
     this.time = 1 - this.timer.progressTotal;
     this.timerBar.progress = (this.time / 1);
     this.timerBar.x = this.x;
-    this.timerBar.y = this.y - 3;
+    this.timerBar.y = this.y - 4;
 }
 
 /**
