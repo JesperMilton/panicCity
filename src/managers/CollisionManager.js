@@ -76,7 +76,6 @@ panicCity.managers.CollisionManager.prototype.m_players = function () {
  */
 panicCity.managers.CollisionManager.prototype.m_enemies = function () {
     this.game.enemies.hitTestAndSeparateGroup(this.game.players, function (enemy, player) {
-        console.log("Hit!");
         enemy.attack(player);
         enemy.isAttacking = true;
     });
