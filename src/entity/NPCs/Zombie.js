@@ -9,7 +9,6 @@
  * @extends panicCity.entity.Entity
  *
  * @class
- * @classdesc
  * 
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate
@@ -18,7 +17,7 @@
  * @param {string} texture - texture resource
  * @param {object} game - The Game object
  * 
- * ...
+ * The basic class for Zombie, includes methods for basic animations and functions such as die, attack, findClosestPlayer
  */
 panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
 
@@ -134,11 +133,7 @@ panicCity.entity.Zombie.prototype = Object.create(panicCity.entity.Entity.protot
 panicCity.entity.Zombie.prototype.constructor = panicCity.entity.Zombie;
 
 /**
- * Initialize the zombie.
- *
- * @return {undefined}
- * @public
- * 
+ * @inheritDoc
  */
 panicCity.entity.Zombie.prototype.init = function () {
     this.m_initAnimations();
@@ -146,13 +141,7 @@ panicCity.entity.Zombie.prototype.init = function () {
 };
 
 /**
- * Update lopp.
- * 
- * @param {number} step The update ticks.
- *
- * @return {undefined}
- * @public
- * 
+ * @inheritDoc
  */
 panicCity.entity.Zombie.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
@@ -228,13 +217,6 @@ panicCity.entity.Zombie.prototype.m_updateAnimations = function () {
             }
         }
     }
-
-    // if (this.isAttacking) {
-    //     this.animation.gotoAndPlay("attack");
-    //     this.isAttacking = false;
-    // } else if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
-    //     this.animation.gotoAndPlay("walk");
-    // }
 };
 
 /**
@@ -272,7 +254,6 @@ panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
 panicCity.entity.Zombie.prototype.attack = function (target) {
     var now = Date.now();
     if (target && now > this.lastShot) {
-        console.log("Attacking!!");
         target.takeDamage(this.damage);
 
         this.lastShot = now + this.coolDown;
@@ -297,7 +278,7 @@ panicCity.entity.Zombie.prototype.takeDamage = function (damage) {
 }
 
 /**
- * Removes the zombie from the enemies group.
+ * Kills the zombie and removes the zombie from the enemies group.
  *
  * @return {undefined}
  * @private

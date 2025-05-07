@@ -9,9 +9,8 @@
  * @extends rune.particle.Particle
  *
  * @class
- * @classdesc
  * 
- * ...
+ * Class for blood particles
  */
 panicCity.entity.Blood = function () {
 

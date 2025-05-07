@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Character base, includes methods for basic movement
  *
  * @constructor
  * @extends rune.display.Sprite
@@ -11,7 +11,11 @@
  * @class
  * @classdesc
  * 
- * ...
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @param {number} width - Width
+ * @param {number} height - Height
+ * @param {string} texture - texture resource
  */
 
 panicCity.entity.Entity = function (x, y, width, height, texture) {
@@ -22,23 +26,27 @@ panicCity.entity.Entity = function (x, y, width, height, texture) {
     //--------------------------------------------------------------------------
 
     /**
-     * ...
+     * The default acceleration
      *
      * @type {number}
+     * @public
      */
     this.acceleration = 1;
 
     /**
-     * ...
+     * the default speed
      *
      * @type {number}
+     * @public
      */
     this.speed = 1.1;
 
+    /**
+     * The default hitbox for the entity
+     * @public
+     * @type {Object}
+     */
     this.hitbox.set(0, 0, 27, 26);
-
-    // this.debug = true;
-    // this.hitbox.debug = true;
 
     this.m_initVelocity();
 };
@@ -50,35 +58,46 @@ panicCity.entity.Entity = function (x, y, width, height, texture) {
 panicCity.entity.Entity.prototype = Object.create(rune.display.Sprite.prototype);
 panicCity.entity.Entity.prototype.constructor = panicCity.entity.Entity;
 
-//------------------------------------------------------------------------------
-// Public prototype methods (API)
-//------------------------------------------------------------------------------
-
-
+/**
+ * Method for moving up
+ * @public
+ * @returns (undefined)
+ */
 panicCity.entity.Entity.prototype.moveUp = function () {
     this.velocity.y -= this.acceleration;
 };
 
+/**
+ * Method for moving right
+ * @public
+ * @returns (undefined)
+ */
 panicCity.entity.Entity.prototype.moveRight = function () {
     this.velocity.x += this.acceleration;
     this.flippedX = true;
 };
 
+/**
+ * Method for moving down
+ * @public
+ * @returns (undefined)
+ */
 panicCity.entity.Entity.prototype.moveDown = function () {
     this.velocity.y += this.acceleration;
 };
 
+/**
+ * Method for moving left
+ * @public
+ * @returns (undefined)
+ */
 panicCity.entity.Entity.prototype.moveLeft = function () {
     this.velocity.x -= this.acceleration;
     this.flippedX = false;
 };
 
-//------------------------------------------------------------------------------
-// Protected prototype methods
-//------------------------------------------------------------------------------
-
 /**
- * ...
+ * Initiates velocity
  *
  * @return {undefined}
  * @private

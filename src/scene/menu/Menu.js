@@ -3,15 +3,13 @@
 //------------------------------------------------------------------------------
 
 /**
- * Creates a new scene object.
+ * Creates a new Menu scene Object
  *
  * @constructor
  * @extends rune.scene.Scene
  *
  * @class
- * @classdesc
  * 
- * Menu scene.
  */
 panicCity.scene.Menu = function() {
 
@@ -29,6 +27,9 @@ panicCity.scene.Menu = function() {
 panicCity.scene.Menu.prototype = Object.create(rune.scene.Scene.prototype);
 panicCity.scene.Menu.prototype.constructor = panicCity.scene.Menu;
 
+/**
+ * @inheritDoc
+ */
 panicCity.scene.Menu.prototype.init = function() {
     rune.scene.Scene.prototype.init.call(this);
 
@@ -40,11 +41,7 @@ panicCity.scene.Menu.prototype.init = function() {
 };
 
 /**
- * Updates the zombie each frame by running the base update logic.
- *
- * @param {number} step - steps for the update-loop
- *
- * @returns {undefined}
+ * @inheritDoc
  */
 panicCity.scene.Menu.prototype.update = function(step) {
     rune.scene.Scene.prototype.update.call(this, step);
@@ -55,9 +52,7 @@ panicCity.scene.Menu.prototype.update = function(step) {
 };
 
 /**
- * This method is used for discarding references and removing object thats no longer in use. In the purpose of freeing up memory.
- *
- * @returns {undefined}
+ * @inheritDoc
  */
 panicCity.scene.Menu.prototype.dispose = function() {
     rune.scene.Scene.prototype.dispose.call(this);

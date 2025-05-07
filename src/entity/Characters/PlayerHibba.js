@@ -9,7 +9,6 @@
  * @extends panicCity.entity.Entity
  *
  * @class
- * @classdesc
  * 
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate
@@ -19,7 +18,7 @@
  * @param {object} game - The Game object
  * @param {number} gamepadIndex - GamepadIndex
  * 
- * ...
+ * Class for creating "Hibba"-character, includes methods for basic movement and basic functions such as heal and downed
  */
 panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gamepadIndex) {
 
@@ -46,7 +45,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     this.direction = "UP";
 
     /**
-     * Tha Players gamepad-Index which is used for controlling a gamepad.
+     * The Players gamepad-Index which is used for controlling a gamepad.
      * 
      * @type (number)
      * @public
@@ -86,11 +85,7 @@ panicCity.entity.PlayerHibba.prototype = Object.create(panicCity.entity.Entity.p
 panicCity.entity.PlayerHibba.prototype.constructor = panicCity.entity.PlayerHibba;
 
 /**
- * Initialize the player.
- *
- * @return {undefined}
- * @public
- * 
+ * @inheritDoc
  */
 panicCity.entity.PlayerHibba.prototype.init = function () {
     this.m_initAnimations();
@@ -98,13 +93,7 @@ panicCity.entity.PlayerHibba.prototype.init = function () {
 };
 
 /**
- * Update lopp.
- * 
- * @param {number} step The update ticks.
- *
- * @return {undefined}
- * @public
- * 
+ * @inheritDoc
  */
 panicCity.entity.PlayerHibba.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);

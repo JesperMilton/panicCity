@@ -28,7 +28,6 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     //--------------------------------------------------------------------------
 
     panicCity.entity.Entity.call(this, x, y, width, height, texture, game);
-
     /**
      * The Game object.
      * 
