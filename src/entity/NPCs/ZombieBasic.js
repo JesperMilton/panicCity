@@ -35,9 +35,30 @@ panicCity.entity.ZombieBasic = function (x, y, width, height, texture, game) {
 panicCity.entity.ZombieBasic.prototype = Object.create(panicCity.entity.Zombie.prototype);
 panicCity.entity.ZombieBasic.prototype.constructor = panicCity.entity.ZombieBasic;
 
+/**
+ * Initialize the ZombieBasic statistics.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBasic.prototype.m_initStats = function () {
     panicCity.entity.Zombie.prototype.m_initStats.call(this);
+
+    /**
+     * Total amount health for the ZombieBasic.
+     * 
+     * @type (number)
+     * @public
+     */
     this.health = 40;
+
+    /**
+     * Total amount damage the ZombieBasic can do.
+     * 
+     * @type (number)
+     * @public
+     */
     this.damage = 10;
 
     this.acceleration = 0.4;
@@ -46,6 +67,13 @@ panicCity.entity.ZombieBasic.prototype.m_initStats = function () {
     this.velocity.max.y = 0.7;
 };
 
+/**
+ * Updates the zombieBasics inputs.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieBasic.prototype.m_updateInput = function () {
     var dX = this.targets.getMemberAt(0).x - this.x;
     var dY = this.targets.getMemberAt(0).y - this.y;
@@ -72,7 +100,7 @@ panicCity.entity.ZombieBasic.prototype.m_updateInput = function () {
 };
 
 /**
- * Method to initialize the animations.
+ * Initialize the animations.
  *
  * @return {undefined}
  * @private

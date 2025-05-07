@@ -15,9 +15,10 @@
  * ...
  */
 panicCity.managers.ZombieSpawner = function (game) {
+    this.game = game;
+    
     this.spawnPoints = [{ x: -50, y: 150 }, { x: 75, y: 330 }, { x: 525, y: 150 }, { x: 350, y: 330 }];
     this.bossSpawnPoints = [{x: -80, y: 100}, {x: 555, y: 100}];
-    this.game = game;
 };
 
 panicCity.managers.ZombieSpawner.prototype.spawnZombie = function () {

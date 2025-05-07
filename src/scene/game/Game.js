@@ -25,7 +25,7 @@ panicCity.scene.Game.prototype.init = function () {
     this.enemies = this.groups.create(this.stage);
     this.bullets = this.groups.create(this.stage);
     this.baseSta = this.groups.create(this.stage);
-    this.stones = this.groups.create(this.stage);
+    this.projectiles  = this.groups.create(this.stage);
     this.items = this.groups.create(this.stage);
     this.walls = this.groups.create(this.stage);
     this.humans = this.groups.create(this.stage);
@@ -52,6 +52,7 @@ panicCity.scene.Game.prototype.init = function () {
             this.m_addScore();
         },
     });
+
     this.timers.create({
         duration: this.rescueeTime,
         onComplete: function () {
@@ -71,6 +72,15 @@ panicCity.scene.Game.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
     this.collisionControl.update();
     this.waveManager.updateSpawner();
+
+    if (this.playerJesper.isDowned && this.playerHibba.isDowned) {
+        this.timers.create({
+            duration: 4000,
+            onComplete: function () {
+                this.application.scenes.load([new panicCity.scene.Gameover(this)]);
+            },
+        });
+    }
 };
 
 /**

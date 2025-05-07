@@ -35,9 +35,30 @@ panicCity.entity.ZombieHunter = function (x, y, width, height, texture, game) {
 panicCity.entity.ZombieHunter.prototype = Object.create(panicCity.entity.Zombie.prototype);
 panicCity.entity.ZombieHunter.prototype.constructor = panicCity.entity.ZombieHunter;
 
+/**
+ * Initialize the ZombieHunter statistics.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieHunter.prototype.m_initStats = function () {
     panicCity.entity.Zombie.prototype.m_initStats.call(this);
+
+    /**
+     * Total amount health for the ZombieHunter.
+     * 
+     * @type (number)
+     * @public
+     */
     this.health = 30;
+
+    /**
+     * Total amount damage the ZombieHunter can do.
+     * 
+     * @type (number)
+     * @public
+     */
     this.damage = 15;
 
     this.acceleration = 0.6;
@@ -46,6 +67,13 @@ panicCity.entity.ZombieHunter.prototype.m_initStats = function () {
     this.velocity.max.y = 0.8;
 };
 
+/**
+ * Updates the zombieHunters inputs.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieHunter.prototype.m_updateInput = function () {
     var dX = this.newTarget.x - this.x;
     var dY = this.newTarget.y - this.y;
@@ -72,7 +100,7 @@ panicCity.entity.ZombieHunter.prototype.m_updateInput = function () {
 };
 
 /**
- * Method to initialize the animations. 
+ * Initialize the animations.
  *
  * @return {undefined}
  * @private

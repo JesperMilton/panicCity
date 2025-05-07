@@ -17,12 +17,15 @@
  */
 panicCity.managers.WaveManager = function (game, cameras) {
     this.game = game;
+    this.m_cameras = cameras;
+
     this.currentWave = 0;
     this.waveAmount = 5;
+
     this.currentZombies = 0;
-    this.coldDown = false;
     this.spawnComplete = false;
-    this.m_cameras = cameras;
+
+    this.coldDown = false;
 
     this.zombieSpawner = new panicCity.managers.ZombieSpawner(this.game);
 
@@ -68,14 +71,14 @@ panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
  * 
  */
 panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
-    this.waveAmount += 5;  //For two-players: 20
+    this.waveAmount += 4;  //For two-players: 20
     this.currentWave++;
     this.currentZombies = 0;
 
     if (this.currentWave % 3 == 0) {
         this.zombieSpawner.spawnZombieBoss();
         this.currentZombies++;
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 5; i++) {
             this.zombieSpawner.spawnZombie();
             this.currentZombies++; 
         }

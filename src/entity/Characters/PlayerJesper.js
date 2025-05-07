@@ -29,7 +29,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
 
     panicCity.entity.Entity.call(this, x, y, width, height, texture);
 
-     /**
+    /**
      * The Game object.
      * 
      * @type (Object)
@@ -59,7 +59,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
      * @type (number)
      * @public
      */
-    this.health = 100;
+    this.health = 200;
 
     /**
      * Total amount of mass the Player has.
@@ -86,9 +86,10 @@ panicCity.entity.PlayerJesper.prototype = Object.create(panicCity.entity.Entity.
 panicCity.entity.PlayerJesper.prototype.constructor = panicCity.entity.PlayerJesper;
 
 /**
- * Method to initialize the players functions.
+ * Initialize the player.
  *
  * @return {undefined}
+ * @public
  * 
  */
 panicCity.entity.PlayerJesper.prototype.init = function () {
@@ -97,10 +98,12 @@ panicCity.entity.PlayerJesper.prototype.init = function () {
 };
 
 /**
+ * Update lopp.
  * 
+ * @param {number} step The update ticks.
  *
- * @param {number} step - steps for the update-loop
  * @return {undefined}
+ * @public
  * 
  */
 panicCity.entity.PlayerJesper.prototype.update = function (step) {
@@ -109,6 +112,13 @@ panicCity.entity.PlayerJesper.prototype.update = function (step) {
     this.m_updateHealthbar();
 };
 
+/**
+ * Updates the players inputs.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
     if (this.isDowned) {
         return;
@@ -187,7 +197,7 @@ panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
 };
 
 /**
- * Method to initialize the animations.
+ * Initialize the animations.
  *
  * @return {undefined}
  * @private
@@ -203,7 +213,7 @@ panicCity.entity.PlayerJesper.prototype.m_initAnimations = function (step) {
 };
 
 /**
- * Method to initialize the healthbar.
+ * Initializes the players healthbar.
  *
  * @return {undefined}
  * @private
@@ -214,13 +224,28 @@ panicCity.entity.PlayerJesper.prototype.m_initHealthBar = function () {
     this.game.stage.addChild(this.healthBar);
 }
 
+/**
+ * Updates the players healthbar.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.PlayerJesper.prototype.m_updateHealthbar = function () {
-    this.healthBar.progress = (this.health / 100);
+    this.healthBar.progress = (this.health / 200);
     this.healthBar.x = this.x;
     this.healthBar.y = this.y - 2;
 }
 
-
+/**
+ * Damages the player.
+ * 
+ * @param {number} damage The amount to be damaged.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
     if (this.isDowned) {
         return;
@@ -228,37 +253,52 @@ panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
     this.flicker.start(250);
     this.health -= damage;
     if (this.health <= 0) {
-        this.m_die();
+        this.m_downed();
     }
+    console.log("players takes this much damage: ", damage, " player health: ", this.health);
 }
 
+/**
+ * Heals the player.
+ * 
+ * @param {number} health The amount to be healed.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerJesper.prototype.heal = function (health) {
-    if (this.health > 0 && this.health < 100) {
+    if (this.health > 0 && this.health < 200) {
         this.health += health;
     }
-    if (this.health > 100) {
-        this.health = 100;
+    if (this.health > 200) {
+        this.health = 200;
     }
 }
 
 /**
- * Method to dispose of the PlayerJesper and its Timers.
+ * Puts the player in a downed state.
  *
  * @return {undefined}
  * @private
  * 
  */
-panicCity.entity.PlayerJesper.prototype.m_die = function () {
-    this.isDowned = true;
+panicCity.entity.PlayerJesper.prototype.m_downed = function () {
     this.animation.gotoAndPlay("downed");
+    this.isDowned = true;
     this.health = 0;
-
-    // this.game.players.removeMember(this, true);
-    // this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
-    // this.game.stage.removeChild(this.healthBar);
-
 }
 
+/**
+ * Rescue Human NPC:s.
+ * 
+ * @param {panicCity.entity.Human} human Instance of the class Human.
+ * @param {panicCity.entity.Base} base Instance of the class Base.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerJesper.prototype.pickupNPC = function (human, base) {
     if (this.keyboard.justPressed("O") || this.gamepad.justPressed(0)) {
         console.log("pickupNpc");
@@ -266,18 +306,34 @@ panicCity.entity.PlayerJesper.prototype.pickupNPC = function (human, base) {
     }
 }
 
+/**
+ * Resurrect another player.
+ * 
+ * @param {panicCity.entity.Entity} player The player who will be resurrected.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerJesper.prototype.res = function (player) {
     if (this.keyboard.justPressed("I") || this.gamepad.justPressed(0)) {
-        console.log("Res");
         player.getRessed();
     }
 }
 
+/**
+ * Resurrect this player, but giving back health and changing the animation.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerJesper.prototype.getRessed = function () {
+    this.animation.gotoAndPlay("idle");
     if (!this.isDowned) {
         return;
     }
     this.isDowned = false;
     this.rotation = 0;
-    this.health = 100;
+    this.health += 100;
 }

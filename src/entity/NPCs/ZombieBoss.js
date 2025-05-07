@@ -32,7 +32,6 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     this.game = game;
 
     this.throwColdown = false;
-    this.isThrowing = false;
 
     this.isAttacking = false;
     this.coolDown = false;
@@ -43,6 +42,10 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     this.immovable = true;
     this.attackTimer;
     this.throwTimer;
+
+    this.lastShot = 0;
+    this.lastThow = 0;
+    this.coolDown = 2000;
 };
 
 //------------------------------------------------------------------------------
@@ -121,6 +124,9 @@ panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function () {
     this.newTarget = null;
 
     var checkTarget = function (target) {
+        if(target.isDowned) {
+            return;
+        }
         var dX = target.x - this.x;
         var dY = target.y - this.y;
         var distance = dX * dX + dY * dY;
@@ -136,38 +142,22 @@ panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function () {
 };
 
 panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
-    if (this.velocity.x == 0.0 && !this.throwColdown) {
+    var now = Date.now();
+    if (this.velocity.x == 0.0 && now > this.lastThow) {
         this.animation.gotoAndPlay("attack");
-        this.isThrowing = true;
-        this.throwColdown = true;
-        console.log("closest target", this.newTarget);
-        var stone = new panicCity.entity.Stone(15, 15, this, this.newTarget, 30, this.game);
-        this.game.stones.addMember(stone);
+        var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, "image_Stone", 35, this.game);
+        this.game.projectiles.addMember(projectile);
 
-        this.throwTimer = this.game.timers.create({
-            duration: 2000,
-            onComplete: function () {
-                this.throwColdown = false;
-                this.isThrowing = false;
-            }.bind(this)
-        });
+        this.lastThow = now + this.coolDown;
     }
 };
 
 panicCity.entity.ZombieBoss.prototype.attack = function (target) {
-    if (target && !this.coolDown) {
-        this.animation.gotoAndPlay("attack");
-        this.isAttacking = true;
-        this.coolDown = true;
+    var now = Date.now();
+    if (target && now > this.lastShot) {
         target.takeDamage(this.damage);
 
-        this.attackTimer = this.game.timers.create({
-            duration: 800,
-            onComplete: function () {
-                this.coolDown = false;
-                this.isAttacking = false;
-            }.bind(this)
-        });
+        this.lastShot = now + this.coolDown;
     }
 };
 

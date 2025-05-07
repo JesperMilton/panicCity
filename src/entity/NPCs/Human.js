@@ -25,19 +25,71 @@
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
-    this.x = x;
-    this.y = y;
-    panicCity.entity.Entity.call(this, this.x, this.y, 27, 26, "image_BaseHuman");
 
-    this.despawnTime = 5000;
-    this.started = false;
+    panicCity.entity.Entity.call(this, this.x, this.y, 27, 35, "Human-Sheet");
+
+    /**
+     * Specified x-Value.
+     * 
+     * @type (number)
+     * @public
+     */
+    this.x = x;
+
+    /**
+     * Specified x-Value.
+     * 
+     * @type (number)
+     * @public
+     */
+    this.y = y;
+    
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type ()
+     * @public
+     */
     this.game = game;
-    this.time = 1;
-    this.speed = 0.5;
-    this.acceleration = 0.5;
-    this.velocity.max.x = 0.7;
-    this.velocity.max.y = 0.7;
+
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type (number)
+     * @public
+     */
+    this.started = false;
+
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type (number)
+     * @public
+     */
     this.inPosition = false;
+
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type (number)
+     * @public
+     */
+    this.despawnTime = 5000;
+
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type (number)
+     * @public
+     */
+    this.time = 1;
+
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type (number)
+     * @public
+     */
     this.itemSpawner = new panicCity.managers.ItemSpawner(this.game);
 };
 
@@ -49,7 +101,9 @@ panicCity.entity.Human.prototype = Object.create(panicCity.entity.Entity.prototy
 panicCity.entity.Human.prototype.constructor = panicCity.entity.Human;
 
 panicCity.entity.Human.prototype.init = function () {
-    this.initProgressbar();
+    this.m_initProgressbar();
+    this.m_initAnimations();
+    this.m_initStats();
 };
 
 panicCity.entity.Human.prototype.update = function (step) {
@@ -58,11 +112,21 @@ panicCity.entity.Human.prototype.update = function (step) {
     this.m_updateInput();
 };
 
+panicCity.entity.Human.prototype.m_initAnimations = function () {
+    this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
+    this.animation.create("help", [9, 10], 2, true);
+};
+
+panicCity.entity.Human.prototype.m_initStats = function () {
+    this.speed = 0.5;
+    this.acceleration = 0.5;
+    this.velocity.max.x = 0.7;
+    this.velocity.max.y = 0.7;
+};
+
+
 panicCity.entity.Human.prototype.m_updateAnimations = function () {
-    if (this.isAttacking) {
-        this.animation.gotoAndPlay("attack");
-        this.isAttacking = false;
-    } else if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
+    if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
         this.animation.gotoAndPlay("walk");
     }
 };
@@ -98,12 +162,22 @@ panicCity.entity.Human.prototype.m_updateInput = function () {
     }
     else{
         this.inPosition = true;
-        this.initTimer();
+        this.m_initTimer();
         this.m_updateTimerbar();
     }
 };
 
-panicCity.entity.Human.prototype.initTimer = function(){
+/**
+ * Create emitter.
+ *
+ * @return {undefined}
+ * @private
+ */
+panicCity.entity.Human.prototype.m_initTimer = function(){
+    if(this.flippedX = false) {
+        this.flippedX = true;
+    }
+    this.animation.gotoAndPlay("help");
     if(this.started == true){
         return;
     }
@@ -118,25 +192,51 @@ panicCity.entity.Human.prototype.initTimer = function(){
         });
     }
 }
-panicCity.entity.Human.prototype.initProgressbar = function(){
+
+/**
+ * Create emitter.
+ *
+ * @return {undefined}
+ * @private
+ */
+panicCity.entity.Human.prototype.m_initProgressbar = function(){
     this.timerBar = new rune.ui.Progressbar(27, 4, "gray", "orange");
     this.timerBar.progress = (this.time / 1);
     
     this.game.stage.addChild(this.timerBar);
 }
+
+/**
+ * Create emitter.
+ *
+ * @return {undefined}
+ * @private
+ */
 panicCity.entity.Human.prototype.m_updateTimerbar = function(){
     this.time = 1 - this.timer.progressTotal;
     this.timerBar.progress = (this.time / 1);
     this.timerBar.x = this.x;
-    this.timerBar.y = this.y;
+    this.timerBar.y = this.y - 3;
 }
 
+/**
+ * Create emitter.
+ *
+ * @return {undefined}
+ * @private
+ */
 panicCity.entity.Human.prototype.m_die = function () {
     this.game.humans.removeMember(this, true);
     this.game.stage.removeChild(this.timerBar);
     this.game.updateScoretext(-10);
 }
 
+/**
+ * Create emitter.
+ *
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.Human.prototype.getSaved = function(base){
     this.game.humans.removeMember(this, true);
     this.game.stage.removeChild(this.timerBar);
