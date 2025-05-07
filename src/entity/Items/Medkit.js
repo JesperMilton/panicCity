@@ -10,7 +10,6 @@
  * @extends panicCity.entity.Items
  *
  * @class
- * @classdesc
  * 
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate

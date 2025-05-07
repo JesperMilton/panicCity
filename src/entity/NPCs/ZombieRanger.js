@@ -9,7 +9,6 @@
  * @extends panicCity.entity.Zombie
  *
  * @class
- * @classdesc
  * 
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate
@@ -17,7 +16,8 @@
  * @param {number} height - Height
  * @param {string} texture - texture resource
  * @param {object} game - The Game object
- * ...
+ * 
+ * Class for Ranger zombie, includes methods such as initStatus and movement logic
  */
 panicCity.entity.ZombieRanger = function (x, y, width, height, texture, game) {
 
@@ -28,7 +28,7 @@ panicCity.entity.ZombieRanger = function (x, y, width, height, texture, game) {
     panicCity.entity.Zombie.call(this, x, y, width, height, texture, game);
 
     /**
-     * Controls the delayed of the thorw attack.
+     * Controls the delay of the throw attack.
      * 
      * @type (number)
      * @public
@@ -52,7 +52,7 @@ panicCity.entity.ZombieRanger.prototype = Object.create(panicCity.entity.Zombie.
 panicCity.entity.ZombieRanger.prototype.constructor = panicCity.entity.ZombieRanger;
 
 /**
- * Initialize the ZombieBasic statistics.
+ * Initialize the ZombieRanger statistics.
  *
  * @return {undefined}
  * @private
@@ -60,23 +60,8 @@ panicCity.entity.ZombieRanger.prototype.constructor = panicCity.entity.ZombieRan
  */
 panicCity.entity.ZombieRanger.prototype.m_initStats = function () {
     panicCity.entity.Zombie.prototype.m_initStats.call(this);
-
-    /**
-     * Total amount health for the ZombieRanger.
-     * 
-     * @type (number)
-     * @public
-     */
     this.health = 10;
-
-    /**
-     * Total amount damage the ZombieRanger can do.
-     * 
-     * @type (number)
-     * @public
-     */
     this.damage = 5;
-
     this.acceleration = 0.4;
     this.speed = 0.3;
     this.velocity.max.x = 0.7;

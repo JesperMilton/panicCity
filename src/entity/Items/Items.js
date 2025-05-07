@@ -10,8 +10,7 @@
  * @extends rune.display.Sprite
  *
  * @class
- * @classdesc
- * 
+ *  
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate
  * @param {number} width - Width
@@ -35,7 +34,6 @@ panicCity.entity.Items = function (x, y, width, height, texture, game) {
     //--------------------------------------------------------------------------
 
     rune.display.Sprite.call(this, x, y, width, height, texture);
-    // this.hitbox.debug = true;
 };
 
 //------------------------------------------------------------------------------
@@ -45,6 +43,9 @@ panicCity.entity.Items = function (x, y, width, height, texture, game) {
 panicCity.entity.Items.prototype = Object.create(rune.display.Sprite.prototype);
 panicCity.entity.Items.prototype.constructor = panicCity.entity.Items;
 
+/**
+ * @inheritDoc
+ */
 panicCity.entity.Items.prototype.init = function () {
     this.m_initAnimations();
     this.game.timers.create({
@@ -55,11 +56,25 @@ panicCity.entity.Items.prototype.init = function () {
     });
 };
 
+/**
+ * Initialize the animations.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.Items.prototype.m_initAnimations = function () {
     this.animation.create("idle", [0, 1], 2, true);
 };
 
-
+/**
+ * Heals the specified target with the the items health points
+ *
+ * @return {undefined}
+ * @public
+ * 
+ * @param {Object} target - The target to be healed
+ */
 panicCity.entity.Items.prototype.heal = function (target) {
     target.forEachMember(function (target){
         target.heal(this.hp);
@@ -68,6 +83,12 @@ panicCity.entity.Items.prototype.heal = function (target) {
     this.m_delete();
 }
 
+/**
+ * Removes the item from the game
+ * 
+ * @returns {undefined}
+ * @private
+ */
 panicCity.entity.Items.prototype.m_delete = function () {
     this.game.items.removeMember(this, true);
 }

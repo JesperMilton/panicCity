@@ -9,16 +9,12 @@
  * @extends panicCity.entity.Entity
  *
  * @class
- * @classdesc
  * 
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate
- * @param {number} width - Width
- * @param {number} height - Height
- * @param {string} texture - texture resource
  * @param {object} game - The Game object
  * 
- * ...
+ * The class for the Human NPCs, includes methods for animations and movements, also includes basic functions such as getSaved and die
  */
  panicCity.entity.Human = function (x, y, game) {
 
@@ -37,7 +33,7 @@
     this.x = x;
 
     /**
-     * Specified x-Value.
+     * Specified y-Value.
      * 
      * @type (number)
      * @public
@@ -45,31 +41,31 @@
     this.y = y;
     
     /**
-     * Total amount of healing points to be given out
+     * The Game object.
      * 
-     * @type ()
+     * @type (Object)
      * @public
      */
     this.game = game;
 
     /**
-     * Total amount of healing points to be given out
+     * Flag used for checking if timer has started
      * 
-     * @type (number)
+     * @type (boolean)
      * @public
      */
     this.started = false;
 
     /**
-     * Total amount of healing points to be given out
+     * Flag used to check if Human is in position
      * 
-     * @type (number)
+     * @type (boolean)
      * @public
      */
     this.inPosition = false;
 
     /**
-     * Total amount of healing points to be given out
+     * The amount of time it takes to despawn the Human
      * 
      * @type (number)
      * @public
@@ -77,20 +73,12 @@
     this.despawnTime = 5000;
 
     /**
-     * Total amount of healing points to be given out
+     * Used to keep track of the time elapsed
      * 
      * @type (number)
      * @public
      */
     this.time = 1;
-
-    /**
-     * Total amount of healing points to be given out
-     * 
-     * @type (number)
-     * @public
-     */
-    this.itemSpawner = new panicCity.managers.ItemSpawner(this.game);
 };
 
 //------------------------------------------------------------------------------
@@ -100,23 +88,43 @@
 panicCity.entity.Human.prototype = Object.create(panicCity.entity.Entity.prototype);
 panicCity.entity.Human.prototype.constructor = panicCity.entity.Human;
 
+/**
+ * @inheritDoc
+ */
 panicCity.entity.Human.prototype.init = function () {
     this.m_initProgressbar();
     this.m_initAnimations();
     this.m_initStats();
 };
 
+/**
+ * @inheritDoc
+ */
 panicCity.entity.Human.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_updateAnimations();
     this.m_updateInput();
 };
 
+/**
+ * Initialize the animations.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.Human.prototype.m_initAnimations = function () {
     this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
     this.animation.create("help", [9, 10], 2, true);
 };
 
+/**
+ * Initialize the Human statistics.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.Human.prototype.m_initStats = function () {
     this.speed = 0.5;
     this.acceleration = 0.5;
@@ -124,13 +132,26 @@ panicCity.entity.Human.prototype.m_initStats = function () {
     this.velocity.max.y = 0.7;
 };
 
-
+/**
+ * Updates the animations.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.Human.prototype.m_updateAnimations = function () {
     if (this.velocity.x != 0.0 || this.velocity.y != 0.0) {
         this.animation.gotoAndPlay("walk");
     }
 };
 
+/**
+ * Updates the Human movement inputs.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.Human.prototype.m_updateInput = function () {
     var dX = this.target.getMemberAt(0).x - this.x;
     var dY = this.target.getMemberAt(0).y - this.y;
@@ -168,10 +189,11 @@ panicCity.entity.Human.prototype.m_updateInput = function () {
 };
 
 /**
- * Create emitter.
+ * Initiates a timer
  *
  * @return {undefined}
  * @private
+ * 
  */
 panicCity.entity.Human.prototype.m_initTimer = function(){
     if(this.flippedX = false) {
@@ -194,7 +216,7 @@ panicCity.entity.Human.prototype.m_initTimer = function(){
 }
 
 /**
- * Create emitter.
+ * Initiates a progressbar
  *
  * @return {undefined}
  * @private
@@ -207,10 +229,11 @@ panicCity.entity.Human.prototype.m_initProgressbar = function(){
 }
 
 /**
- * Create emitter.
+ * Updates the progressbar
  *
  * @return {undefined}
  * @private
+ * 
  */
 panicCity.entity.Human.prototype.m_updateTimerbar = function(){
     this.time = 1 - this.timer.progressTotal;
@@ -220,10 +243,11 @@ panicCity.entity.Human.prototype.m_updateTimerbar = function(){
 }
 
 /**
- * Create emitter.
+ * Kills the Human, removes Human from stage and humans group, removes 10 points from the score
  *
  * @return {undefined}
  * @private
+ * 
  */
 panicCity.entity.Human.prototype.m_die = function () {
     this.game.humans.removeMember(this, true);
@@ -232,10 +256,12 @@ panicCity.entity.Human.prototype.m_die = function () {
 }
 
 /**
- * Create emitter.
+ * Saves the human and despawns it, heals base for 40 points, gives 20 score and removes human from stage and humans group
  *
  * @return {undefined}
  * @public
+ * 
+ * @param {Object} base - the Base object
  */
 panicCity.entity.Human.prototype.getSaved = function(base){
     this.game.humans.removeMember(this, true);

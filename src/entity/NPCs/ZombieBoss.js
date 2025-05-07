@@ -28,9 +28,20 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     //--------------------------------------------------------------------------
 
     panicCity.entity.Entity.call(this, x, y, width, height, texture, game);
-
+    /**
+     * The Game object.
+     * 
+     * @type (Object)
+     * @public
+     */
     this.game = game;
 
+    /**
+     * Flag for throw cooldown.
+     * 
+     * @type (Object)
+     * @public
+     */
     this.throwColdown = false;
 
     this.isAttacking = false;

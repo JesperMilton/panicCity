@@ -35,3 +35,5 @@ npx google-closure-compiler \
 --js "./../../src/system/Main.js" \
 --js "./../../src/scope/Alias.js" \
 --js_output_file "./../../dist/panicCity.js";
+
+echo "OK";

@@ -1,5 +1,22 @@
+/**
+ * The Gameover Object, responsible for showing the Gameover Screen
+ * 
+ * @constructor
+ * @extends rune.scene.Scene
+ *
+ * @class
+ * 
+ * @param {Object} game - The game object
+*/
 panicCity.scene.Gameover = function(game){
     rune.scene.Scene.call(this);
+
+    /**
+     * The Game object.
+     * 
+     * @type (Object)
+     * @public
+     */
     this.game = game;
 }
 
@@ -10,6 +27,9 @@ panicCity.scene.Gameover = function(game){
 panicCity.scene.Gameover.prototype = Object.create(rune.scene.Scene.prototype);
 panicCity.scene.Gameover.prototype.constructor = panicCity.scene.Gameover;
 
+/**
+ * @inheritDoc
+ */
 panicCity.scene.Gameover.prototype.init = function() {
     rune.scene.Scene.prototype.init.call(this);
 
@@ -21,11 +41,7 @@ panicCity.scene.Gameover.prototype.init = function() {
 };
 
 /**
- * Updates the zombie each frame by running the base update logic.
- *
- * @param {number} step - steps for the update-loop
- *
- * @returns {undefined}
+ * @inheritDoc
  */
  panicCity.scene.Gameover.prototype.update = function(step) {
     rune.scene.Scene.prototype.update.call(this, step);
@@ -36,9 +52,7 @@ panicCity.scene.Gameover.prototype.init = function() {
 };
 
 /**
- * This method is used for discarding references and removing object thats no longer in use. In the purpose of freeing up memory.
- *
- * @returns {undefined}
+ * @inheritDoc
  */
 panicCity.scene.Gameover.prototype.dispose = function() {
     rune.scene.Scene.prototype.dispose.call(this);

@@ -1,9 +1,33 @@
+/**
+ * @constructor
+ * @extends rune.scene.Scene
+ *
+ * @class
+ * 
+ * The Game Object, responsible for showing the game stage 
+ */
 panicCity.scene.Game = function () {
     rune.scene.Scene.call(this);
 
-    this.zombie = null;
+    /**
+     * The total amount of score that has been collected
+     * @public
+     * @type {number}
+     */
     this.score = 0;
+
+    /**
+     * Timer for score, used to call a method that gives points every 4 seconds
+     * @public
+     * @type {number}
+     */
     this.scoreTime = 4000;
+
+    /**
+     * Timer for rescuees, used to call a method that spawns a NPC every 10 seconds
+     * @public
+     * @type {number}
+     */
     this.rescueeTime = 10000;
 };
 
@@ -14,6 +38,9 @@ panicCity.scene.Game = function () {
 panicCity.scene.Game.prototype = Object.create(rune.scene.Scene.prototype);
 panicCity.scene.Game.prototype.constructor = panicCity.scene.Game;
 
+/**
+ * @inheritDoc
+ */
 panicCity.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
@@ -29,7 +56,7 @@ panicCity.scene.Game.prototype.init = function () {
     this.items = this.groups.create(this.stage);
     this.walls = this.groups.create(this.stage);
     this.humans = this.groups.create(this.stage);
-    this.powerups = this.groups.create(this.stage);
+    //this.powerups = this.groups.create(this.stage);
 
     this.playerJesper = new panicCity.entity.PlayerJesper(320, 128, 27, 26, "Player1-Sheet", this, 0);
     this.playerHibba = new panicCity.entity.PlayerHibba(140, 128, 27, 26, "Player2-Sheet", this, 1);
@@ -62,11 +89,7 @@ panicCity.scene.Game.prototype.init = function () {
 };
 
 /**
- * Updates the zombie each frame by running the base update logic.
- *
- * @param {number} step - steps for the update-loop
- *
- * @returns {undefined}
+ * @inheritDoc
  */
 panicCity.scene.Game.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
@@ -84,14 +107,17 @@ panicCity.scene.Game.prototype.update = function (step) {
 };
 
 /**
- * This method is used for discarding references and removing object thats no longer in use. In the purpose of freeing up memory.
- *
- * @returns {undefined}
+ * @inheritDoc
  */
 panicCity.scene.Game.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };
 
+/**
+ * Initializes score
+ * @private
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.m_initScore = function () {
     this.counter = new rune.ui.Counter(6, 10, 20);
     this.counter.spacing = 10;
@@ -102,6 +128,11 @@ panicCity.scene.Game.prototype.m_initScore = function () {
     this.cameras.getCameraAt(1).addChild(this.counter);
 }
 
+/**
+ * Initializes the camera
+ * @private
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.m_initCamera = function () {
     this.m_camera = this.cameras.addCamera(this.cameras.createCamera());
     this.m_camera.bounderies = new rune.geom.Rectangle(
@@ -112,6 +143,11 @@ panicCity.scene.Game.prototype.m_initCamera = function () {
     );
 };
 
+/**
+ * Initializes the background
+ * @private
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.m_initBackground = function () {
     this.m_background = new rune.display.Graphic(
         0,
@@ -123,11 +159,21 @@ panicCity.scene.Game.prototype.m_initBackground = function () {
     this.stage.addChild(this.m_background);
 };
 
+/**
+ * Updates the score
+ * @public
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.updateScoretext = function (points) {
     this.score += points;
     this.counter.value = this.score;
 }
 
+/**
+ * Adds points to the score
+ * @private
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.m_addScore = function () {
     this.updateScoretext(1);
     this.timers.create({
@@ -138,6 +184,11 @@ panicCity.scene.Game.prototype.m_addScore = function () {
     });
 }
 
+/**
+ * Spawns a human
+ * @private
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.spawnHuman = function (){
     this.rescueeSpawner.spawnRescuee();
     this.timers.create({

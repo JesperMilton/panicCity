@@ -9,17 +9,12 @@
  * @extends rune.display.Graphic
  *
  * @class
- * @classdesc
  * 
- * @param {object} player - The player object
- * ...
+ * @param {Object} player - The player object that initialized the bullet
+ * 
+ * Class for the Bullet projectile, includes methods for movement
  */
 panicCity.entity.Bullet = function (player) {
-
-    //--------------------------------------------------------------------------
-    // Public properties
-    //--------------------------------------------------------------------------
-
     /**
      * The amount of damage the bullet causes.
      *
@@ -27,10 +22,6 @@ panicCity.entity.Bullet = function (player) {
      * @default 10
      */
     this.damage = 10.0;
-
-    //--------------------------------------------------------------------------
-    // Protected properties
-    //--------------------------------------------------------------------------
 
     /**
      * The speed of the bullet.
@@ -40,17 +31,51 @@ panicCity.entity.Bullet = function (player) {
      */
     this.m_speed = 5;
 
+    /**
+     * The object of the player that intiated the projectile
+     * @type {Object}
+     * @public
+     */
     this.player = player;
-    var y = this.player.y + 17;
-    var x = this.player.x + 13;
-    var bulletTexture = "image_Bullet";
+
+    /**
+     * The Y-coordinate of the bullet
+     * @type {number}
+     * @public
+     */
+    this.y = this.player.y + 17;
+
+    /**
+     * The X-coordinate of the bullet
+     * @type {number}
+     * @public
+     */
+    this.x = this.player.x + 13;
+
+    /**
+     * The texture of the bullet
+     * @type {string}
+     * @public
+     */
+    this.bulletTexture = "image_Bullet";
+
+    /**
+     * The direction of the bullet
+     * @type {string}
+     * @public
+     */
     this.direction = this.player.direction;
 
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
     
-    rune.display.Graphic.call(this, x, y, 5, 5, bulletTexture);
+    rune.display.Graphic.call(this, this.x, this.y, 5, 5, this.bulletTexture);
+    /**
+     * The hitbox of the bullet
+     * @type {Object}
+     * @public
+     */
     this.hitbox.set(0, 0, 5, 5);
 };
 
@@ -61,11 +86,19 @@ panicCity.entity.Bullet = function (player) {
 panicCity.entity.Bullet.prototype = Object.create(rune.display.Graphic.prototype);
 panicCity.entity.Bullet.prototype.constructor = panicCity.entity.Bullet;
 
+/**
+ * @inheritDoc
+ */
 panicCity.entity.Bullet.prototype.update = function (step) {
-    this.m_updateMotion(step);
+    this.m_updateMotion();
 };
 
-panicCity.entity.Bullet.prototype.m_updateMotion = function (step) {
+/**
+ * Checks which direction the bullet is facing and calls the respective method
+ * @private
+ * @returns {undefined}
+ */
+panicCity.entity.Bullet.prototype.m_updateMotion = function () {
     switch (this.direction) {
         case "UP":
             this.m_moveUp();
@@ -92,36 +125,82 @@ panicCity.entity.Bullet.prototype.m_updateMotion = function (step) {
             this.m_moveDownRight();
             break;
         default:
-            this.m_moveUp(); // fallback
+            this.m_moveUp();
             break;
     }
 }
 
+/**
+ * Moves the bullet up
+ * @private
+ * @returns {undefined}
+ */
 panicCity.entity.Bullet.prototype.m_moveUp = function () {
     this.y -= this.m_speed;
 }
+
+/**
+ * Moves the bullet down
+ * @private
+ * @returns {undefined}
+ */
 panicCity.entity.Bullet.prototype.m_moveDown = function () {
     this.y += this.m_speed;
 }
+
+/**
+ * Moves the bullet left
+ * @private
+ * @returns {undefined}
+ */
 panicCity.entity.Bullet.prototype.m_moveLeft = function () {
     this.x -= this.m_speed;
 }
+
+/**
+ * Moves the bullet right
+ * @private
+ * @returns {undefined}
+ */
 panicCity.entity.Bullet.prototype.m_moveRight = function () {
     this.x += this.m_speed;
 }
 
+/**
+ * Moves the bullet up and left
+ * @private
+ * @returns {undefined}
+ */
 panicCity.entity.Bullet.prototype.m_moveUpLeft = function () {
     this.y -= this.m_speed;
     this.x -= this.m_speed;
 }
+
+/**
+ * Moves the bullet down and left
+ * @private
+ * @returns {undefined}
+ */
 panicCity.entity.Bullet.prototype.m_moveDownLeft = function () {
     this.y += this.m_speed;
     this.x -= this.m_speed;
 }
+
+/**
+ * Moves the bullet up and right
+ * @private
+ * @returns {undefined}
+ */
 panicCity.entity.Bullet.prototype.m_moveUpRight = function () {
     this.x += this.m_speed;
     this.y -= this.m_speed;
 }
+
+/**
+ * Moves the bullet down and right
+ * @private
+ * @returns {undefined}
+ */
 panicCity.entity.Bullet.prototype.m_moveDownRight = function () {
     this.y += this.m_speed;
     this.x += this.m_speed;
