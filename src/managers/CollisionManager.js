@@ -25,8 +25,8 @@ panicCity.managers.CollisionManager = function (game) {
 
     this.m_walls = [
         this.leftWall = new rune.display.DisplayObject(-10, -5, 10, 485),
-        this.topWall = new rune.display.DisplayObject(-5, -10, 310, 10),
-        this.bottomWall = new rune.display.DisplayObject(-5, 300, 310, 10),
+        this.topWall = new rune.display.DisplayObject(-5, -10, 485, 10),
+        this.bottomWall = new rune.display.DisplayObject(-5, 300, 485, 10),
         this.rightWall = new rune.display.DisplayObject(475, -5, 10, 485)
     ];
 
@@ -46,7 +46,7 @@ panicCity.managers.CollisionManager.prototype.update = function () {
     this.m_players();
     this.m_enemies();
     this.m_bullets();
-    this.m_stones();
+    this.m_projectiles();
     this.m_items();
     this.m_rescuees();
 };
@@ -76,14 +76,15 @@ panicCity.managers.CollisionManager.prototype.m_players = function () {
  */
 panicCity.managers.CollisionManager.prototype.m_enemies = function () {
     this.game.enemies.hitTestAndSeparateGroup(this.game.players, function (enemy, player) {
-        enemy.isAttacking = true;
+        console.log("Hit!");
         enemy.attack(player);
-    }, this);
+        enemy.isAttacking = true;
+    });
 
     this.game.enemies.hitTestAndSeparateGroup(this.game.baseSta, function (enemy, base) {
-        enemy.isAttacking = true;
         enemy.attack(base);
-    }, this);
+        enemy.isAttacking = true;
+    });
 };
 
 /**
@@ -94,12 +95,12 @@ panicCity.managers.CollisionManager.prototype.m_enemies = function () {
  * 
  */
 panicCity.managers.CollisionManager.prototype.m_bullets = function () {
-    this.game.bullets.hitTest(this.game.enemies, function (bullet, enemy) {
+    this.game.bullets.hitTestGroup(this.game.enemies, function (bullet, enemy) {
         enemy.takeDamage(bullet.damage);
         this.game.bullets.removeMember(bullet, true);
     }, this);
 
-    this.game.bullets.hitTest(this.game.walls, function (bullet) {
+    this.game.bullets.hitTestGroup(this.game.walls, function (bullet) {
         this.game.bullets.removeMember(bullet, true);
     }, this);
 };
@@ -111,15 +112,18 @@ panicCity.managers.CollisionManager.prototype.m_bullets = function () {
  * @private
  * 
  */
-panicCity.managers.CollisionManager.prototype.m_stones = function () {
-    this.game.stones.hitTest(this.game.players, function (stone, player) {
-        player.takeDamage(stone.damage);
-        this.game.stones.removeMember(stone, true);
+panicCity.managers.CollisionManager.prototype.m_projectiles = function () {
+    this.game.projectiles.hitTestGroup(this.game.players, function (projectile, player) {
+        if(player.isDowned) {
+            return;
+        }
+        player.takeDamage(projectile.damage);
+        this.game.projectiles.removeMember(projectile, true);
     }, this);
 
-    this.game.stones.hitTest(this.game.baseSta, function (stone, base) {
-        base.takeDamage(stone.damage);
-        this.game.stones.removeMember(stone, true);
+    this.game.projectiles.hitTestGroup(this.game.baseSta, function (projectile, base) {
+        base.takeDamage(projectile.damage);
+        this.game.projectiles.removeMember(projectile, true);
     }, this);
 };
 
@@ -131,7 +135,7 @@ panicCity.managers.CollisionManager.prototype.m_stones = function () {
  * 
  */
 panicCity.managers.CollisionManager.prototype.m_items = function () {
-    this.game.items.hitTest(this.game.players, function (item, player) {
+    this.game.items.hitTestGroup(this.game.players, function (item, player) {
         if (item.type === "MEDKIT") {
             item.heal(this.game.players);
         }
@@ -142,7 +146,7 @@ panicCity.managers.CollisionManager.prototype.m_items = function () {
 }
 
 panicCity.managers.CollisionManager.prototype.m_rescuees = function () {
-    this.game.humans.hitTest(this.game.players, function (human, player) {
+    this.game.humans.hitTestGroup(this.game.players, function (human, player) {
         if(human.inPosition){
             player.pickupNPC(human,this.game.baseSta);
         }

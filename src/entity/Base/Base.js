@@ -28,19 +28,40 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
 
     rune.display.Sprite.call(this, x, y, width, height, texture);
 
-    // this.debug = true;
-    // this.hitbox.debug = true;
-    this.immovable = true;
-    this.health = 500;
+    /**
+     * The Game object.
+     * 
+     * @type (Object)
+     * @public
+     */
     this.game = game;
+
+    /**
+     * Makes the base immovable.
+     * 
+     * @type (boolean)
+     * @public
+     */
+    this.immovable = true;
+
+    /**
+     * Total amount health for the base.
+     * 
+     * @type (number)
+     * @public
+     */
+    this.health = 500;
+
+    /**
+     * A timer.
+     * 
+     * @type (number)
+     * @public
+     */
     this.time = 3000;
 
-    this.game.timers.create({
-        duration: this.time,
-        onComplete: function () {
-          this.m_baseTimer();
-        }.bind(this),
-      });
+    // this.debug = true;
+    // this.hitbox.debug = true;
 };
 
 //------------------------------------------------------------------------------
@@ -50,12 +71,27 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
 panicCity.entity.Base.prototype = Object.create(rune.display.Sprite.prototype);
 panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;
 
+/**
+ * Initialize the base.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.Base.prototype.init = function () {
     this.m_initAnimations();
     this.m_initHealthBar();
 };
 
-
+/**
+ * Update lopp.
+ * 
+ * @param {number} step The update ticks.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.Base.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     if(this.keyboard.justPressed("K")) {
@@ -70,10 +106,18 @@ panicCity.entity.Base.prototype.update = function (step) {
  * @private
  * 
  */
-panicCity.entity.Base.prototype.m_initAnimations = function (step) {
-    panicCity.entity.Entity.prototype.update.call(this, step);
+panicCity.entity.Base.prototype.m_initAnimations = function () {
 };
 
+/**
+ * Damages the base.
+ * 
+ * @param {number} damage The amount to be damaged.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.Base.prototype.takeDamage = function (damage) {
     // this.flicker.start(250);
     this.health -= damage;
@@ -83,10 +127,29 @@ panicCity.entity.Base.prototype.takeDamage = function (damage) {
     }
 }
 
+/**
+ * Kills the base. Which goes to the Gameover screen.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.Base.prototype.m_die = function () {
-    this.game.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
+    this.game.timers.create({
+        duration: 4000,
+        onComplete: function () {
+            this.game.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
+        }.bind(this)
+    });
 }
 
+/**
+ * Initializes the bases healthbar.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.Base.prototype.m_initHealthBar = function() {
     this.healthBar = new rune.ui.Progressbar(this.width, 6, "gray", "red");
     this.healthBar.progress = (this.health / 500);
@@ -95,6 +158,15 @@ panicCity.entity.Base.prototype.m_initHealthBar = function() {
     this.game.stage.addChild(this.healthBar);
 }
 
+/**
+ * Heals the base.
+ * 
+ * @param {number} health The amount to be healed.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.Base.prototype.heal = function(health){
     if(this.health > 0 && this.health < 500){
         this.health += health;
@@ -103,14 +175,4 @@ panicCity.entity.Base.prototype.heal = function(health){
     if(this.health > 500){
         this.health = 500;
     }
-}
-
-panicCity.entity.Base.prototype.m_baseTimer = function(){
-    this.takeDamage(15);
-    this.game.timers.create({
-        duration: this.time,
-        onComplete: function () {
-          this.m_baseTimer();
-        }.bind(this),
-      });
 }

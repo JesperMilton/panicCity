@@ -59,7 +59,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
      * @type (number)
      * @public
      */
-    this.health = 100;
+    this.health = 200;
 
     /**
      * Total amount of mass the Player has.
@@ -85,24 +85,41 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
 panicCity.entity.PlayerHibba.prototype = Object.create(panicCity.entity.Entity.prototype);
 panicCity.entity.PlayerHibba.prototype.constructor = panicCity.entity.PlayerHibba;
 
+/**
+ * Initialize the player.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.init = function () {
     this.m_initAnimations();
     this.m_initHealthBar();
 };
 
 /**
- * Method to initialize the players functions.
+ * Update lopp.
+ * 
+ * @param {number} step The update ticks.
  *
  * @return {undefined}
+ * @public
  * 
  */
 panicCity.entity.PlayerHibba.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
-    this.m_updateInput(step);
+    this.m_updateInput();
     this.m_updateHealthbar();
 };
 
-panicCity.entity.PlayerHibba.prototype.m_updateInput = function (step) {
+/**
+ * Updates the players inputs.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
+panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
     if (this.isDowned) {
         return;
     }
@@ -178,13 +195,13 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function (step) {
 };
 
 /**
- * Method to initialize the animations.
+ * Initialize the animations.
  *
  * @return {undefined}
  * @private
  * 
  */
-panicCity.entity.PlayerHibba.prototype.m_initAnimations = function (step) {
+panicCity.entity.PlayerHibba.prototype.m_initAnimations = function () {
     this.animation.create("idle", [0, 1, 2], 6, true);
     this.animation.create("walkSide", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
     this.animation.create("walkUp", [12, 13, 14, 15, 16], 5, true);
@@ -193,7 +210,7 @@ panicCity.entity.PlayerHibba.prototype.m_initAnimations = function (step) {
 };
 
 /**
- * Method to initialize the healthbar.
+ * Initializes the players healthbar.
  *
  * @return {undefined}
  * @private
@@ -204,12 +221,28 @@ panicCity.entity.PlayerHibba.prototype.m_initHealthBar = function () {
     this.game.stage.addChild(this.healthBar);
 }
 
+/**
+ * Updates the players healthbar.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.m_updateHealthbar = function () {
-    this.healthBar.progress = (this.health / 100);
+    this.healthBar.progress = (this.health / 200);
     this.healthBar.x = this.x;
     this.healthBar.y = this.y - 2;
 }
 
+/**
+ * Damages the player.
+ * 
+ * @param {number} damage The amount to be damaged.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
     if (this.isDowned) {
         return;
@@ -217,53 +250,85 @@ panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
     this.flicker.start(250);
     this.health -= damage;
     if (this.health <= 0) {
-        this.m_die();
-    }
-}
-panicCity.entity.PlayerHibba.prototype.heal = function (health) {
-    if (this.health > 0 && this.health < 100) {
-        this.health += health;
-    }
-    if (this.health > 100) {
-        this.health = 100;
+        this.m_downed();
     }
 }
 
 /**
- * Method to dispose of the PlayerHibba and its Timers.
+ * Heals the player.
+ * 
+ * @param {number} health The amount to be healed.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
+panicCity.entity.PlayerHibba.prototype.heal = function (health) {
+    if (this.health > 0 && this.health < 200) {
+        this.health += health;
+    }
+    if (this.health > 200) {
+        this.health = 200;
+    }
+}
+
+/**
+ * Puts the player in a downed state.
  *
  * @return {undefined}
  * @private
  * 
  */
-panicCity.entity.PlayerHibba.prototype.m_die = function () {
-    this.isDowned = true;
+panicCity.entity.PlayerHibba.prototype.m_downed = function () {
     this.animation.gotoAndPlay("downed");
+    this.isDowned = true;
     this.health = 0;
-
-    // this.game.players.removeMember(this, true);
-    // this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
-    // this.game.stage.removeChild(this.healthBar);
-
 }
 
+/**
+ * Rescue Human NPC:s.
+ * 
+ * @param {panicCity.entity.Human} human Instance of the class Human.
+ * @param {panicCity.entity.Base} base Instance of the class Base.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.pickupNPC = function (human, base) {
     if (this.keyboard.justPressed("E") || this.gamepad.justPressed(0)) {
         human.getSaved(base);
     }
 }
 
+/**
+ * Resurrect another player.
+ * 
+ * @param {panicCity.entity.Entity} player The player who will be resurrected.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.res = function (player) {
     if (this.keyboard.justPressed("R") || this.gamepad.justPressed(0)) {
         player.getRessed();
     }
 }
 
+/**
+ * Resurrect this player, but giving back health and changing the animation.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.entity.PlayerHibba.prototype.getRessed = function () {
+    this.animation.gotoAndPlay("idle");
     if (!this.isDowned) {
         return;
     }
     this.isDowned = false;
     this.rotation = 0;
-    this.health = 100;
+    this.health += 100;
 }

@@ -26,6 +26,22 @@ panicCity.entity.ZombieRanger = function (x, y, width, height, texture, game) {
     //--------------------------------------------------------------------------
 
     panicCity.entity.Zombie.call(this, x, y, width, height, texture, game);
+
+    /**
+     * Controls the delayed of the thorw attack.
+     * 
+     * @type (number)
+     * @public
+     */
+    this.lastThrow = 0;
+
+    /**
+     * Cooldown for the zombies throw attacks.
+     * 
+     * @type (number)
+     * @public
+     */
+    this.throwCoolDown = 2000;
 };
 
 //------------------------------------------------------------------------------
@@ -35,9 +51,30 @@ panicCity.entity.ZombieRanger = function (x, y, width, height, texture, game) {
 panicCity.entity.ZombieRanger.prototype = Object.create(panicCity.entity.Zombie.prototype);
 panicCity.entity.ZombieRanger.prototype.constructor = panicCity.entity.ZombieRanger;
 
+/**
+ * Initialize the ZombieBasic statistics.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieRanger.prototype.m_initStats = function () {
     panicCity.entity.Zombie.prototype.m_initStats.call(this);
+
+    /**
+     * Total amount health for the ZombieRanger.
+     * 
+     * @type (number)
+     * @public
+     */
     this.health = 10;
+
+    /**
+     * Total amount damage the ZombieRanger can do.
+     * 
+     * @type (number)
+     * @public
+     */
     this.damage = 5;
 
     this.acceleration = 0.4;
@@ -46,6 +83,13 @@ panicCity.entity.ZombieRanger.prototype.m_initStats = function () {
     this.velocity.max.y = 0.7;
 };
 
+/**
+ * Updates the zombieRangers inputs.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieRanger.prototype.m_updateInput = function () {
     var dX = this.newTarget.x - this.x;
     var dY = this.newTarget.y - this.y;
@@ -81,7 +125,7 @@ panicCity.entity.ZombieRanger.prototype.m_updateInput = function () {
 };
 
 /**
- * Method to initialize the animations. 
+ * Initialize the animations. 
  *
  * @return {undefined}
  * @private
@@ -97,20 +141,20 @@ panicCity.entity.ZombieRanger.prototype.m_initAnimations = function () {
     this.animation.create("attackUp", [30, 31, 32, 33, 34, 35], 8, true);
 }; 
 
+/**
+ * Does a throwing attack to the closest target to the ZombieRanger.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.entity.ZombieRanger.prototype.m_throwAttack = function () {
-    if (this.velocity.x == 0.0 && !this.throwColdown) {
+    var now = Date.now();
+    if (this.velocity.x == 0.0 && now > this.lastThrow) {
         this.animation.gotoAndPlay("attack");
-        this.isThrowing = true;
-        this.throwColdown = true;
-        var stone = new panicCity.entity.Stone(5, 5, this, this.newTarget, 15, this.game);
-        this.game.stones.addMember(stone);
+        var projectile = new panicCity.entity.Projectile(5, 13, this, this.newTarget, "image_Bottle", 10, this.game);
+        this.game.projectiles.addMember(projectile);
 
-        this.throwTimer = this.game.timers.create({
-            duration: 2000,
-            onComplete: function () {
-                this.throwColdown = false;
-                this.isThrowing = false;
-            }.bind(this)
-        });
+        this.lastThrow = now + this.throwCoolDown;
     }
 };

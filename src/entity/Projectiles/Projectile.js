@@ -11,13 +11,13 @@
  * @class
  * @classdesc
  * 
- * @param {object} boss - The Boss object
+ * @param {object} origin - The origin object
  * @param {object} target - The Target object
  * @param {object} game - The Game object
  * 
  * ...
  */
-panicCity.entity.Stone = function (width, height, boss, target, damage, game) {
+panicCity.entity.Projectile = function (width, height, origin, target, texture, damage, game) {
     this.game = game;
     this.damage = damage;
     
@@ -26,30 +26,30 @@ panicCity.entity.Stone = function (width, height, boss, target, damage, game) {
     
     this.m_speed = 2;
 
-    this.boss = boss;
+    this.origin = origin;
 
-    var y = this.boss.y + 17;
-    var x = this.boss.x + 13;
+    var y = this.origin.y + 17;
+    var x = this.origin.x + 13;
 
-    var StoneTexture = "image_Stone";
+    // var ProjectileTexture = "image_Projectile";
 
-    rune.display.Graphic.call(this, x, y, width, height, StoneTexture);
+    var PTexture = texture;
 
-    this.hitbox.set(0, 0, 15, 15);
+    rune.display.Graphic.call(this, x, y, width, height, PTexture);
 };
 
 //------------------------------------------------------------------------------
 // Inheritance
 //------------------------------------------------------------------------------
 
-panicCity.entity.Stone.prototype = Object.create(rune.display.Graphic.prototype);
-panicCity.entity.Stone.prototype.constructor = panicCity.entity.Stone;
+panicCity.entity.Projectile.prototype = Object.create(rune.display.Graphic.prototype);
+panicCity.entity.Projectile.prototype.constructor = panicCity.entity.Projectile;
 
-panicCity.entity.Stone.prototype.update = function () {
+panicCity.entity.Projectile.prototype.update = function () {
     this.m_followTarget()
 };
 
-panicCity.entity.Stone.prototype.m_followTarget = function () {
+panicCity.entity.Projectile.prototype.m_followTarget = function () {
     var currentPosition = new rune.geom.Point(this.x, this.y);
     var targetPosition = new rune.geom.Point(this.tX, this.tY);
 
@@ -58,10 +58,10 @@ panicCity.entity.Stone.prototype.m_followTarget = function () {
 
     var distance = currentPosition.distance(targetPosition);
 
-    var threshold = 2.0;
+    var threshold = 2;
     
     if (distance < threshold) {
-        this.game.stones.removeMember(this);
+        this.game.projectiles.removeMember(this);
     }
     
     var dirX = disX / distance;
