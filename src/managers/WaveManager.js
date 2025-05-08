@@ -19,7 +19,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -27,7 +27,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * The Cameras object.
      * 
-     * @type (rune.camera.Camera)
+     * @type {rune.camera.Camera}
      * @public
      */
     this.m_cameras = cameras;
@@ -35,7 +35,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * Keeps track of the current wave.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.currentWave = 0;
@@ -43,7 +43,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * The amount enemies to be spawned during current wave.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.waveAmount = 5;
@@ -51,7 +51,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * Keeps track of the current zombies in the wave.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.currentZombies = 0;
@@ -59,7 +59,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * Flag to control that the spawn is completed for a wave.
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.spawnComplete = false;
@@ -67,7 +67,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * Flag to control the enemy spawner.
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.coolDown = false;
@@ -75,7 +75,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * The ZombieSpawner object.
      * 
-     * @type (panicCity.managers.ZombieSpawner)
+     * @type {panicCity.managers.ZombieSpawner}
      * @public
      */
     this.zombieSpawner = new panicCity.managers.ZombieSpawner(this.game);
@@ -83,7 +83,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * Text to represent the current wave.
      * 
-     * @type (rune.text)
+     * @type {rune.text.BitmapField}
      * @public
      */
     this.text = new rune.text.BitmapField();
@@ -91,19 +91,13 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * Use for the size of the text.
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.text.autoSize = true;
 
-    /**
-     * The Camera object.
-     * 
-     * @type (rune.camera.Camera)
-     * @public
-     */
-    this.m_cameras.getCameraAt(1).addChild(this.text);
 
+    this.m_cameras.getCameraAt(1).addChild(this.text);
     this.m_startnewWave();
 };
 

@@ -16,22 +16,34 @@
  * 
  * The class for the Human NPCs, includes methods for animations and movements, also includes basic functions such as getSaved and die
  */
- panicCity.entity.Human = function (x, y, game) {
+panicCity.entity.Human = function (x, y, game) {
+
+    /**
+     * Array of different human grafics.
+     * 
+     * @type {string[]}
+     * @public
+     */
+    this.humans = ["Human-Sheet-A", "Human-Sheet-B"]
+
+    /**
+     * Random number between 0 and 1.
+     * 
+     * @type {number}
+     * @private
+     */
+    var ran = Math.floor(Math.random() * 2);
 
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
 
-    this.arr = ["Human-Sheet-A", "Human-Sheet-B"]
-
-    var ran = Math.floor(Math.random() * 2);
-
-    panicCity.entity.Entity.call(this, this.x, this.y, 27, 35, this.arr[ran]);
+    panicCity.entity.Entity.call(this, this.x, this.y, 27, 35, this.humans[ran]);
 
     /**
      * Specified x-Value.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.x = x;
@@ -39,15 +51,15 @@
     /**
      * Specified y-Value.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.y = y;
-    
+
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -55,7 +67,7 @@
     /**
      * Flag used for checking if timer has started
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.started = false;
@@ -63,7 +75,7 @@
     /**
      * Flag used to check if Human is in position
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.inPosition = false;
@@ -71,7 +83,7 @@
     /**
      * The amount of time it takes to despawn the Human
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.despawnTime = 5000;
@@ -79,7 +91,7 @@
     /**
      * Used to keep track of the time elapsed
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.time = 1;
@@ -185,7 +197,7 @@ panicCity.entity.Human.prototype.m_updateInput = function () {
             }
         }
     }
-    else{
+    else {
         this.inPosition = true;
         this.m_initTimer();
         this.m_updateTimerbar();
@@ -199,15 +211,15 @@ panicCity.entity.Human.prototype.m_updateInput = function () {
  * @private
  * 
  */
-panicCity.entity.Human.prototype.m_initTimer = function(){
-    if(this.flippedX = false) {
+panicCity.entity.Human.prototype.m_initTimer = function () {
+    if (this.flippedX = false) {
         this.flippedX = true;
     }
     this.animation.gotoAndPlay("help");
-    if(this.started == true){
+    if (this.started == true) {
         return;
     }
-    else{
+    else {
         this.started = true;
         var self = this;
         this.timer = this.game.timers.create({
@@ -225,10 +237,10 @@ panicCity.entity.Human.prototype.m_initTimer = function(){
  * @return {undefined}
  * @private
  */
-panicCity.entity.Human.prototype.m_initProgressbar = function(){
+panicCity.entity.Human.prototype.m_initProgressbar = function () {
     this.timerBar = new rune.ui.Progressbar(27, 4, "gray", "orange");
     this.timerBar.progress = (this.time / 1);
-    
+
     this.game.stage.addChild(this.timerBar);
 }
 
@@ -239,7 +251,7 @@ panicCity.entity.Human.prototype.m_initProgressbar = function(){
  * @private
  * 
  */
-panicCity.entity.Human.prototype.m_updateTimerbar = function(){
+panicCity.entity.Human.prototype.m_updateTimerbar = function () {
     this.time = 1 - this.timer.progressTotal;
     this.timerBar.progress = (this.time / 1);
     this.timerBar.x = this.x;
@@ -267,11 +279,11 @@ panicCity.entity.Human.prototype.m_die = function () {
  * 
  * @param {panicCity.entity.Base} base - the Base object
  */
-panicCity.entity.Human.prototype.getSaved = function(base){
+panicCity.entity.Human.prototype.getSaved = function (base) {
     this.game.humans.removeMember(this, true);
     this.game.stage.removeChild(this.timerBar);
     this.game.updateScoretext(20);
-    base.forEachMember(function (base){
+    base.forEachMember(function (base) {
         base.heal(40);
     }, this);
 }

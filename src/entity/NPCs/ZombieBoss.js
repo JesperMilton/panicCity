@@ -30,17 +30,23 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
 
+    /**
+    * If zombieBoss is attacking or not.
+     * 
+     * @type {boolean}
+     * @public
+     */
     this.isAttacking = false;
 
     /**
      * Array of the zombiesBosses targets.
      * 
-     * @type (Array)
+     * @type {Array}
      * @public
      */
     this.targets = [];
@@ -48,7 +54,7 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     /**
      * The closet player.
      * 
-     * @type (panicCity.entity.Entity)
+     * @type {panicCity.entity.Entity}
      * @public
      */
     this.newTarget;
@@ -56,7 +62,7 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     /**
      * Makes the zombieBoss immovable.
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.immovable = true;
@@ -64,7 +70,7 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     /**
      * Controls the delayed attack pattern of the zombieBoss.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.lastShot = 0;
@@ -72,7 +78,7 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     /**
      * Controls the delayed of the thorw attack.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.lastThow = 0;
@@ -80,7 +86,7 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     /**
      * Cooldown for the zombieBoss attacks.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.coolDown = 2000;

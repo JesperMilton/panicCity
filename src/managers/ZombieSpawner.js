@@ -18,7 +18,7 @@ panicCity.managers.ZombieSpawner = function (game) {
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -26,7 +26,7 @@ panicCity.managers.ZombieSpawner = function (game) {
     /**
      * Array for the different spawnpoints for the Zombies.
      * 
-     * @type (Array)
+     * @type {{x: number, y: number}[]}
      * @public
      */
     this.spawnPoints = [{ x: -50, y: 150 }, { x: 75, y: 330 }, { x: 525, y: 150 }, { x: 350, y: 330 }];
@@ -34,7 +34,7 @@ panicCity.managers.ZombieSpawner = function (game) {
     /**
      * Array for the different spawnpoints for the ZombieBoss.
      * 
-     * @type (Array)
+     * @type {{x: number, y: number}[]}
      * @public
      */
     this.bossSpawnPoints = [{x: -80, y: 100}, {x: 555, y: 100}];

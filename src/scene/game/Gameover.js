@@ -14,7 +14,7 @@ panicCity.scene.Gameover = function(game){
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;

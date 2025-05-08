@@ -30,7 +30,7 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -38,7 +38,7 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
     /**
      * Makes the base immovable.
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.immovable = true;
@@ -46,7 +46,7 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
     /**
      * Total amount of health for the base.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.health = 500;

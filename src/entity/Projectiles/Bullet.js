@@ -32,13 +32,15 @@ panicCity.entity.Bullet = function (player) {
 
     /**
      * The object of the player that intiated the projectile
-     * @type {Object}
+     * 
+     * @type {panicCity.entity.Entity}
      * @public
      */
     this.player = player;
 
     /**
      * The Y-coordinate of the bullet
+     * 
      * @type {number}
      * @public
      */
@@ -46,6 +48,7 @@ panicCity.entity.Bullet = function (player) {
 
     /**
      * The X-coordinate of the bullet
+     * 
      * @type {number}
      * @public
      */
@@ -53,6 +56,7 @@ panicCity.entity.Bullet = function (player) {
 
     /**
      * The texture of the bullet
+     * 
      * @type {string}
      * @public
      */
@@ -60,6 +64,7 @@ panicCity.entity.Bullet = function (player) {
 
     /**
      * The direction of the bullet
+     * 
      * @type {string}
      * @public
      */

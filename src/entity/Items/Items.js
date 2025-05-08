@@ -22,7 +22,7 @@ panicCity.entity.Items = function (x, y, width, height, texture, game) {
     /**
      * The Game object
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;

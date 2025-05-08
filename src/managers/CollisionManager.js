@@ -18,7 +18,7 @@ panicCity.managers.CollisionManager = function (game) {
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -26,7 +26,7 @@ panicCity.managers.CollisionManager = function (game) {
     /**
      * The walls to contain the game area.
      * 
-     * @type (Array)
+     * @type {rune.display.DisplayObject[]}
      * @public
      */
     this.m_walls = [

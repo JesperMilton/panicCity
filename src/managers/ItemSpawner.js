@@ -18,7 +18,7 @@ panicCity.managers.ItemSpawner = function (game) {
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;

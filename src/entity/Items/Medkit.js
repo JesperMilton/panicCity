@@ -19,7 +19,7 @@ panicCity.entity.Medkit = function (x, y, game) {
     /**
      * Total amount of healing points to be given out
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.hp = 35;
@@ -27,7 +27,7 @@ panicCity.entity.Medkit = function (x, y, game) {
     /**
      * The category of the item
      * 
-     * @type (string)
+     * @type {string}
      * @public
      */
     this.type = "MEDKIT";
@@ -35,7 +35,7 @@ panicCity.entity.Medkit = function (x, y, game) {
     /**
      * Total amount of points to be added to score
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.pointValue = 15;

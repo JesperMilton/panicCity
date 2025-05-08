@@ -30,7 +30,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -38,7 +38,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * The closet player.
      * 
-     * @type (panicCity.entity.Entity)
+     * @type {panicCity.entity.Entity}
      * @public
      */
     this.newTarget;
@@ -46,6 +46,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * Flag to control if the zombie is attacking.
      * 
+     * @type {boolean}
      * @public
      */
     this.isAttacking;
@@ -53,7 +54,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * The mass of the zombie.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.mass = 0;
@@ -61,6 +62,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * The direction of the zombie.
      * 
+     * @type {string}
      * @public
      */
     this.direction;
@@ -68,7 +70,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * A counter fo the animations ticks.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.animationCounter = 0;
@@ -76,7 +78,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * Controls the delayed attack pattern of the zombie.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.lastShot = 0;
@@ -84,7 +86,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * Cooldown for the zombie attacks.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.coolDown = 2000;
@@ -92,7 +94,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * Used for dropping items from the zombies.
      * 
-     * @type (panicCity.managers.ItemSpawner)
+     * @type {panicCity.managers.ItemSpawner}
      * @public
      */
     this.itemSpawner = new panicCity.managers.ItemSpawner(this.game);
@@ -100,7 +102,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * Emitter for when the zombie dies.
      * 
-     * @type (rune.particle.Emitter)
+     * @type {rune.particle.Emitter}
      * @public
      */
     this.emitterTest = new rune.particle.Emitter(0, 0, 0, 0, {
@@ -116,12 +118,6 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
         maxRotation: 2
     });
 
-    /**
-     * The stage of the game.
-     * 
-     * @type (Object)
-     * @public
-     */
     this.game.stage.addChild(this.emitterTest);
 };
 

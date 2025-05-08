@@ -30,7 +30,7 @@ panicCity.entity.ZombieRanger = function (x, y, width, height, texture, game) {
     /**
      * Controls the delay of the throw attack.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.lastThrow = 0;
@@ -38,7 +38,7 @@ panicCity.entity.ZombieRanger = function (x, y, width, height, texture, game) {
     /**
      * Cooldown for the zombies throw attacks.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.throwCoolDown = 2000;

@@ -30,7 +30,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -38,7 +38,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     /**
      * The default direction of the player.
      * 
-     * @type (String)
+     * @type {string}
      * @public
      */
     this.direction = "UP";
@@ -46,7 +46,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     /**
      * Tha Players gamepad-Index which is used for controlling a gamepad.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.gamepadIndex = gamepadIndex;
@@ -54,7 +54,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     /**
      * Total amount health for the Player.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.health = 200;
@@ -62,7 +62,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     /**
      * Total amount of mass the Player has.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.mass = 20;
@@ -70,7 +70,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     /**
      * Flag to control if the Player is downed or not.
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.isDowned = false;

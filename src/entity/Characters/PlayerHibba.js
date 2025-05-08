@@ -30,7 +30,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -38,7 +38,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     /**
      * The default direction of the player.
      * 
-     * @type (String)
+     * @type {string}
      * @public
      */
     this.direction = "UP";
@@ -46,7 +46,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     /**
      * The Players gamepad-Index which is used for controlling a gamepad.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.gamepadIndex = gamepadIndex;
@@ -54,7 +54,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     /**
      * Total amount health for the Player.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.health = 200;
@@ -62,7 +62,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     /**
      * Total amount of mass the Player has.
      * 
-     * @type (number)
+     * @type {number}
      * @public
      */
     this.mass = 20;
@@ -70,7 +70,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     /**
      * Flag to control if the Player is downed or not.
      * 
-     * @type (boolean)
+     * @type {boolean}
      * @public
      */
     this.isDowned = false;
@@ -113,10 +113,6 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
     }
 
     this.gamepad = this.game.gamepads.get(this.gamepadIndex);
-
-    if (this.gamepad.justPressed(7)) {
-        console.log("stopped");
-    }
 
     if (!this.gamepad.pressed(7)) {
         if (this.keyboard.pressed("W") || this.gamepad.stickLeftUp) {

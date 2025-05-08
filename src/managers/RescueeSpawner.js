@@ -18,7 +18,7 @@ panicCity.managers.RescueeSpawner = function (game) {
     /**
      * The Game object.
      * 
-     * @type (rune.scene.Scene)
+     * @type {rune.scene.Scene}
      * @public
      */
     this.game = game;
@@ -26,7 +26,7 @@ panicCity.managers.RescueeSpawner = function (game) {
     /**
      * Array for the different spawnpoints for the humans.
      * 
-     * @type (Array)
+     * @type {{x: number, y: number}[]}
      * @public
      */
     this.spawnPoints = [{ x: -50, y: 150 }, { x: 75, y: 240 }, { x: 450, y: 150 }, { x: 350, y: 240 }];
