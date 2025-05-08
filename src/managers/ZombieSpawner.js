@@ -3,23 +3,22 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the ZombieSpawner class.
  *
  * @constructor
  *
  * @class
- * @classdesc
  * 
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
- * ...
+ * Handles the spawning of zombies.
  */
 panicCity.managers.ZombieSpawner = function (game) {
 
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;

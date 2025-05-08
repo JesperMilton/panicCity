@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the Human class.
  *
  * @constructor
  * @extends panicCity.entity.Entity
@@ -12,7 +12,7 @@
  * 
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
  * The class for the Human NPCs, includes methods for animations and movements, also includes basic functions such as getSaved and die
  */
@@ -47,7 +47,7 @@
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;
@@ -265,7 +265,7 @@ panicCity.entity.Human.prototype.m_die = function () {
  * @return {undefined}
  * @public
  * 
- * @param {Object} base - the Base object
+ * @param {panicCity.entity.Base} base - the Base object
  */
 panicCity.entity.Human.prototype.getSaved = function(base){
     this.game.humans.removeMember(this, true);

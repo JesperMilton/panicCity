@@ -3,23 +3,22 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the ItemSpawner class.
  *
  * @constructor
  *
  * @class
- * @classdesc
  * 
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
- * ...
+ * Class to control how the items drop in the Game.
  */
 panicCity.managers.ItemSpawner = function (game) {
 
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;

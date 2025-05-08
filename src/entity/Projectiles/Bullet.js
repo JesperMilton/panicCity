@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
  *
  * @constructor
  * @extends rune.display.Graphic
@@ -71,6 +70,7 @@ panicCity.entity.Bullet = function (player) {
     //--------------------------------------------------------------------------
     
     rune.display.Graphic.call(this, this.x, this.y, 5, 5, this.bulletTexture);
+    
     /**
      * The hitbox of the bullet
      * @type {Object}

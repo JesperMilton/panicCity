@@ -3,23 +3,22 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the CollisionManger class.
  *
  * @constructor
  *
  * @class
- * @classdesc
  * 
- * @param {object} game - The Game object.
+ * @param {rune.scene.Scene} game - The Game object.
  * 
- * ...
+ * Class to handle all the collisions in the Game.
  */
 panicCity.managers.CollisionManager = function (game) {
 
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;

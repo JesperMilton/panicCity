@@ -3,24 +3,23 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the WaveManager class.
  *
  * @constructor
  *
  * @class
- * @classdesc
  * 
- * @param {object} game - The Game object
- * @param {object} cameras - The Cameras object
+ * @param {rune.scene.Scene} game - The Game object
+ * @param {rune.camera.Camera} cameras - The Cameras object
  * 
- * ...
+ * Handles the waves of the Game.
  */
 panicCity.managers.WaveManager = function (game, cameras) {
 
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;
@@ -28,7 +27,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * The Cameras object.
      * 
-     * @type (Object)
+     * @type (rune.camera.Camera)
      * @public
      */
     this.m_cameras = cameras;
@@ -100,7 +99,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     /**
      * The Camera object.
      * 
-     * @type (Object)
+     * @type (rune.camera.Camera)
      * @public
      */
     this.m_cameras.getCameraAt(1).addChild(this.text);

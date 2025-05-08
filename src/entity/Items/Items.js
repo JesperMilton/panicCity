@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
  *  The base class for all items. Responsible for  all base functions such as delete and heal.
  * 
  * @constructor
@@ -16,15 +15,14 @@
  * @param {number} width - Width
  * @param {number} height - Height
  * @param {string} texture - texture resource
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
- * ...
  */
 panicCity.entity.Items = function (x, y, width, height, texture, game) {
     /**
      * The Game object
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;
@@ -73,7 +71,7 @@ panicCity.entity.Items.prototype.m_initAnimations = function () {
  * @return {undefined}
  * @public
  * 
- * @param {Object} target - The target to be healed
+ * @param {panicCity.entity.Entity} target - The target to be healed
  */
 panicCity.entity.Items.prototype.heal = function (target) {
     target.forEachMember(function (target){

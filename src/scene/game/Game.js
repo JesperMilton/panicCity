@@ -7,6 +7,11 @@
  * The Game Object, responsible for showing the game stage 
  */
 panicCity.scene.Game = function () {
+
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
+    
     rune.scene.Scene.call(this);
 
     /**
@@ -161,6 +166,9 @@ panicCity.scene.Game.prototype.m_initBackground = function () {
 
 /**
  * Updates the score
+ * 
+ * @param {number} points The amount of points to be added to the score.
+ * 
  * @public
  * @returns {undefined}
  */

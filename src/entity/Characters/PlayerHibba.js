@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
  *
  * @constructor
  * @extends panicCity.entity.Entity
@@ -15,7 +14,7 @@
  * @param {number} width - Width
  * @param {number} height - Height
  * @param {string} texture - texture resource
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * @param {number} gamepadIndex - GamepadIndex
  * 
  * Class for creating "Hibba"-character, includes methods for basic movement and basic functions such as heal and downed
@@ -31,7 +30,7 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;
@@ -206,7 +205,7 @@ panicCity.entity.PlayerHibba.prototype.m_initAnimations = function () {
  * 
  */
 panicCity.entity.PlayerHibba.prototype.m_initHealthBar = function () {
-    this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "red");
+    this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "green");
     this.game.stage.addChild(this.healthBar);
 }
 
@@ -236,8 +235,9 @@ panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
     if (this.isDowned) {
         return;
     }
-    this.flicker.start(250);
     this.health -= damage;
+    this.flicker.start(250);
+    this.gamepad.vibrate();
     if (this.health <= 0) {
         this.m_downed();
     }

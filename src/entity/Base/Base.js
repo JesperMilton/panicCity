@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the Base class.
  *
  * @constructor
  * @extends rune.display.Sprite
@@ -15,7 +15,7 @@
  * @param {number} width - Width
  * @param {number} height - Height
  * @param {string} texture - texture resource
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
  * Class for the base, includes methods such as heal, die and healthbar
  */
@@ -30,7 +30,7 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;

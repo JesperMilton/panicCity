@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the ZombieRanger class.
  *
  * @constructor
  * @extends panicCity.entity.Zombie
@@ -15,7 +15,7 @@
  * @param {number} width - Width
  * @param {number} height - Height
  * @param {string} texture - texture resource
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
  * Class for Ranger zombie, includes methods such as initStatus and movement logic
  */
@@ -137,7 +137,7 @@ panicCity.entity.ZombieRanger.prototype.m_throwAttack = function () {
     var now = Date.now();
     if (this.velocity.x == 0.0 && now > this.lastThrow) {
         this.animation.gotoAndPlay("attack");
-        var projectile = new panicCity.entity.Projectile(5, 13, this, this.newTarget, "image_Bottle", 10, this.game);
+        var projectile = new panicCity.entity.Projectile(5, 13, this, this.newTarget, 10, "image_Bottle", this.game);
         this.game.projectiles.addMember(projectile);
 
         this.lastThrow = now + this.throwCoolDown;

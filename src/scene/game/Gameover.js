@@ -6,7 +6,7 @@
  *
  * @class
  * 
- * @param {Object} game - The game object
+ * @param {rune.scene.Scene} game - The game object
 */
 panicCity.scene.Gameover = function(game){
     rune.scene.Scene.call(this);
@@ -14,7 +14,7 @@ panicCity.scene.Gameover = function(game){
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;

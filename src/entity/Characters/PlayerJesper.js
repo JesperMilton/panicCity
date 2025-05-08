@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
  *
  * @constructor
  * @extends panicCity.entity.Entity
@@ -15,7 +14,7 @@
  * @param {number} width - Width
  * @param {number} height - Height
  * @param {string} texture - texture resource
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * @param {number} gamepadIndex - GamepadIndex
  * 
 * Class for creating "Jesper"-character, includes methods for basic movement and basic functions such as heal and downed
@@ -31,7 +30,7 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;
@@ -97,7 +96,7 @@ panicCity.entity.PlayerJesper.prototype.init = function () {
  */
 panicCity.entity.PlayerJesper.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
-    this.m_updateInput(step);
+    this.m_updateInput();
     this.m_updateHealthbar();
 };
 
@@ -108,7 +107,7 @@ panicCity.entity.PlayerJesper.prototype.update = function (step) {
  * @private
  * 
  */
-panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
+panicCity.entity.PlayerJesper.prototype.m_updateInput = function () {
     if (this.isDowned) {
         return;
     }
@@ -192,8 +191,7 @@ panicCity.entity.PlayerJesper.prototype.m_updateInput = function (step) {
  * @private
  * 
  */
-panicCity.entity.PlayerJesper.prototype.m_initAnimations = function (step) {
-    panicCity.entity.Entity.prototype.update.call(this, step);
+panicCity.entity.PlayerJesper.prototype.m_initAnimations = function () {
     this.animation.create("idle", [0, 1, 2], 6, true);
     this.animation.create("walkSide", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
     this.animation.create("walkUp", [12, 13, 14, 15, 16], 5, true);
@@ -209,7 +207,7 @@ panicCity.entity.PlayerJesper.prototype.m_initAnimations = function (step) {
  * 
  */
 panicCity.entity.PlayerJesper.prototype.m_initHealthBar = function () {
-    this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "red");
+    this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "green");
     this.game.stage.addChild(this.healthBar);
 }
 
@@ -239,8 +237,9 @@ panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
     if (this.isDowned) {
         return;
     }
-    this.flicker.start(250);
     this.health -= damage;
+    this.flicker.start(250);
+    this.gamepad.vibrate();
     if (this.health <= 0) {
         this.m_downed();
     }

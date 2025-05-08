@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
  *  The item Plank
  * 
  * @constructor
@@ -13,9 +12,8 @@
  * 
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate
- * @param {object} game - The Game object.
+ * @param {rune.scene.Scene} game - The Game object.
  * 
- * ...
  */
 panicCity.entity.Plank = function (x, y, game) {
     /**

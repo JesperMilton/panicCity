@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the Zombie class.
  *
  * @constructor
  * @extends panicCity.entity.Entity
@@ -15,7 +15,7 @@
  * @param {number} width - Width
  * @param {number} height - Height
  * @param {string} texture - texture resource
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
  * The basic class for Zombie, includes methods for basic animations and functions such as die, attack, findClosestPlayer
  */
@@ -30,7 +30,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;
@@ -232,7 +232,6 @@ panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
         if (target.isDowned) {
             return;
         }
-        console.log("target outside: ", target);
         var dX = target.x - this.x;
         var dY = target.y - this.y;
         var distance = dY * dY + dX * dX;
@@ -246,7 +245,7 @@ panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
 /**
  * Attacks a target.
  * 
- * @param {Object} target The closest player.
+ * @param {panicCity.entity.Entity} target The closest player.
  *
  * @return {undefined}
  * @private

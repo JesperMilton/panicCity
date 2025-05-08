@@ -3,23 +3,22 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the RescueeSpawner class.
  *
  * @constructor
  *
  * @class
- * @classdesc
  * 
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
- * ...
+ * Handles the spawning of humans to be rescued.
  */
 panicCity.managers.RescueeSpawner = function (game) {
 
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;

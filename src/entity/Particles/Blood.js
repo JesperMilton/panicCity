@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the Blood class.
  *
  * @constructor
  * @extends rune.particle.Particle

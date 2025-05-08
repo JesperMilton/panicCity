@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the ZombieHunter class.
  *
  * @constructor
  * @extends panicCity.entity.Zombie
@@ -15,7 +15,7 @@
  * @param {number} width - Width
  * @param {number} height - Height
  * @param {string} texture - texture resource
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
  * Class for hunter zombie, includes methods such as initStatus and movement logic
  */

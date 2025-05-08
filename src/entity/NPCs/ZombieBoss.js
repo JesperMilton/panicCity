@@ -3,22 +3,21 @@
 //------------------------------------------------------------------------------
 
 /**
- * ...
+ * Instances of the ZombieBoss class.
  *
  * @constructor
  * @extends panicCity.entity.Entity
  *
  * @class
- * @classdesc
  * 
  * @param {number} x - X coordinate
  * @param {number} y - Y coordinate
  * @param {number} width - Width
  * @param {number} height - Height
  * @param {string} texture - texture resource
- * @param {object} game - The Game object
+ * @param {rune.scene.Scene} game - The Game object
  * 
- * ...
+ * Class for ZombieBoss, handles movment and attack functions of the ZombieBoss.
  */
 
 panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
@@ -31,7 +30,7 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     /**
      * The Game object.
      * 
-     * @type (Object)
+     * @type (rune.scene.Scene)
      * @public
      */
     this.game = game;
@@ -211,7 +210,7 @@ panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
     var now = Date.now();
     if (this.velocity.x == 0.0 && now > this.lastThow) {
         this.animation.gotoAndPlay("attack");
-        var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, "image_Stone", 35, this.game);
+        var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, 35, "image_Stone", this.game);
         this.game.projectiles.addMember(projectile);
 
         this.lastThow = now + this.coolDown;
@@ -221,7 +220,7 @@ panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
 /**
  * Attacks a target.
  * 
- * @param {Object} target The closest player.
+ * @param {panicCity.entity.Entity} target The closest player.
  *
  * @return {undefined}
  * @private
