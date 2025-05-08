@@ -15,12 +15,39 @@
  * ...
  */
 panicCity.managers.ZombieSpawner = function (game) {
+
+    /**
+     * The Game object.
+     * 
+     * @type (Object)
+     * @public
+     */
     this.game = game;
     
+    /**
+     * Array for the different spawnpoints for the Zombies.
+     * 
+     * @type (Array)
+     * @public
+     */
     this.spawnPoints = [{ x: -50, y: 150 }, { x: 75, y: 330 }, { x: 525, y: 150 }, { x: 350, y: 330 }];
+
+    /**
+     * Array for the different spawnpoints for the ZombieBoss.
+     * 
+     * @type (Array)
+     * @public
+     */
     this.bossSpawnPoints = [{x: -80, y: 100}, {x: 555, y: 100}];
 };
 
+/**
+ * Spawns the zombies.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.ZombieSpawner.prototype.spawnZombie = function () {
     var ran = Math.floor(Math.random() * 3) + 1;
 
@@ -51,6 +78,13 @@ panicCity.managers.ZombieSpawner.prototype.spawnZombie = function () {
     }
 };
 
+/**
+ * Spawns the ZombieBoss.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.ZombieSpawner.prototype.spawnZombieBoss = function () {
     var randomNum = Math.floor(Math.random() * 2);
 

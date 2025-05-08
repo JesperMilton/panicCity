@@ -232,6 +232,7 @@ panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
         if (target.isDowned) {
             return;
         }
+        console.log("target outside: ", target);
         var dX = target.x - this.x;
         var dY = target.y - this.y;
         var distance = dY * dY + dX * dX;

@@ -244,7 +244,6 @@ panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
     if (this.health <= 0) {
         this.m_downed();
     }
-    console.log("players takes this much damage: ", damage, " player health: ", this.health);
 }
 
 /**

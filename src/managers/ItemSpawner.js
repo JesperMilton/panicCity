@@ -15,9 +15,26 @@
  * ...
  */
 panicCity.managers.ItemSpawner = function (game) {
+
+    /**
+     * The Game object.
+     * 
+     * @type (Object)
+     * @public
+     */
     this.game = game;
 };
 
+/**
+ * Spawns the different items based on the enimes location.
+ * 
+ * @param {number} x The X value of the enimey.
+ * @param {number} y The Y value of the enemy.
+ *
+ * @return {undefined}
+ * @public
+ * 
+ */
 panicCity.managers.ItemSpawner.prototype.spawnItem = function(x, y){
     var item;
     if(this.m_randomChance(70)){
@@ -40,6 +57,15 @@ panicCity.managers.ItemSpawner.prototype.spawnItem = function(x, y){
     this.game.items.addMember(item);
 }
 
+/**
+ * Returns a true based on the percentage.
+ * 
+ * @param {number} percentage The chance percentage.
+ *
+ * @return {boolean}
+ * @private
+ * 
+ */
 panicCity.managers.ItemSpawner.prototype.m_randomChance = function(percentage){
     var result = rune.util.Math.chance(percentage);
     return result;

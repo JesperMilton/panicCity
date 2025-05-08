@@ -15,14 +15,21 @@
  * ...
  */
 panicCity.managers.CollisionManager = function (game) {
+
     /**
-     * Reference to the Game object.
-     *
-     * @type {object}
+     * The Game object.
      * 
+     * @type (Object)
+     * @public
      */
     this.game = game;
 
+    /**
+     * The walls to contain the game area.
+     * 
+     * @type (Array)
+     * @public
+     */
     this.m_walls = [
         this.leftWall = new rune.display.DisplayObject(-10, -5, 10, 485),
         this.topWall = new rune.display.DisplayObject(-5, -10, 485, 10),
@@ -144,6 +151,13 @@ panicCity.managers.CollisionManager.prototype.m_items = function () {
     }, this);
 }
 
+/**
+ * Controls the collision for the rescuees DisplayGroup.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.CollisionManager.prototype.m_rescuees = function () {
     this.game.humans.hitTestGroup(this.game.players, function (human, player) {
         if(human.inPosition){
