@@ -46,7 +46,7 @@ panicCity.scene.Gameover.prototype.init = function() {
  panicCity.scene.Gameover.prototype.update = function(step) {
     rune.scene.Scene.prototype.update.call(this, step);
     var gamepad = this.gamepads.get(0);
-    if (this.keyboard.justPressed("SPACE") || gamepad.justPressed(2)) {
+    if (this.keyboard.justPressed("SPACE") || gamepad.justPressed(0)) {
         this.application.scenes.load([new panicCity.scene.Menu()]);
     }
 };

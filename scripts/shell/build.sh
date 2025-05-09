@@ -9,6 +9,7 @@ npx google-closure-compiler \
 --js "./../../lib/rune.js" \
 --js "./../../src/scope/Manifest.js" \
 --js "./../../src/data/resource/Requests.js" \
+--js "./../../src/scene/menu/Credits.js" \
 --js "./../../src/scene/menu/Menu.js" \
 --js "./../../src/entity/Entity.js" \
 --js "./../../src/entity/Projectiles/Bullet.js" \

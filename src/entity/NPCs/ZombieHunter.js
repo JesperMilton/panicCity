@@ -60,6 +60,10 @@ panicCity.entity.ZombieHunter.prototype.m_initStats = function () {
  * 
  */
 panicCity.entity.ZombieHunter.prototype.m_updateInput = function () {
+    if (!this.newTarget) {
+        console.log("No target set: ", this.newTarget);
+        return;
+    }
     var dX = this.newTarget.x - this.x;
     var dY = this.newTarget.y - this.y;
 

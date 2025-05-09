@@ -16,6 +16,14 @@ panicCity.scene.Menu = function() {
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
+
+    /**
+     * Demo selection menu.
+     *
+     * @type {rune.ui.VTMenu}
+     * @private
+     */
+    this.m_menu = null;
     
     rune.scene.Scene.call(this);
 };
@@ -32,12 +40,7 @@ panicCity.scene.Menu.prototype.constructor = panicCity.scene.Menu;
  */
 panicCity.scene.Menu.prototype.init = function() {
     rune.scene.Scene.prototype.init.call(this);
-
-    var text = new rune.text.BitmapField("Hello Menu!");
-    text.autoSize = true;
-    text.center = this.application.screen.center;
-
-    this.stage.addChild(text);
+    this.m_initMenu();
 };
 
 /**
@@ -45,15 +48,43 @@ panicCity.scene.Menu.prototype.init = function() {
  */
 panicCity.scene.Menu.prototype.update = function(step) {
     rune.scene.Scene.prototype.update.call(this, step);
-    var gamepad = this.gamepads.get(0);
-    if (this.keyboard.justPressed("SPACE") || gamepad.justPressed(2)) {
-        this.application.scenes.load([new panicCity.scene.Game()]);
-    }
+    this.m_updateInput(step);
 };
 
 /**
  * @inheritDoc
  */
-panicCity.scene.Menu.prototype.dispose = function() {
-    rune.scene.Scene.prototype.dispose.call(this);
+panicCity.scene.Menu.prototype.m_initMenu = function() {
+    this.m_menu = new rune.ui.VTMenu();
+    this.m_menu.onSelect(this.m_onMenuSelect, this);
+    this.m_menu.add("Game");
+    this.m_menu.add("Credits");
+    this.m_menu.center = this.cameras.getCameraAt(0).viewport.center;
+    this.stage.addChild(this.m_menu);
+};
+
+panicCity.scene.Menu.prototype.m_updateInput = function(step) {
+    if (this.keyboard.justPressed("W") || this.gamepads.stickLeftJustUp) {
+        this.m_menu.up()
+    }
+    
+    if (this.keyboard.justPressed("S") || this.gamepads.stickLeftJustDown) {
+        this.m_menu.down()
+    }
+    
+    if (this.keyboard.justPressed("SPACE") || this.gamepads.justPressed(0)) {
+        this.m_menu.select();
+    }
+};
+
+panicCity.scene.Menu.prototype.m_onMenuSelect = function(elem) {
+    switch (elem.text) {
+        case "Game":
+            this.application.scenes.load([new panicCity.scene.Game()])
+            break;
+        
+        case "Credits":
+            this.application.scenes.load([new panicCity.scene.Credits()])
+            break;
+    }
 };

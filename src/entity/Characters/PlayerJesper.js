@@ -207,7 +207,7 @@ panicCity.entity.PlayerJesper.prototype.m_initAnimations = function () {
  * 
  */
 panicCity.entity.PlayerJesper.prototype.m_initHealthBar = function () {
-    this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "green");
+    this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "#6fff2c");
     this.game.stage.addChild(this.healthBar);
 }
 
