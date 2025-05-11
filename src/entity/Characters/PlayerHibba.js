@@ -44,6 +44,22 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
     this.direction = "UP";
 
     /**
+     * Flag for checking if player is invincible
+     * 
+     * @type {boolean}
+     * @public
+     */
+     this.invincible = false;
+
+     /**
+     * Flag for checking if full auto is enabled
+     * 
+     * @type {boolean}
+     * @public
+     */
+      this.fullAuto = false;
+
+    /**
      * The Players gamepad-Index which is used for controlling a gamepad.
      * 
      * @type {number}
@@ -171,10 +187,17 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
     if (this.gamepad.stickLeftDown && this.gamepad.stickLeftLeft) {
         this.direction = "DOWN-LEFT";
     }
-
-    if (this.keyboard.justPressed("Q") || this.gamepad.justPressed(2)) {
-        var bullet = new panicCity.entity.Bullet(this);
-        this.game.bullets.addMember(bullet);
+    if(this.fullAuto){
+        if (this.keyboard.pressed("Q") || this.gamepad.pressed(2)) {
+            var bullet = new panicCity.entity.Bullet(this);
+            this.game.bullets.addMember(bullet);
+        }
+    }
+    else{
+        if (this.keyboard.justPressed("Q") || this.gamepad.justPressed(2)) {
+            var bullet = new panicCity.entity.Bullet(this);
+            this.game.bullets.addMember(bullet);
+        }
     }
 };
 
@@ -229,6 +252,9 @@ panicCity.entity.PlayerHibba.prototype.m_updateHealthbar = function () {
  */
 panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
     if (this.isDowned) {
+        return;
+    }
+    if (this.invincible){
         return;
     }
     this.health -= damage;

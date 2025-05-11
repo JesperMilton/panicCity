@@ -36,6 +36,14 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
     this.game = game;
 
     /**
+     * Flag for checking if base is invincible
+     * 
+     * @type {boolean}
+     * @public
+     */
+     this.invincible = false;
+
+    /**
      * Makes the base immovable.
      * 
      * @type {boolean}
@@ -86,6 +94,9 @@ panicCity.entity.Base.prototype.update = function (step) {
  * 
  */
 panicCity.entity.Base.prototype.takeDamage = function (damage) {
+    if(this.invincible){
+        return;
+    }
     this.health -= damage;
     this.healthBar.progress = (this.health / 500);
     if (this.health <= 0) {

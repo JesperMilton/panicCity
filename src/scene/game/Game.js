@@ -61,11 +61,13 @@ panicCity.scene.Game.prototype.init = function () {
     this.items = this.groups.create(this.stage);
     this.walls = this.groups.create(this.stage);
     this.humans = this.groups.create(this.stage);
-    //this.powerups = this.groups.create(this.stage);
+    this.powerups = this.groups.create(this.stage);
 
     this.playerJesper = new panicCity.entity.PlayerJesper(320, 128, 27, 26, "Player1-Sheet", this, 0);
     this.playerHibba = new panicCity.entity.PlayerHibba(140, 128, 27, 26, "Player2-Sheet", this, 1);
     this.base = new panicCity.entity.Base(220, 128, 45, 45, "image_Base", this);
+
+    this.testPower = new panicCity.entity.FullAuto(140, 140, 20, 20, "Human-Shield", this);
 
     this.cameras.getCameraAt(1).targets.add(this.playerJesper);
     this.cameras.getCameraAt(1).targets.add(this.playerHibba);
@@ -73,6 +75,8 @@ panicCity.scene.Game.prototype.init = function () {
     this.players.addMember(this.playerJesper);
     this.players.addMember(this.playerHibba);
     this.baseSta.addMember(this.base);
+
+    this.powerups.addMember(this.testPower);
 
     this.collisionControl = new panicCity.managers.CollisionManager(this);
     this.waveManager = new panicCity.managers.WaveManager(this, this.cameras);
