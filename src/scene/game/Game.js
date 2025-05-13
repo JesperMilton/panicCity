@@ -34,6 +34,8 @@ panicCity.scene.Game = function () {
      * @type {number}
      */
     this.rescueeTime = 10000;
+
+    this.powerupTime = 10000;
 };
 
 //------------------------------------------------------------------------------
@@ -67,8 +69,6 @@ panicCity.scene.Game.prototype.init = function () {
     this.playerHibba = new panicCity.entity.PlayerHibba(140, 128, 27, 26, "Player2-Sheet", this, 1);
     this.base = new panicCity.entity.Base(220, 128, 45, 45, "image_Base", this);
 
-    this.testPower = new panicCity.entity.FullAuto(140, 140, 20, 20, "Human-Shield", this);
-
     this.cameras.getCameraAt(1).targets.add(this.playerJesper);
     this.cameras.getCameraAt(1).targets.add(this.playerHibba);
 
@@ -76,11 +76,10 @@ panicCity.scene.Game.prototype.init = function () {
     this.players.addMember(this.playerHibba);
     this.baseSta.addMember(this.base);
 
-    this.powerups.addMember(this.testPower);
-
     this.collisionControl = new panicCity.managers.CollisionManager(this);
     this.waveManager = new panicCity.managers.WaveManager(this, this.cameras);
     this.rescueeSpawner = new panicCity.managers.RescueeSpawner(this);
+    this.powerupSpawner = new panicCity.managers.PowerupSpawner(this);
 
     this.timers.create({
         duration: this.scoreTime,
@@ -93,6 +92,13 @@ panicCity.scene.Game.prototype.init = function () {
         duration: this.rescueeTime,
         onComplete: function () {
             this.spawnHuman();
+        },
+    });
+
+    this.timers.create({
+        duration: this.powerupTime,
+        onComplete: function () {
+            this.spawnPowerup();
         },
     });
 };
@@ -207,6 +213,16 @@ panicCity.scene.Game.prototype.spawnHuman = function (){
         duration: this.rescueeTime,
         onComplete: function () {
             this.spawnHuman();
+        },
+    });
+}
+
+panicCity.scene.Game.prototype.spawnPowerup = function (){
+    this.powerupSpawner.spawn();
+    this.timers.create({
+        duration: this.powerupTime,
+        onComplete: function () {
+            this.spawnPowerup();
         },
     });
 }
