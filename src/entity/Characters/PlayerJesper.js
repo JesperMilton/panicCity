@@ -44,6 +44,25 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
     this.direction = "UP";
 
     /**
+     * Flag for checking if player is invincible
+     * 
+     * @type {boolean}
+     * @public
+     */
+    this.invincible = false;
+    
+    this.shotgun = false;
+
+
+     /**
+     * Flag for checking if full auto is enabled
+     * 
+     * @type {boolean}
+     * @public
+     */
+      this.fullAuto = false;
+
+    /**
      * Tha Players gamepad-Index which is used for controlling a gamepad.
      * 
      * @type {number}
@@ -178,9 +197,22 @@ panicCity.entity.PlayerJesper.prototype.m_updateInput = function () {
         this.direction = "DOWN-LEFT";
     }
 
-    if (this.keyboard.justPressed("P") || this.gamepad.justPressed(2)) {
-        var bullet = new panicCity.entity.Bullet(this);
-        this.game.bullets.addMember(bullet);
+    if(this.fullAuto){
+        if (this.keyboard.pressed("P") || this.gamepad.pressed(2)) {
+            var bullet = new panicCity.entity.Bullet(this);
+            this.game.bullets.addMember(bullet);
+        }
+    }
+    else if(this.shotgun){
+        if (this.keyboard.justPressed("P") || this.gamepad.justPressed(2)) {
+            var shells = new panicCity.entity.Shell(this, this.game);
+        }
+    }
+    else{
+        if (this.keyboard.justPressed("P") || this.gamepad.justPressed(2)) {
+            var bullet = new panicCity.entity.Bullet(this);
+            this.game.bullets.addMember(bullet);
+        }
     }
 };
 
@@ -235,6 +267,9 @@ panicCity.entity.PlayerJesper.prototype.m_updateHealthbar = function () {
  */
 panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
     if (this.isDowned) {
+        return;
+    }
+    if (this.invincible){
         return;
     }
     this.health -= damage;

@@ -55,6 +55,7 @@ panicCity.managers.CollisionManager.prototype.update = function () {
     this.m_projectiles();
     this.m_items();
     this.m_rescuees();
+    this.m_powerups();
 };
 
 /**
@@ -161,6 +162,17 @@ panicCity.managers.CollisionManager.prototype.m_rescuees = function () {
     this.game.humans.hitTestGroup(this.game.players, function (human, player) {
         if(human.inPosition){
             player.pickupNPC(human,this.game.baseSta);
+        }
+    }, this);
+}
+
+panicCity.managers.CollisionManager.prototype.m_powerups = function () {
+    this.game.powerups.hitTestGroup(this.game.players, function (item, player) {
+        if (item.type === "INVINCIBILITY_BASE") {
+            item.initPower(this.game.baseSta);
+        }
+        else{
+            item.initPower(player);
         }
     }, this);
 }
