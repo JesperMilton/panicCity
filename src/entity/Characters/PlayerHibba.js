@@ -193,6 +193,11 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
             this.game.bullets.addMember(bullet);
         }
     }
+    else if(this.shotgun){
+        if (this.keyboard.justPressed("Q") || this.gamepad.justPressed(2)) {
+            var shells = new panicCity.entity.Shell(this, this.game);
+        }
+    }
     else{
         if (this.keyboard.justPressed("Q") || this.gamepad.justPressed(2)) {
             var bullet = new panicCity.entity.Bullet(this);

@@ -50,6 +50,8 @@ panicCity.entity.PlayerJesper = function (x, y, width, height, texture, game, ga
      * @public
      */
     this.invincible = false;
+    
+    this.shotgun = false;
 
 
      /**
@@ -199,6 +201,11 @@ panicCity.entity.PlayerJesper.prototype.m_updateInput = function () {
         if (this.keyboard.pressed("P") || this.gamepad.pressed(2)) {
             var bullet = new panicCity.entity.Bullet(this);
             this.game.bullets.addMember(bullet);
+        }
+    }
+    else if(this.shotgun){
+        if (this.keyboard.justPressed("P") || this.gamepad.justPressed(2)) {
+            var shells = new panicCity.entity.Shell(this, this.game);
         }
     }
     else{
