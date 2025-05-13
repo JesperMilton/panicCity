@@ -19,6 +19,7 @@
  * 
  */
 panicCity.entity.Items = function (x, y, width, height, texture, game) {
+    
     /**
      * The Game object
      * 
@@ -46,12 +47,18 @@ panicCity.entity.Items.prototype.constructor = panicCity.entity.Items;
  */
 panicCity.entity.Items.prototype.init = function () {
     this.m_initAnimations();
-    this.game.timers.create({
-        duration: 5000,
-        onComplete: function () {
-            this.m_delete();
-        }.bind(this),
-    });
+    this.startTime = Date.now();
+};
+
+/**
+ * @inheritDoc
+ */
+panicCity.entity.Items.prototype.update = function (step) {
+    rune.display.Sprite.prototype.update.call(this, step);
+    
+    if (Date.now() - this.startTime >= 5000) {
+        this.m_delete();
+    }
 };
 
 /**

@@ -262,7 +262,7 @@ panicCity.entity.ZombieBoss.prototype.m_initAnimations = function () {
  */
 panicCity.entity.ZombieBoss.prototype.m_initHealthBar = function () {
     this.healthBar = new rune.ui.Progressbar(200, 6, "gray", "red");
-    this.game.cameras.getCameraAt(1).addChild(this.healthBar);
+    this.game.cameras.getCameraAt(0).addChild(this.healthBar);
 }
 
 /**
@@ -275,7 +275,7 @@ panicCity.entity.ZombieBoss.prototype.m_initHealthBar = function () {
 panicCity.entity.ZombieBoss.prototype.m_updateHealthbar = function () {
     this.healthBar.progress = (this.health / 500);
     this.healthBar.x = 100;
-    this.healthBar.y = 20;
+    this.healthBar.y = 35;
 }
 
 /**
@@ -304,6 +304,6 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
  */
 panicCity.entity.ZombieBoss.prototype.m_die = function () {
     this.game.enemies.removeMember(this, true);
-    this.game.cameras.getCameraAt(1).removeChild(this.healthBar, true);
+    this.game.cameras.getCameraAt(0).removeChild(this.healthBar, true);
     this.game.updateScoretext(50);
-};
+}; 

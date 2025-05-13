@@ -105,7 +105,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
      * @type {rune.particle.Emitter}
      * @public
      */
-    this.emitterTest = new rune.particle.Emitter(0, 0, 0, 0, {
+    this.bloodEmitter = new rune.particle.Emitter(0, 0, 0, 0, {
         particles: [panicCity.entity.Blood],
         minLifespan: 500,
         maxLifespan: 1000,
@@ -118,7 +118,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
         maxRotation: 2
     });
 
-    this.game.stage.addChild(this.emitterTest);
+    this.game.stage.addChild(this.bloodEmitter);
 };
 
 //------------------------------------------------------------------------------
@@ -281,10 +281,10 @@ panicCity.entity.Zombie.prototype.takeDamage = function (damage) {
  * 
  */
 panicCity.entity.Zombie.prototype.m_die = function () {
-    if (this.emitterTest) {
-        this.emitterTest.centerX = this.centerX;
-        this.emitterTest.centerY = this.centerY + 10;
-        this.emitterTest.emit(20);
+    if (this.bloodEmitter) {
+        this.bloodEmitter.centerX = this.centerX;
+        this.bloodEmitter.centerY = this.centerY + 10;
+        this.bloodEmitter.emit(20);
     }
     this.game.enemies.removeMember(this, true);
     this.game.updateScoretext(5);

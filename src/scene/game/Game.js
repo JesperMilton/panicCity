@@ -49,8 +49,12 @@ panicCity.scene.Game.prototype.constructor = panicCity.scene.Game;
 panicCity.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+    this.cameras.getCameraAt(0).fade.opacity = 1;
+    this.cameras.getCameraAt(0).fade.in(1000);
+
     this.m_initBackground();
     this.m_initCamera();
+    this.m_initUI();
     this.m_initScore();
 
     this.players = this.groups.create(this.stage);
@@ -65,10 +69,10 @@ panicCity.scene.Game.prototype.init = function () {
 
     this.playerJesper = new panicCity.entity.PlayerJesper(320, 128, 27, 26, "Player1-Sheet", this, 0);
     this.playerHibba = new panicCity.entity.PlayerHibba(140, 128, 27, 26, "Player2-Sheet", this, 1);
-    this.base = new panicCity.entity.Base(220, 128, 45, 45, "image_Base", this);
+    this.base = new panicCity.entity.Base(220, 128, 45, 45, "Base-Sheet", this);
 
-    this.cameras.getCameraAt(1).targets.add(this.playerJesper);
-    this.cameras.getCameraAt(1).targets.add(this.playerHibba);
+    this.cameras.getCameraAt(0).targets.add(this.playerJesper);
+    this.cameras.getCameraAt(0).targets.add(this.playerHibba);
 
     this.players.addMember(this.playerJesper);
     this.players.addMember(this.playerHibba);
@@ -124,13 +128,23 @@ panicCity.scene.Game.prototype.dispose = function () {
  * @returns {undefined}
  */
 panicCity.scene.Game.prototype.m_initScore = function () {
-    this.counter = new rune.ui.Counter(6, 10, 20);
+    this.counter = new rune.ui.Counter(6, 8, 8, "Counter-Digit-Sheet");
     this.counter.spacing = 10;
-    this.counter.y = 2;
-    this.counter.x = this.application.screen.width - this.counter.width;
+    this.counter.y = 7;
+    this.counter.x = this.application.screen.width - this.counter.width - 15;
     this.counter.value = this.score;
 
-    this.cameras.getCameraAt(1).addChild(this.counter);
+    this.cameras.getCameraAt(0).addChild(this.counter);
+}
+
+/**
+ * Initializes the UI
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.Game.prototype.m_initUI= function () {
+    this.testHud = new rune.display.Graphic( 0, 0, 400, 30, "UI");
+    this.m_cameras.getCameraAt(0).addChild(this.testHud);
 }
 
 /**
@@ -139,7 +153,10 @@ panicCity.scene.Game.prototype.m_initScore = function () {
  * @returns {undefined}
  */
 panicCity.scene.Game.prototype.m_initCamera = function () {
-    this.m_camera = this.cameras.addCamera(this.cameras.createCamera());
+    if (this.cameras.length == 0) {
+        this.cameras.addCamera(this.cameras.createCamera());
+    }
+    this.m_camera = this.cameras.getCameraAt(0);
     this.m_camera.bounderies = new rune.geom.Rectangle(
         0,
         0,
@@ -159,7 +176,7 @@ panicCity.scene.Game.prototype.m_initBackground = function () {
         0,
         475,
         300,
-        "backgroundPlaceholder"
+        "image_Background"
     );
     this.stage.addChild(this.m_background);
 };

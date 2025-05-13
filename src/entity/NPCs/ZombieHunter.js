@@ -26,6 +26,7 @@ panicCity.entity.ZombieHunter = function (x, y, width, height, texture, game) {
     //--------------------------------------------------------------------------
     
     panicCity.entity.Zombie.call(this, x, y, width, height, texture, game);
+    
 };
 
 //------------------------------------------------------------------------------

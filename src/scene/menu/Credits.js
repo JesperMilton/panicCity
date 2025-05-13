@@ -33,6 +33,9 @@ panicCity.scene.Credits.prototype.constructor = panicCity.scene.Credits;
 panicCity.scene.Credits.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+    this.cameras.getCameraAt(0).fade.opacity = 1;
+    this.cameras.getCameraAt(0).fade.in(1000);
+
     var text = new rune.text.BitmapField("Created by: Jesper & Hibba!!");
     text.autoSize = true;
     text.center = this.application.screen.center;

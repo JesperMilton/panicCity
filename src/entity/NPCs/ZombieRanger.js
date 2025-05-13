@@ -76,6 +76,10 @@ panicCity.entity.ZombieRanger.prototype.m_initStats = function () {
  * 
  */
 panicCity.entity.ZombieRanger.prototype.m_updateInput = function () {
+    if (!this.newTarget) {
+        console.log("No target set: ", this.newTarget);
+        return;
+    }
     var dX = this.newTarget.x - this.x;
     var dY = this.newTarget.y - this.y;
     
@@ -134,6 +138,10 @@ panicCity.entity.ZombieRanger.prototype.m_initAnimations = function () {
  * 
  */
 panicCity.entity.ZombieRanger.prototype.m_throwAttack = function () {
+    if (!this.newTarget) {
+        console.log("No target set: ", this.newTarget);
+        return;
+    }
     var now = Date.now();
     if (this.velocity.x == 0.0 && now > this.lastThrow) {
         this.animation.gotoAndPlay("attack");

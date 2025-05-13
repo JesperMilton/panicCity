@@ -86,7 +86,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
      * @type {rune.text.BitmapField}
      * @public
      */
-    this.text = new rune.text.BitmapField();
+    this.text = new rune.text.BitmapField("text", "Font");
 
     /**
      * Use for the size of the text.
@@ -97,7 +97,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
     this.text.autoSize = true;
 
 
-    this.m_cameras.getCameraAt(1).addChild(this.text);
+    this.m_cameras.getCameraAt(0).addChild(this.text);
     this.m_startnewWave();
 };
 
@@ -127,7 +127,7 @@ panicCity.managers.WaveManager.prototype.updateSpawner = function () {
  * 
  */
 panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
-    this.game.timers.create({
+    this.waveTimer = this.game.timers.create({
         duration: 5000,
         onComplete: function () {
             this.m_startnewWave();
@@ -152,7 +152,7 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
         this.currentZombies++;
         for (var i = 0; i < 5; i++) {
             this.zombieSpawner.spawnZombie();
-            this.currentZombies++; 
+            this.currentZombies++;
         }
         this.spawnComplete = true;
     }
@@ -164,9 +164,9 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     //     this.spawnComplete = true;
     // }
 
-    this.text.text = "Wave: " + this.currentWave;
-    this.text.x = this.game.application.screen.width - this.text.width - 5;
-    this.text.y = 15;
+    this.text.text = "WAVE:" + this.currentWave;
+    this.text.centerX = this.game.application.screen.centerX;
+    this.text.y = 7;
 };
 
 /**

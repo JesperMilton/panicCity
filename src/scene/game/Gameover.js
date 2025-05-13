@@ -33,6 +33,9 @@ panicCity.scene.Gameover.prototype.constructor = panicCity.scene.Gameover;
 panicCity.scene.Gameover.prototype.init = function() {
     rune.scene.Scene.prototype.init.call(this);
 
+    this.cameras.getCameraAt(0).fade.opacity = 1;
+    this.cameras.getCameraAt(0).fade.in(1000);
+
     var text = new rune.text.BitmapField("Gameover! Your Score: " + this.game.score);
     text.autoSize = true;
     text.center = this.application.screen.center;

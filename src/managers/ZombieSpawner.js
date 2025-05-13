@@ -38,6 +38,14 @@ panicCity.managers.ZombieSpawner = function (game) {
      * @public
      */
     this.bossSpawnPoints = [{x: -80, y: 100}, {x: 555, y: 100}];
+
+    /**
+     * Array for the different spawnpoints for the ZombieBoss.
+     * 
+     * @type {rune.display.DisplayGroup[][]}
+     * @public
+     */
+    this.bossTargets = [this.game.baseSta, this.game.players];
 };
 
 /**
@@ -89,7 +97,7 @@ panicCity.managers.ZombieSpawner.prototype.spawnZombieBoss = function () {
 
     var zombieBoss = new panicCity.entity.ZombieBoss(this.bossSpawnPoints[randomNum].x, this.bossSpawnPoints[randomNum].y,81, 78, "Boss-Sheet", this.game);
 
-    zombieBoss.targets = [this.game.baseSta, this.game.players];
+    zombieBoss.targets = this.bossTargets;
 
     this.game.enemies.addMember(zombieBoss);
 };

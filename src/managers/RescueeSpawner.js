@@ -67,6 +67,6 @@ panicCity.managers.RescueeSpawner.prototype.spawnRescuee = function () {
  * 
  */
 panicCity.managers.RescueeSpawner.prototype.m_randomChance = function () {
-    var result = rune.util.Math.chance(50);
+    var result = rune.util.Math.chance(100);
     return result;
 }

@@ -63,7 +63,10 @@ panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;
  * @inheritDoc
  */
 panicCity.entity.Base.prototype.init = function () {
+    this.m_initAnimations();
     this.m_initHealthBar();
+
+    this.animation.create("idle", [0], 1, true);
 };
 
 /**
@@ -74,6 +77,18 @@ panicCity.entity.Base.prototype.update = function (step) {
     if(this.keyboard.justPressed("K")) {
         this.healBase(30);
     };
+};
+
+/**
+ * Initialize the animations.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
+panicCity.entity.Base.prototype.m_initAnimations = function () {
+    this.animation.create("idle", [0], 1, true);
+    this.animation.create("dead", [1], 1, true);
 };
 
 /**
@@ -101,6 +116,7 @@ panicCity.entity.Base.prototype.takeDamage = function (damage) {
  * 
  */
 panicCity.entity.Base.prototype.m_die = function () {
+    this.animation.gotoAndPlay("dead");
     this.game.timers.create({
         duration: 4000,
         onComplete: function () {

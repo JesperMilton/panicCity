@@ -78,7 +78,6 @@ panicCity.entity.Projectile = function (width, height, origin, target, damage, t
     var y = this.origin.y + 17;
     var x = this.origin.x + 13;
 
-
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
