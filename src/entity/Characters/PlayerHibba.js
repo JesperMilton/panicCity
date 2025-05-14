@@ -49,15 +49,15 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
      * @type {boolean}
      * @public
      */
-     this.invincible = false;
+    this.invincible = false;
 
-     /**
-     * Flag for checking if full auto is enabled
-     * 
-     * @type {boolean}
-     * @public
-     */
-      this.fullAuto = false;
+    /**
+    * Flag for checking if full auto is enabled
+    * 
+    * @type {boolean}
+    * @public
+    */
+    this.fullAuto = false;
 
     /**
      * The Players gamepad-Index which is used for controlling a gamepad.
@@ -187,18 +187,18 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
     if (this.gamepad.stickLeftDown && this.gamepad.stickLeftLeft) {
         this.direction = "DOWN-LEFT";
     }
-    if(this.fullAuto){
+    if (this.fullAuto) {
         if (this.keyboard.pressed("Q") || this.gamepad.pressed(2)) {
             var bullet = new panicCity.entity.Bullet(this);
             this.game.bullets.addMember(bullet);
         }
     }
-    else if(this.shotgun){
+    else if (this.shotgun) {
         if (this.keyboard.justPressed("Q") || this.gamepad.justPressed(2)) {
             var shells = new panicCity.entity.Shell(this, this.game);
         }
     }
-    else{
+    else {
         if (this.keyboard.justPressed("Q") || this.gamepad.justPressed(2)) {
             var bullet = new panicCity.entity.Bullet(this);
             this.game.bullets.addMember(bullet);
@@ -259,7 +259,7 @@ panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
     if (this.isDowned) {
         return;
     }
-    if (this.invincible){
+    if (this.invincible) {
         return;
     }
     this.health -= damage;
@@ -282,9 +282,11 @@ panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
 panicCity.entity.PlayerHibba.prototype.heal = function (health) {
     if (this.health > 0 && this.health < 200) {
         this.health += health;
+        this.healthBar.progress = (this.health / 200);
     }
     if (this.health > 200) {
         this.health = 200;
+        this.healthBar.progress = (this.health / 200);
     }
 }
 
@@ -347,4 +349,8 @@ panicCity.entity.PlayerHibba.prototype.getRessed = function () {
     this.isDowned = false;
     this.rotation = 0;
     this.health += 100;
+}
+
+panicCity.entity.PlayerHibba.prototype.changeHealthColor = function (color) {
+    this.healthBar.forgroundColor = color;
 }

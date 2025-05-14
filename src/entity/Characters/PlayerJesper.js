@@ -292,9 +292,11 @@ panicCity.entity.PlayerJesper.prototype.takeDamage = function (damage) {
 panicCity.entity.PlayerJesper.prototype.heal = function (health) {
     if (this.health > 0 && this.health < 200) {
         this.health += health;
+        this.healthBar.progress = (this.health / 200);
     }
     if (this.health > 200) {
         this.health = 200;
+        this.healthBar.progress = (this.health / 200);
     }
 }
 
@@ -358,4 +360,8 @@ panicCity.entity.PlayerJesper.prototype.getRessed = function () {
     this.isDowned = false;
     this.rotation = 0;
     this.health += 100;
+}
+
+panicCity.entity.PlayerJesper.prototype.changeHealthColor = function (color) {
+    this.healthBar.forgroundColor = color;
 }
