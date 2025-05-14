@@ -71,7 +71,7 @@ panicCity.scene.Game.prototype.init = function () {
 
     this.playerJesper = new panicCity.entity.PlayerJesper(320, 128, 27, 26, "Player1-Sheet", this, 0);
     this.playerHibba = new panicCity.entity.PlayerHibba(140, 128, 27, 26, "Player2-Sheet", this, 1);
-    this.base = new panicCity.entity.Base(220, 128, 45, 45, "Base-Sheet", this);
+    this.base = new panicCity.entity.Base(220, 128, 47, 47, "Base-Sheet", this);
 
     this.cameras.getCameraAt(0).targets.add(this.playerJesper);
     this.cameras.getCameraAt(0).targets.add(this.playerHibba);

@@ -41,7 +41,7 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
      * @type {boolean}
      * @public
      */
-     this.invincible = false;
+    this.invincible = false;
 
     /**
      * Makes the base immovable.
@@ -93,7 +93,9 @@ panicCity.entity.Base.prototype.update = function (step) {
  */
 panicCity.entity.Base.prototype.m_initAnimations = function () {
     this.animation.create("idle", [0], 1, true);
-    this.animation.create("dead", [1], 1, true);
+    this.animation.create("invincibility", [1], 1, true);
+    this.animation.create("dead", [2], 1, true);
+
 };
 
 /**
@@ -106,13 +108,13 @@ panicCity.entity.Base.prototype.m_initAnimations = function () {
  * 
  */
 panicCity.entity.Base.prototype.takeDamage = function (damage) {
-    if(this.invincible){
+    if (this.invincible) {
         return;
     }
     this.health -= damage;
     this.healthBar.progress = (this.health / 500);
     if (this.health <= 0) {
-     this.m_die();
+        this.m_die();
     }
 }
 
@@ -140,7 +142,7 @@ panicCity.entity.Base.prototype.m_die = function () {
  * @private
  * 
  */
-panicCity.entity.Base.prototype.m_initHealthBar = function() {
+panicCity.entity.Base.prototype.m_initHealthBar = function () {
     this.healthBar = new rune.ui.Progressbar(this.width, 6, "gray", "red");
     this.healthBar.progress = (this.health / 500);
     this.healthBar.x = this.x;
@@ -157,16 +159,21 @@ panicCity.entity.Base.prototype.m_initHealthBar = function() {
  * @public
  * 
  */
-panicCity.entity.Base.prototype.heal = function(health){
-    if(this.health > 0 && this.health < 500){
+panicCity.entity.Base.prototype.heal = function (health) {
+    if (this.health > 0 && this.health < 500) {
         this.health += health;
         this.healthBar.progress = (this.health / 500);
     }
-    if(this.health > 500){
+    if (this.health > 500) {
         this.health = 500;
     }
 }
 
-panicCity.entity.Base.prototype.changeHealthColor = function(color){
+panicCity.entity.Base.prototype.changeHealthColor = function (color) {
     this.healthBar.forgroundColor = color;
+    if(color == "red") {
+        this.animation.gotoAndPlay("idle");
+    }else{
+        this.animation.gotoAndPlay("invincibility");
+    }
 }
