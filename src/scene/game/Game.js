@@ -35,7 +35,7 @@ panicCity.scene.Game = function () {
      */
     this.rescueeTime = 10000;
 
-    this.powerupTime = 10000;
+    this.powerupTime = 1000;
 };
 
 //------------------------------------------------------------------------------

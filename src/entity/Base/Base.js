@@ -82,9 +82,6 @@ panicCity.entity.Base.prototype.init = function () {
  */
 panicCity.entity.Base.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
-    if(this.keyboard.justPressed("K")) {
-        this.healBase(30);
-    };
 };
 
 /**
@@ -168,4 +165,8 @@ panicCity.entity.Base.prototype.heal = function(health){
     if(this.health > 500){
         this.health = 500;
     }
+}
+
+panicCity.entity.Base.prototype.changeHealthColor = function(color){
+    this.healthBar.forgroundColor = color;
 }

@@ -118,16 +118,20 @@ panicCity.entity.Bullet.prototype.m_updateMotion = function () {
             this.m_moveLeft();
             break;
         case "UP-LEFT":
-            this.m_moveUpLeft();
+            this.m_moveUp();
+            this.m_moveLeft();
             break;
         case "UP-RIGHT":
-            this.m_moveUpRight();
+            this.m_moveUp();
+            this.m_moveRight();
             break;
         case "DOWN-LEFT":
-            this.m_moveDownLeft();
+            this.m_moveDown();
+            this.m_moveLeft();
             break;
         case "DOWN-RIGHT":
-            this.m_moveDownRight();
+            this.m_moveDown();
+            this.m_moveRight();
             break;
         default:
             this.m_moveUp();
@@ -168,45 +172,5 @@ panicCity.entity.Bullet.prototype.m_moveLeft = function () {
  * @returns {undefined}
  */
 panicCity.entity.Bullet.prototype.m_moveRight = function () {
-    this.x += this.m_speed;
-}
-
-/**
- * Moves the bullet up and left
- * @private
- * @returns {undefined}
- */
-panicCity.entity.Bullet.prototype.m_moveUpLeft = function () {
-    this.y -= this.m_speed;
-    this.x -= this.m_speed;
-}
-
-/**
- * Moves the bullet down and left
- * @private
- * @returns {undefined}
- */
-panicCity.entity.Bullet.prototype.m_moveDownLeft = function () {
-    this.y += this.m_speed;
-    this.x -= this.m_speed;
-}
-
-/**
- * Moves the bullet up and right
- * @private
- * @returns {undefined}
- */
-panicCity.entity.Bullet.prototype.m_moveUpRight = function () {
-    this.x += this.m_speed;
-    this.y -= this.m_speed;
-}
-
-/**
- * Moves the bullet down and right
- * @private
- * @returns {undefined}
- */
-panicCity.entity.Bullet.prototype.m_moveDownRight = function () {
-    this.y += this.m_speed;
     this.x += this.m_speed;
 }
