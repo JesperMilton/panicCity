@@ -167,6 +167,28 @@ panicCity.entity.Player.prototype.m_updateInput = function () {
             this.moveLeft();
             this.animation.gotoAndPlay("walkSide");
         }
+    }else{
+        if (this.gamepad.stickLeftUp) {
+            this.direction = "UP";
+            this.animation.gotoAndPlay("walkUp");
+        }
+    
+        if (this.gamepad.stickLeftDown) {
+            this.direction = "DOWN";
+            this.animation.gotoAndPlay("walkDown");
+        }
+    
+        if (this.gamepad.stickLeftRight) {
+            this.direction = "RIGHT";
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = true;
+        }
+    
+        if (this.gamepad.stickLeftLeft) {
+            this.direction = "LEFT";
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = false;
+        }
     }
 
     if (this.gamepad.stickLeftUp) {

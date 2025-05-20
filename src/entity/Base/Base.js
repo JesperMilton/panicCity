@@ -73,8 +73,6 @@ panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;
 panicCity.entity.Base.prototype.init = function () {
     this.m_initAnimations();
     this.m_initHealthBar();
-
-    this.animation.create("idle", [0], 1, true);
 };
 
 /**

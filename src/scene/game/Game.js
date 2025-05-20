@@ -11,7 +11,7 @@ panicCity.scene.Game = function () {
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
-    
+
     rune.scene.Scene.call(this);
 
     /**
@@ -36,6 +36,8 @@ panicCity.scene.Game = function () {
     this.rescueeTime = 10000;
 
     this.powerupTime = 10000;
+
+    this.startTest = false;
 };
 
 //------------------------------------------------------------------------------
@@ -63,7 +65,7 @@ panicCity.scene.Game.prototype.init = function () {
     this.enemies = this.groups.create(this.stage);
     this.bullets = this.groups.create(this.stage);
     this.baseSta = this.groups.create(this.stage);
-    this.projectiles  = this.groups.create(this.stage);
+    this.projectiles = this.groups.create(this.stage);
     this.items = this.groups.create(this.stage);
     this.walls = this.groups.create(this.stage);
     this.humans = this.groups.create(this.stage);
@@ -116,12 +118,14 @@ panicCity.scene.Game.prototype.update = function (step) {
     this.waveManager.updateSpawner();
 
     if (this.playerJesper.isDowned && this.playerHibba.isDowned) {
-        this.timers.create({
-            duration: 4000,
-            onComplete: function () {
+        if (!this.startTest) {
+            this.startTest = true;
+            this.cameras.getCameraAt(0).fade.out(4000, function () {
+                console.log("inside the fadeout callback");
                 this.application.scenes.load([new panicCity.scene.Gameover(this)]);
-            },
-        });
+            }, this);
+
+        }
     }
 };
 
@@ -144,6 +148,12 @@ panicCity.scene.Game.prototype.m_initScore = function () {
     this.counter.x = this.application.screen.width - this.counter.width - 15;
     this.counter.value = this.score;
 
+    var text = new rune.text.BitmapField("SCORE:", "Font");
+    text.autoSize = true;
+    text.x = this.application.screen.width - this.counter.width - text.width - 15;
+    text.y = 7;
+
+    this.cameras.getCameraAt(0).addChild(text);
     this.cameras.getCameraAt(0).addChild(this.counter);
 }
 
@@ -152,8 +162,8 @@ panicCity.scene.Game.prototype.m_initScore = function () {
  * @private
  * @returns {undefined}
  */
-panicCity.scene.Game.prototype.m_initUI= function () {
-    this.testHud = new rune.display.Graphic( 0, 0, 400, 30, "UI");
+panicCity.scene.Game.prototype.m_initUI = function () {
+    this.testHud = new rune.display.Graphic(0, 0, 400, 30, "UI");
     this.m_cameras.getCameraAt(0).addChild(this.testHud);
 }
 
@@ -224,7 +234,7 @@ panicCity.scene.Game.prototype.m_addScore = function () {
  * @private
  * @returns {undefined}
  */
-panicCity.scene.Game.prototype.spawnHuman = function (){
+panicCity.scene.Game.prototype.spawnHuman = function () {
     this.rescueeSpawner.spawnRescuee();
     this.timers.create({
         duration: this.rescueeTime,
@@ -234,7 +244,7 @@ panicCity.scene.Game.prototype.spawnHuman = function (){
     });
 }
 
-panicCity.scene.Game.prototype.spawnPowerup = function (){
+panicCity.scene.Game.prototype.spawnPowerup = function () {
     this.powerupSpawner.spawn();
     this.timers.create({
         duration: this.powerupTime,

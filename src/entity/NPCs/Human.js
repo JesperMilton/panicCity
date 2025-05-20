@@ -280,7 +280,7 @@ panicCity.entity.Human.prototype.m_die = function () {
  * @param {panicCity.entity.Base} base - the Base object
  */
 panicCity.entity.Human.prototype.getSaved = function (base) {
-    new panicCity.entity.ShowScore(this, 20, this.game);
+    new panicCity.entity.ShowScore(this, 40, this.game);
     this.game.humans.removeMember(this, true);
     this.game.stage.removeChild(this.timerBar);
     this.game.updateScoretext(20);

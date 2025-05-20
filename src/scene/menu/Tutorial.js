@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * Creates a new Credits scene Object
+ * Creates a new Tutorial scene Object
  *
  * @constructor
  * @extends rune.scene.Scene
@@ -11,7 +11,7 @@
  * @class
  * 
  */
-panicCity.scene.Credits = function () {
+panicCity.scene.Tutorial = function () {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -24,13 +24,13 @@ panicCity.scene.Credits = function () {
 // Inheritance
 //------------------------------------------------------------------------------
 
-panicCity.scene.Credits.prototype = Object.create(rune.scene.Scene.prototype);
-panicCity.scene.Credits.prototype.constructor = panicCity.scene.Credits;
+panicCity.scene.Tutorial.prototype = Object.create(rune.scene.Scene.prototype);
+panicCity.scene.Tutorial.prototype.constructor = panicCity.scene.Tutorial;
 
 /**
  * @inheritDoc
  */
-panicCity.scene.Credits.prototype.init = function () {
+panicCity.scene.Tutorial.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     this.cameras.getCameraAt(0).fade.opacity = 1;
@@ -38,19 +38,12 @@ panicCity.scene.Credits.prototype.init = function () {
 
     this.m_initBackground();
     this.m_initMenu();
-
-    var text = new rune.text.BitmapField("HIBBA AND JESPER!!", "Font");
-    text.autoSize = true;
-    text.centerX = this.application.screen.centerX;
-    text.y = 100;
-
-    this.stage.addChild(text);
 };
 
 /**
  * @inheritDoc
  */
-panicCity.scene.Credits.prototype.update = function (step) {
+panicCity.scene.Tutorial.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
     this.m_updateInput(step);
 };
@@ -58,7 +51,7 @@ panicCity.scene.Credits.prototype.update = function (step) {
 /**
  * @inheritDoc
  */
-panicCity.scene.Credits.prototype.dispose = function () {
+panicCity.scene.Tutorial.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };
 
@@ -67,13 +60,13 @@ panicCity.scene.Credits.prototype.dispose = function () {
  * @private
  * @returns {undefined}
  */
-panicCity.scene.Credits.prototype.m_initBackground = function () {
+panicCity.scene.Tutorial.prototype.m_initBackground = function () {
     this.m_background = new rune.display.Graphic(
         0,
         0,
         400,
         225,
-        "image_Credits"
+        "Tutorial"
     );
     this.stage.addChild(this.m_background);
 };
@@ -81,10 +74,11 @@ panicCity.scene.Credits.prototype.m_initBackground = function () {
 /**
  * @inheritDoc
  */
-panicCity.scene.Credits.prototype.m_initMenu = function () {
+panicCity.scene.Tutorial.prototype.m_initMenu = function () {
     this.m_menu = new rune.ui.VTMenu({ resource: "Font" });
     this.m_menu.onSelect(this.m_onMenuSelect, this);
     this.m_menu.add("BACK TO MENU");
+    // this.m_menu.centerX = this.cameras.getCameraAt(0).viewport.centerX + 45;
     this.m_menu.centerX = this.cameras.getCameraAt(0).viewport.centerX;
     this.m_menu.y = 200;
     this.stage.addChild(this.m_menu);
@@ -95,7 +89,7 @@ panicCity.scene.Credits.prototype.m_initMenu = function () {
  * @private
  * @returns {undefined}
  */
-panicCity.scene.Credits.prototype.m_updateInput = function (step) {
+panicCity.scene.Tutorial.prototype.m_updateInput = function (step) {
     if (this.keyboard.justPressed("SPACE") || this.gamepads.justPressed(0)) {
         this.m_menu.select();
     }
@@ -109,8 +103,7 @@ panicCity.scene.Credits.prototype.m_updateInput = function (step) {
  * @private
  * @returns {undefined}
  */
-panicCity.scene.Credits.prototype.m_onMenuSelect = function (elem) {
+panicCity.scene.Tutorial.prototype.m_onMenuSelect = function (elem) {
     this.application.scenes.load([new panicCity.scene.Menu()])
 
 };
-
