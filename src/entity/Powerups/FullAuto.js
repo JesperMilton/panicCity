@@ -40,6 +40,12 @@ panicCity.entity.FullAuto.prototype.initPower = function(target){
     panicCity.entity.Powerups.prototype.initPower.call(this);
     target.fullAuto = true;
     this.game.timers.create({
+        duration: 3000,
+        onComplete: function () {
+            target.initFlicker(2000, 150);
+        }
+    });
+    this.game.timers.create({
         duration: 5000,
         onComplete: function () {
             target.fullAuto = false;

@@ -38,16 +38,16 @@ panicCity.managers.ItemSpawner.prototype.spawnItem = function(x, y){
     var item;
     if(this.m_randomChance(70)){
         if (this.m_randomChance(20)) {
-            item = new panicCity.entity.Medkit(x, y, this.game);
+            item = new panicCity.entity.Items(x, y, 18, 18, "Medkit-Sheet", this.game, "MEDKIT", 35, 15);
         }
         else if (this.m_randomChance(40)) {
-            item = new panicCity.entity.Food(x, y, this.game);
+            item = new panicCity.entity.Items(x, y, 16, 22, "Food-Sheet", this.game, "FOOD", 15, 10);
         }
         else if (this.m_randomChance(60)) {
-            item = new panicCity.entity.Water(x, y, this.game);
+            item = new panicCity.entity.Items(x, y, 13, 16, "Water-Sheet", this.game, "WATER", 10, 5);
         }
         else if (this.m_randomChance(100)) {
-            item = new panicCity.entity.Plank(x, y, this.game);
+            item = new panicCity.entity.Items(x, y, 20, 20, "Planks-Sheet", this.game, "PLANK", 5, 1);
         }
     }
     else{

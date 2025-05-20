@@ -19,7 +19,7 @@
  * 
  * Class for creating "Hibba"-character, includes methods for basic movement and basic functions such as heal and downed
  */
-panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gamepadIndex) {
+ panicCity.entity.Player = function (x, y, width, height, texture, game, gamepadIndex, upKey, downKey, leftKey, rightKey, shootKey, resKey) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -90,19 +90,32 @@ panicCity.entity.PlayerHibba = function (x, y, width, height, texture, game, gam
      * @public
      */
     this.isDowned = false;
+
+
+    this.upKey = upKey;
+
+    this.downKey = downKey;
+
+    this.leftKey = leftKey;
+
+    this.rightKey = rightKey;
+
+    this.shootKey = shootKey;
+
+    this.resKey = resKey;
 };
 
 //------------------------------------------------------------------------------
 // Inheritance
 //------------------------------------------------------------------------------
 
-panicCity.entity.PlayerHibba.prototype = Object.create(panicCity.entity.Entity.prototype);
-panicCity.entity.PlayerHibba.prototype.constructor = panicCity.entity.PlayerHibba;
+panicCity.entity.Player.prototype = Object.create(panicCity.entity.Entity.prototype);
+panicCity.entity.Player.prototype.constructor = panicCity.entity.Player;
 
 /**
  * @inheritDoc
  */
-panicCity.entity.PlayerHibba.prototype.init = function () {
+panicCity.entity.Player.prototype.init = function () {
     this.m_initAnimations();
     this.m_initHealthBar();
 };
@@ -110,7 +123,7 @@ panicCity.entity.PlayerHibba.prototype.init = function () {
 /**
  * @inheritDoc
  */
-panicCity.entity.PlayerHibba.prototype.update = function (step) {
+panicCity.entity.Player.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
     this.m_updateInput();
     this.m_updateHealthbar();
@@ -123,7 +136,7 @@ panicCity.entity.PlayerHibba.prototype.update = function (step) {
  * @private
  * 
  */
-panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
+panicCity.entity.Player.prototype.m_updateInput = function () {
     if (this.isDowned) {
         return;
     }
@@ -131,25 +144,25 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
     this.gamepad = this.game.gamepads.get(this.gamepadIndex);
 
     if (!this.gamepad.pressed(7)) {
-        if (this.keyboard.pressed("W") || this.gamepad.stickLeftUp) {
+        if (this.keyboard.pressed(this.upKey) || this.gamepad.stickLeftUp) {
             this.direction = "UP";
             this.moveUp();
             this.animation.gotoAndPlay("walkUp");
         }
 
-        if (this.keyboard.pressed("S") || this.gamepad.stickLeftDown) {
+        if (this.keyboard.pressed(this.downKey) || this.gamepad.stickLeftDown) {
             this.direction = "DOWN";
             this.moveDown();
             this.animation.gotoAndPlay("walkDown");
         }
 
-        if (this.keyboard.pressed("D") || this.gamepad.stickLeftRight) {
+        if (this.keyboard.pressed(this.rightKey) || this.gamepad.stickLeftRight) {
             this.direction = "RIGHT";
             this.moveRight();
             this.animation.gotoAndPlay("walkSide");
         }
 
-        if (this.keyboard.pressed("A") || this.gamepad.stickLeftLeft) {
+        if (this.keyboard.pressed(this.leftKey) || this.gamepad.stickLeftLeft) {
             this.direction = "LEFT";
             this.moveLeft();
             this.animation.gotoAndPlay("walkSide");
@@ -188,18 +201,18 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
         this.direction = "DOWN-LEFT";
     }
     if (this.fullAuto) {
-        if (this.keyboard.pressed("Q") || this.gamepad.pressed(2)) {
+        if (this.keyboard.pressed(this.shootKey) || this.gamepad.pressed(2)) {
             var bullet = new panicCity.entity.Bullet(this);
             this.game.bullets.addMember(bullet);
         }
     }
     else if (this.shotgun) {
-        if (this.keyboard.justPressed("Q") || this.gamepad.justPressed(2)) {
+        if (this.keyboard.justPressed(this.shootKey) || this.gamepad.justPressed(2)) {
             var shells = new panicCity.entity.Shell(this, this.game);
         }
     }
     else {
-        if (this.keyboard.justPressed("Q") || this.gamepad.justPressed(2)) {
+        if (this.keyboard.justPressed(this.shootKey) || this.gamepad.justPressed(2)) {
             var bullet = new panicCity.entity.Bullet(this);
             this.game.bullets.addMember(bullet);
         }
@@ -213,7 +226,7 @@ panicCity.entity.PlayerHibba.prototype.m_updateInput = function () {
  * @private
  * 
  */
-panicCity.entity.PlayerHibba.prototype.m_initAnimations = function () {
+panicCity.entity.Player.prototype.m_initAnimations = function () {
     this.animation.create("idle", [0, 1, 2], 6, true);
     this.animation.create("walkSide", [3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
     this.animation.create("walkUp", [12, 13, 14, 15, 16], 5, true);
@@ -228,7 +241,7 @@ panicCity.entity.PlayerHibba.prototype.m_initAnimations = function () {
  * @private
  * 
  */
-panicCity.entity.PlayerHibba.prototype.m_initHealthBar = function () {
+panicCity.entity.Player.prototype.m_initHealthBar = function () {
     this.healthBar = new rune.ui.Progressbar(this.width, 2, "gray", "#6fff2c");
     this.game.stage.addChild(this.healthBar);
 }
@@ -240,7 +253,7 @@ panicCity.entity.PlayerHibba.prototype.m_initHealthBar = function () {
  * @private
  * 
  */
-panicCity.entity.PlayerHibba.prototype.m_updateHealthbar = function () {
+panicCity.entity.Player.prototype.m_updateHealthbar = function () {
     this.healthBar.progress = (this.health / 200);
     this.healthBar.x = this.x;
     this.healthBar.y = this.y - 2;
@@ -255,7 +268,7 @@ panicCity.entity.PlayerHibba.prototype.m_updateHealthbar = function () {
  * @public
  * 
  */
-panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
+panicCity.entity.Player.prototype.takeDamage = function (damage) {
     if (this.isDowned) {
         return;
     }
@@ -263,7 +276,7 @@ panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
         return;
     }
     this.health -= damage;
-    this.flicker.start(250);
+    this.initFlicker(250, 64);
     this.gamepad.vibrate();
     if (this.health <= 0) {
         this.m_downed();
@@ -279,7 +292,7 @@ panicCity.entity.PlayerHibba.prototype.takeDamage = function (damage) {
  * @public
  * 
  */
-panicCity.entity.PlayerHibba.prototype.heal = function (health) {
+panicCity.entity.Player.prototype.heal = function (health) {
     if (this.health > 0 && this.health < 200) {
         this.health += health;
         this.healthBar.progress = (this.health / 200);
@@ -297,7 +310,7 @@ panicCity.entity.PlayerHibba.prototype.heal = function (health) {
  * @private
  * 
  */
-panicCity.entity.PlayerHibba.prototype.m_downed = function () {
+panicCity.entity.Player.prototype.m_downed = function () {
     this.animation.gotoAndPlay("downed");
     this.isDowned = true;
     this.health = 0;
@@ -313,8 +326,8 @@ panicCity.entity.PlayerHibba.prototype.m_downed = function () {
  * @public
  * 
  */
-panicCity.entity.PlayerHibba.prototype.pickupNPC = function (human, base) {
-    if (this.keyboard.justPressed("E") || this.gamepad.justPressed(0)) {
+panicCity.entity.Player.prototype.pickupNPC = function (human, base) {
+    if (this.keyboard.justPressed(this.resKey) || this.gamepad.justPressed(0)) {
         human.getSaved(base);
     }
 }
@@ -328,8 +341,8 @@ panicCity.entity.PlayerHibba.prototype.pickupNPC = function (human, base) {
  * @public
  * 
  */
-panicCity.entity.PlayerHibba.prototype.res = function (player) {
-    if (this.keyboard.justPressed("R") || this.gamepad.justPressed(0)) {
+panicCity.entity.Player.prototype.res = function (player) {
+    if (this.keyboard.justPressed(this.resKey) || this.gamepad.justPressed(0)) {
         player.getRessed();
     }
 }
@@ -341,7 +354,7 @@ panicCity.entity.PlayerHibba.prototype.res = function (player) {
  * @public
  * 
  */
-panicCity.entity.PlayerHibba.prototype.getRessed = function () {
+panicCity.entity.Player.prototype.getRessed = function () {
     this.animation.gotoAndPlay("idle");
     if (!this.isDowned) {
         return;
@@ -351,6 +364,23 @@ panicCity.entity.PlayerHibba.prototype.getRessed = function () {
     this.health += 100;
 }
 
-panicCity.entity.PlayerHibba.prototype.changeHealthColor = function (color) {
-    this.healthBar.forgroundColor = color;
+panicCity.entity.Player.prototype.changeHealthColor = function (color) {
+    if(this.health <= 1){
+        this.health++;
+        this.healthBar.progress = (this.health / 200);
+        this.healthBar.forgroundColor = color;
+        this.health--;
+        this.healthBar.progress = (this.health / 200);
+    }
+    else{
+        this.health--;
+        this.healthBar.progress = (this.health / 200);
+        this.healthBar.forgroundColor = color;
+        this.health++;
+        this.healthBar.progress = (this.health / 200);
+    }
+}
+
+panicCity.entity.Player.prototype.initFlicker = function(time, amount){
+    this.flicker.start(time, amount);
 }

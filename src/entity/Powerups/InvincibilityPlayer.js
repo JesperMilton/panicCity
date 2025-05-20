@@ -38,15 +38,19 @@ panicCity.entity.InvincibilityPlayer.prototype.constructor = panicCity.entity.In
 
 panicCity.entity.InvincibilityPlayer.prototype.initPower = function (target) {
     panicCity.entity.Powerups.prototype.initPower.call(this);
-    target.invincible = true;
     target.changeHealthColor("#27dcf5");
-    target.heal(1);
+    target.invincible = true;
+    this.game.timers.create({
+        duration: 3000,
+        onComplete: function () {
+                target.initFlicker(2000, 150);
+        }
+    });
     this.game.timers.create({
         duration: 5000,
         onComplete: function () {
             target.invincible = false;
             target.changeHealthColor("#6fff2c");
-            target.takeDamage(1);
         },
     });
 }

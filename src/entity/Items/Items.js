@@ -18,8 +18,8 @@
  * @param {rune.scene.Scene} game - The Game object
  * 
  */
-panicCity.entity.Items = function (x, y, width, height, texture, game) {
-    
+panicCity.entity.Items = function (x, y, width, height, texture, game, type, hp, points) {
+
     /**
      * The Game object
      * 
@@ -27,6 +27,30 @@ panicCity.entity.Items = function (x, y, width, height, texture, game) {
      * @public
      */
     this.game = game;
+
+    /**
+     * The category of the item
+     * 
+     * @type {string}
+     * @public
+     */
+    this.type = type;
+
+    /**
+     * Total amount of healing points to be given out
+     * 
+     * @type {number}
+     * @public
+     */
+    this.hp = hp;
+
+    /**
+     * Total amount of points to be added to score
+     * 
+     * @type {number}
+     * @public
+     */
+    this.pointValue = points;
 
     //--------------------------------------------------------------------------
     // Super call
@@ -47,19 +71,41 @@ panicCity.entity.Items.prototype.constructor = panicCity.entity.Items;
  */
 panicCity.entity.Items.prototype.init = function () {
     this.m_initAnimations();
-    this.startTime = Date.now();
+    this.timer = this.game.timers.create({
+        duration: 6000,
+        onComplete: function () {
+            this.m_delete();
+        }.bind(this),
+    });
 };
 
 /**
  * @inheritDoc
  */
 panicCity.entity.Items.prototype.update = function (step) {
-    rune.display.Sprite.prototype.update.call(this, step);
-    
-    if (Date.now() - this.startTime >= 5000) {
-        this.m_delete();
+    panicCity.entity.Entity.prototype.update.call(this, step);
+    if (this.timer.elapsed <= 2000) {
+        return;
+    }
+    else if (this.timer.elapsed >= 2000 && this.timer.elapsed <= 4000) {
+        this.initFlicker(500);
+    }
+    else{
+        this.initFlicker(150);
     }
 };
+
+panicCity.entity.Items.prototype.initFlicker = function(amount){
+    if (this.flickerActive) {
+        return;
+    }
+
+    this.flickerActive = true;
+
+    this.flicker.start(1000, amount, function() {
+        this.flickerActive = false;
+    }, this);
+}
 
 /**
  * Initialize the animations.
@@ -81,7 +127,7 @@ panicCity.entity.Items.prototype.m_initAnimations = function () {
  * @param {panicCity.entity.Entity} target - The target to be healed
  */
 panicCity.entity.Items.prototype.heal = function (target) {
-    target.forEachMember(function (target){
+    target.forEachMember(function (target) {
         target.heal(this.hp);
     }, this);
     this.game.updateScoretext(this.pointValue);

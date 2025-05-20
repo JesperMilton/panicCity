@@ -171,10 +171,28 @@ panicCity.entity.Base.prototype.heal = function (health) {
 }
 
 panicCity.entity.Base.prototype.changeHealthColor = function (color) {
-    this.healthBar.forgroundColor = color;
+    if(this.health <= 1){
+        this.health++;
+        this.healthBar.progress = (this.health / 500);
+        this.healthBar.forgroundColor = color;
+        this.health--;
+        this.healthBar.progress = (this.health / 500);
+    }
+    else{
+        this.health--;
+        this.healthBar.progress = (this.health / 500);
+        this.healthBar.forgroundColor = color;
+        this.health++;
+        this.healthBar.progress = (this.health / 500);
+    }
     if(color == "red") {
         this.animation.gotoAndPlay("idle");
     }else{
         this.animation.gotoAndPlay("invincibility");
     }
+    
+}
+
+panicCity.entity.Base.prototype.initFlicker = function(time, amount){
+    this.flicker.start(time, amount);
 }

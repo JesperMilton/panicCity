@@ -35,7 +35,7 @@ panicCity.scene.Game = function () {
      */
     this.rescueeTime = 10000;
 
-    this.powerupTime = 1000;
+    this.powerupTime = 10000;
 };
 
 //------------------------------------------------------------------------------
@@ -69,8 +69,8 @@ panicCity.scene.Game.prototype.init = function () {
     this.humans = this.groups.create(this.stage);
     this.powerups = this.groups.create(this.stage);
 
-    this.playerJesper = new panicCity.entity.PlayerJesper(320, 128, 27, 26, "Player1-Sheet", this, 0);
-    this.playerHibba = new panicCity.entity.PlayerHibba(140, 128, 27, 26, "Player2-Sheet", this, 1);
+    this.playerJesper = new panicCity.entity.Player(320, 128, 27, 26, "Player1-Sheet", this, 0, "UP", "DOWN", "LEFT", "RIGHT", "P", "O");
+    this.playerHibba = new panicCity.entity.Player(140, 128, 27, 26, "Player2-Sheet", this, 1, "W", "S", "A", "D", "Q", "E");
     this.base = new panicCity.entity.Base(220, 128, 47, 47, "Base-Sheet", this);
 
     this.cameras.getCameraAt(0).targets.add(this.playerJesper);

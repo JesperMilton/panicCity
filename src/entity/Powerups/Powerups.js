@@ -44,15 +44,45 @@ panicCity.entity.Powerups.prototype.constructor = panicCity.entity.Powerups;
 /**
  * @inheritDoc
  */
-panicCity.entity.Powerups.prototype.init = function () {
-    //this.m_initAnimations();
-    this.game.timers.create({
-        duration: 5000,
+ panicCity.entity.Powerups.prototype.init = function () {
+    this.flickerActive = false;
+
+    this.timer = this.game.timers.create({
+        duration: 8000,
         onComplete: function () {
             this.m_delete();
         }.bind(this),
     });
 };
+
+panicCity.entity.Powerups.prototype.update = function(step){
+    panicCity.entity.Entity.prototype.update.call(this, step);
+    if(this.timer.elapsed <= 2000){
+        return;
+    }
+    else if(this.timer.elapsed >= 2000 && this.timer.elapsed <= 4000){
+        this.initFlicker(500);
+    }
+    else if(this.timer.elapsed >= 4000 && this.timer.elapsed <= 6000){
+        this.initFlicker(250);
+    }
+    else{
+        this.initFlicker(100);
+    }
+}
+
+panicCity.entity.Powerups.prototype.initFlicker = function(amount){
+    if (this.flickerActive) {
+        return;
+    }
+
+    this.flickerActive = true;
+
+    this.flicker.start(1000, amount, function() {
+        this.flickerActive = false;
+    }, this);
+}
+
 
 /**
  * Initialize the animations.
