@@ -96,6 +96,22 @@ panicCity.managers.WaveManager = function (game, cameras) {
      */
     this.text.autoSize = true;
 
+    /**
+     * Text to represent the current wave.
+     * 
+     * @type {rune.text.BitmapField}
+     * @public
+     */
+    this.textAnnouncement = new rune.text.BitmapField("text", "Font");
+
+    /**
+     * Use for the size of the text.
+     * 
+     * @type {boolean}
+     * @public
+     */
+    this.textAnnouncement.autoSize = true;
+
 
     this.m_cameras.getCameraAt(0).addChild(this.text);
     this.m_startnewWave();
@@ -164,6 +180,14 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     //     this.spawnComplete = true;
     // }
 
+    if (this.currentWave !== 1) {
+        if (this.currentWave % 3 === 0) {
+            this.m_waveAnnouncement("BOSS WAVE!");
+        } else {
+            this.m_waveAnnouncement("NEW WAVE!");
+        }
+    }
+
     this.text.text = "WAVE:" + this.currentWave;
     this.text.centerX = this.game.application.screen.centerX;
     this.text.y = 7;
@@ -191,4 +215,37 @@ panicCity.managers.WaveManager.prototype.m_callSpawner = function () {
             }.bind(this)
         });
     }
+};
+
+/**
+ * Announcement for when a new wave starts.
+ * 
+ * @param {string} announcementText The text being dsiplayed on every new wave.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
+panicCity.managers.WaveManager.prototype.m_waveAnnouncement = function (announcementText) {
+    this.textAnnouncement.text = announcementText;
+    this.textAnnouncement.center = this.game.application.screen.center;
+
+    this.textAnnouncement.alpha = 0;
+
+    this.m_cameras.getCameraAt(0).addChild(this.textAnnouncement);
+
+    this.game.timers.create({
+        duration: 1800,
+        onUpdate: function () {
+            this.textAnnouncement.alpha += 0.03;
+            if (this.textAnnouncement.alpha > 1.0) {
+                this.textAnnouncement.alpha = 1.0;
+            }
+
+        }.bind(this),
+        onComplete: function () {
+            this.m_cameras.getCameraAt(0).removeChild(this.textAnnouncement);
+        }.bind(this)
+    });
+
 };

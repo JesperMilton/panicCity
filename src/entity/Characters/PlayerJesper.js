@@ -325,7 +325,6 @@ panicCity.entity.PlayerJesper.prototype.m_downed = function () {
  */
 panicCity.entity.PlayerJesper.prototype.pickupNPC = function (human, base) {
     if (this.keyboard.justPressed("O") || this.gamepad.justPressed(0)) {
-        console.log("pickupNpc");
         human.getSaved(base);
     }
 }
