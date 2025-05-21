@@ -127,6 +127,7 @@ panicCity.entity.Items.prototype.m_initAnimations = function () {
  * @param {panicCity.entity.Entity} target - The target to be healed
  */
 panicCity.entity.Items.prototype.heal = function (target) {
+    new panicCity.entity.ShowScore(this, this.pointValue, this.game);
     target.forEachMember(function (target) {
         target.heal(this.hp);
     }, this);

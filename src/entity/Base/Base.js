@@ -58,6 +58,8 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
      * @public
      */
     this.health = 500;
+
+    this.startTest = false;
 };
 
 //------------------------------------------------------------------------------
@@ -125,12 +127,19 @@ panicCity.entity.Base.prototype.takeDamage = function (damage) {
  */
 panicCity.entity.Base.prototype.m_die = function () {
     this.animation.gotoAndPlay("dead");
-    this.game.timers.create({
-        duration: 4000,
-        onComplete: function () {
-            this.game.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
-        }.bind(this)
-    });
+    this.game.checkHighscore();
+    // if (!this.startTest) {
+    //     this.startTest = true;
+    //     this.game.cameras.getCameraAt(0).fade.out(4000, function () {
+    //         this.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
+    //     }, this);
+    // }
+    // this.game.timers.create({
+    //     duration: 4000,
+    //     onComplete: function () {
+    //         this.game.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
+    //     }.bind(this)
+    // });
 }
 
 /**
@@ -169,28 +178,28 @@ panicCity.entity.Base.prototype.heal = function (health) {
 }
 
 panicCity.entity.Base.prototype.changeHealthColor = function (color) {
-    if(this.health <= 1){
+    if (this.health <= 1) {
         this.health++;
         this.healthBar.progress = (this.health / 500);
         this.healthBar.forgroundColor = color;
         this.health--;
         this.healthBar.progress = (this.health / 500);
     }
-    else{
+    else {
         this.health--;
         this.healthBar.progress = (this.health / 500);
         this.healthBar.forgroundColor = color;
         this.health++;
         this.healthBar.progress = (this.health / 500);
     }
-    if(color == "red") {
+    if (color == "red") {
         this.animation.gotoAndPlay("idle");
-    }else{
+    } else {
         this.animation.gotoAndPlay("invincibility");
     }
-    
+
 }
 
-panicCity.entity.Base.prototype.initFlicker = function(time, amount){
+panicCity.entity.Base.prototype.initFlicker = function (time, amount) {
     this.flicker.start(time, amount);
 }

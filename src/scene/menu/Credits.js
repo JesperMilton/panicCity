@@ -79,10 +79,14 @@ panicCity.scene.Credits.prototype.m_initBackground = function () {
 };
 
 /**
- * @inheritDoc
+ * Initialize the Menu.
+ *
+ * @return {undefined}
+ * @private
+ * 
  */
 panicCity.scene.Credits.prototype.m_initMenu = function () {
-    this.m_menu = new rune.ui.VTMenu({ resource: "Font" });
+    this.m_menu = new rune.ui.VTMenu({ resource: "Font", pointer: panicCity.components.Pointer });
     this.m_menu.onSelect(this.m_onMenuSelect, this);
     this.m_menu.add("BACK TO MENU");
     this.m_menu.centerX = this.cameras.getCameraAt(0).viewport.centerX;

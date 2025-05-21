@@ -118,14 +118,7 @@ panicCity.scene.Game.prototype.update = function (step) {
     this.waveManager.updateSpawner();
 
     if (this.playerJesper.isDowned && this.playerHibba.isDowned) {
-        if (!this.startTest) {
-            this.startTest = true;
-            this.cameras.getCameraAt(0).fade.out(4000, function () {
-                console.log("inside the fadeout callback");
-                this.application.scenes.load([new panicCity.scene.Gameover(this)]);
-            }, this);
-
-        }
+        this.checkHighscore();
     }
 };
 
@@ -252,4 +245,17 @@ panicCity.scene.Game.prototype.spawnPowerup = function () {
             this.spawnPowerup();
         },
     });
+}
+
+panicCity.scene.Game.prototype.checkHighscore = function () {
+    if (this.application.highscores.test(this.score) < 5) {
+        this.application.scenes.load([new panicCity.scene.VirtualKeyboard(this)]);
+    } else {
+        if (!this.startTest) {
+            this.startTest = true;
+            this.cameras.getCameraAt(0).fade.out(4000, function () {
+                this.application.scenes.load([new panicCity.scene.Gameover(this)]);
+            }, this);
+        }
+    }
 }

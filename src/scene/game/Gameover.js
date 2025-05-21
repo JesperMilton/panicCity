@@ -63,10 +63,14 @@ panicCity.scene.Gameover.prototype.dispose = function () {
 };
 
 /**
- * @inheritDoc
+ * Initialize the Menu.
+ *
+ * @return {undefined}
+ * @private
+ * 
  */
 panicCity.scene.Gameover.prototype.m_initMenu = function () {
-    this.m_menu = new rune.ui.VTMenu({ resource: "Font" });
+    this.m_menu = new rune.ui.VTMenu({ resource: "Font", pointer: panicCity.components.Pointer });
     this.m_menu.onSelect(this.m_onMenuSelect, this);
     this.m_menu.add("HIGHSCORE");
     this.m_menu.add("BACK TO MENU");

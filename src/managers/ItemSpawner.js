@@ -36,7 +36,7 @@ panicCity.managers.ItemSpawner = function (game) {
  */
 panicCity.managers.ItemSpawner.prototype.spawnItem = function(x, y){
     var item;
-    if(this.m_randomChance(70)){
+    if(this.m_randomChance(60)){
         if (this.m_randomChance(20)) {
             item = new panicCity.entity.Items(x, y, 18, 18, "Medkit-Sheet", this.game, "MEDKIT", 35, 15);
         }

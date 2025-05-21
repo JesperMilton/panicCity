@@ -36,13 +36,25 @@ panicCity.scene.HighscoreScene.prototype.init = function () {
     this.cameras.getCameraAt(0).fade.opacity = 1;
     this.cameras.getCameraAt(0).fade.in(1000);
 
+    this.m_initBackground();
     this.m_initMenu();
 
     var text = new rune.text.BitmapField("HIGHSCORE", "Font");
     text.autoSize = true;
     text.centerX = this.application.screen.centerX;
-    text.y = 100;
+    text.y = 20;
 
+    for (let i = 0; i <= 4; i++) {
+        let test = new rune.text.BitmapField(
+            `${i + 1}: ${this.application.highscores.get(i).name} SCORE: ${this.application.highscores.get(i).score}`,
+            "Font"
+        );
+        test.centerX = this.application.screen.centerX;
+        test.width = 144;
+        test.y = 65 + i * 15;
+
+        this.stage.addChild(test);
+    }
     this.stage.addChild(text);
 };
 
@@ -62,10 +74,31 @@ panicCity.scene.HighscoreScene.prototype.dispose = function () {
 };
 
 /**
- * @inheritDoc
+ * Initializes the background
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.HighscoreScene.prototype.m_initBackground = function () {
+    this.m_background = new rune.display.Graphic(
+        0,
+        0,
+        400,
+        225,
+        "image_Highscore"
+    );
+    this.stage.addChild(this.m_background);
+};
+
+
+/**
+ * Initialize the Menu.
+ *
+ * @return {undefined}
+ * @private
+ * 
  */
 panicCity.scene.HighscoreScene.prototype.m_initMenu = function () {
-    this.m_menu = new rune.ui.VTMenu({ resource: "Font" });
+    this.m_menu = new rune.ui.VTMenu({ resource: "Font", pointer: panicCity.components.Pointer });
     this.m_menu.onSelect(this.m_onMenuSelect, this);
     this.m_menu.add("BACK TO MENU");
     this.m_menu.centerX = this.cameras.getCameraAt(0).viewport.centerX;

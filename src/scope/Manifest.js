@@ -73,6 +73,15 @@ var panicCity = function() {
      * @since 1.0
      */
     m_this.managers = {};
+
+    /**
+     * This package contains the application's most vital classes.
+     *
+     * @namespace system
+     * @memberof workshop
+     * @since 1.0
+     */
+    m_this.components = {};
     
     //--------------------------------------------------------------------------
     // Return public scope object

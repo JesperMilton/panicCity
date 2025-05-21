@@ -104,6 +104,7 @@ panicCity.entity.Powerups.prototype.m_initAnimations = function () {
  */
 panicCity.entity.Powerups.prototype.initPower = function () {
     new panicCity.entity.ShowScore(this, 10, this.game);
+    this.game.updateScoretext(10);
     //@note: Override from child
     this.m_delete();
 }

@@ -10,24 +10,24 @@
  * @class
  * 
  * 
- * Class for letter used for the keyboard in the game.
+ * Class for Keys used for the keyboard in the game.
  */
-panicCity.entity.Letter = function () {
+panicCity.components.Keys = function () {
 
-    this.arr = [
+    this.letters = [
         "A", "B", "C", "D", "E", "F", "G",
         "H", "I", "J", "K", "L", "M", "N",
         "O", "P", "Q", "R", "S", "T", "U",
-        "V", "W", "X", "Y", "Z", "-"
+        "V", "W", "X", "Y", "Z", "$", "#"
     ];
 
-    this.test = [];
+    this.keyFields = [];
 
-    this.arr.forEach(function (letter) {
-        this.test.push(new rune.text.BitmapField(letter, "Font"));
+    this.letters.forEach(function (letter) {
+        this.keyFields.push(new rune.text.BitmapField(letter, "Font"));
     }.bind(this));
 
-    return this.test;
+    return this.keyFields;
 };
 
 

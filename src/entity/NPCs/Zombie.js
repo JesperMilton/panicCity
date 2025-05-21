@@ -132,6 +132,7 @@ panicCity.entity.Zombie.prototype.constructor = panicCity.entity.Zombie;
  * @inheritDoc
  */
 panicCity.entity.Zombie.prototype.init = function () {
+    this.useQaudtree = true;
     this.m_initAnimations();
     this.m_initStats();
 };

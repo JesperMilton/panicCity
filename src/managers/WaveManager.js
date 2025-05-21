@@ -112,6 +112,8 @@ panicCity.managers.WaveManager = function (game, cameras) {
      */
     this.textAnnouncement.autoSize = true;
 
+    this.testlastShot = 0;
+    this.testcoolDown = 500;
 
     this.m_cameras.getCameraAt(0).addChild(this.text);
     this.m_startnewWave();
@@ -144,7 +146,7 @@ panicCity.managers.WaveManager.prototype.updateSpawner = function () {
  */
 panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
     this.waveTimer = this.game.timers.create({
-        duration: 5000,
+        duration: 2500,
         onComplete: function () {
             this.m_startnewWave();
         }.bind(this)
@@ -166,7 +168,7 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     if (this.currentWave % 3 == 0) {
         this.zombieSpawner.spawnZombieBoss();
         this.currentZombies++;
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 10; i++) {
             this.zombieSpawner.spawnZombie();
             this.currentZombies++;
         }
@@ -198,22 +200,32 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
  *
  * @return {undefined}
  * @private
- * 
+ * if (!this.coolDown && (this.waveAmount > this.currentZombies) && this.currentWave % 3 != 0)
  */
 panicCity.managers.WaveManager.prototype.m_callSpawner = function () {
-    if (!this.coolDown && (this.waveAmount > this.currentZombies) && this.currentWave % 3 != 0) {
-        this.coolDown = true;
-        this.game.timers.create({
-            duration: 500,
-            onComplete: function () {
-                this.zombieSpawner.spawnZombie();
-                this.currentZombies++;
-                this.coolDown = false;
-                if (this.currentZombies >= this.waveAmount) {
-                    this.spawnComplete = true;
-                }
-            }.bind(this)
-        });
+    if ((this.waveAmount > this.currentZombies) && this.currentWave % 3 != 0) {
+        // this.coolDown = true;
+        var now = Date.now();
+        if (now > this.testlastShot) {
+            this.zombieSpawner.spawnZombie();
+            this.currentZombies++;
+            // this.coolDown = false;
+            if (this.currentZombies >= this.waveAmount) {
+                this.spawnComplete = true;
+            }
+            this.testlastShot = now + this.testcoolDown;
+        }
+        // this.game.timers.create({
+        //     duration: 500,
+        //     onComplete: function () {
+        //         this.zombieSpawner.spawnZombie();
+        //         this.currentZombies++;
+        //         this.coolDown = false;
+        //         if (this.currentZombies >= this.waveAmount) {
+        //             this.spawnComplete = true;
+        //         }
+        //     }.bind(this)
+        // });
     }
 };
 
