@@ -23,6 +23,7 @@ panicCity.entity.InvincibilityBase = function (x, y, width, height, texture, gam
 
     this.type = "INVINCIBILITY_BASE";
 
+    this.m_active = false;
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ panicCity.entity.InvincibilityBase.prototype.initPower = function (target) {
         this.game.timers.create({
             duration: 10000,
             onComplete: function () {
+                this.touchable = true;
                 target.invincible = false;
                 target.changeHealthColor("red");
             },

@@ -58,6 +58,11 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
      * @public
      */
     this.health = 500;
+
+    this.m_damageSound;
+
+    this.hitbox.set(6, 10, 35, 35);
+
 };
 
 //------------------------------------------------------------------------------
@@ -71,6 +76,7 @@ panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;
  * @inheritDoc
  */
 panicCity.entity.Base.prototype.init = function () {
+    this.m_damageSound = this.application.sounds.sound.get("Zombie-attack-sound");
     this.m_initAnimations();
     this.m_initHealthBar();
 };
@@ -109,6 +115,7 @@ panicCity.entity.Base.prototype.takeDamage = function (damage) {
     if (this.invincible) {
         return;
     }
+    this.m_damageSound.play();
     this.health -= damage;
     this.healthBar.progress = (this.health / 500);
     if (this.health <= 0) {

@@ -52,13 +52,13 @@ panicCity.managers.PowerupSpawner.prototype.spawn = function () {
     var ranX = Math.floor(Math.random() * 350) + 50;
     var ranY = Math.floor(Math.random() * 250) + 50;
     var powerup;
-    if (this.m_randomChance(20)) {
-        powerup = new panicCity.entity.Shotgun(ranX, ranY, 20, 20, "Shotgun", this.game);
-    }
-    else if (this.m_randomChance(40)) {
+    if (this.m_randomChance(100)) {
         powerup = new panicCity.entity.FullAuto(ranX, ranY, 20, 20, "Full-Auto", this.game);
     }
-    else if (this.m_randomChance(60)) {
+    else if (this.m_randomChance(30)) {
+        powerup = new panicCity.entity.Shotgun(ranX, ranY, 20, 20, "Shotgun", this.game);
+    }
+    else if (this.m_randomChance(60) && this.game.base.invincible == false) {
         powerup = new panicCity.entity.InvincibilityBase(ranX, ranY, 20, 20, "Base-Shield", this.game);
     }
     else {

@@ -52,6 +52,8 @@ panicCity.entity.Items = function (x, y, width, height, texture, game, type, hp,
      */
     this.pointValue = points;
 
+    this.m_pickUpSound;
+
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
@@ -70,6 +72,7 @@ panicCity.entity.Items.prototype.constructor = panicCity.entity.Items;
  * @inheritDoc
  */
 panicCity.entity.Items.prototype.init = function () {
+    this.m_pickUpSound = this.application.sounds.sound.get("Pickup-item-sound");
     this.m_initAnimations();
     this.timer = this.game.timers.create({
         duration: 6000,
@@ -127,6 +130,7 @@ panicCity.entity.Items.prototype.m_initAnimations = function () {
  * @param {panicCity.entity.Entity} target - The target to be healed
  */
 panicCity.entity.Items.prototype.heal = function (target) {
+    this.m_pickUpSound.play(true);
     target.forEachMember(function (target) {
         target.heal(this.hp);
     }, this);

@@ -18,6 +18,7 @@ panicCity.scene.Gameover = function (game) {
      * @public
      */
     this.game = game;
+    this.m_backgroundSound;
 }
 
 //------------------------------------------------------------------------------
@@ -32,6 +33,11 @@ panicCity.scene.Gameover.prototype.constructor = panicCity.scene.Gameover;
  */
 panicCity.scene.Gameover.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
+
+    this.m_backgroundSound = this.application.sounds.master.get("Menu-music");
+    this.m_backgroundSound.loop = true;
+    this.m_backgroundSound.volume = 0.5;
+    this.m_backgroundSound.play();
 
     this.cameras.getCameraAt(0).fade.opacity = 1;
     this.cameras.getCameraAt(0).fade.in(1000);

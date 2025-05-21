@@ -27,6 +27,8 @@
      */
     this.game = game;
 
+    this.m_pickUpSound;
+
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
@@ -46,6 +48,7 @@ panicCity.entity.Powerups.prototype.constructor = panicCity.entity.Powerups;
  */
  panicCity.entity.Powerups.prototype.init = function () {
     this.flickerActive = false;
+    this.m_pickUpSound = this.application.sounds.sound.get("Pickup-powerup-sound");
 
     this.timer = this.game.timers.create({
         duration: 8000,
@@ -105,6 +108,7 @@ panicCity.entity.Powerups.prototype.m_initAnimations = function () {
 panicCity.entity.Powerups.prototype.initPower = function () {
     new panicCity.entity.ShowScore(this, 10, this.game);
     //@note: Override from child
+    this.m_pickUpSound.play();
     this.m_delete();
 }
 

@@ -38,6 +38,10 @@ panicCity.scene.Game = function () {
     this.powerupTime = 10000;
 
     this.startTest = false;
+
+    this.m_music;
+
+    this.base;
 };
 
 //------------------------------------------------------------------------------
@@ -53,6 +57,10 @@ panicCity.scene.Game.prototype.constructor = panicCity.scene.Game;
 panicCity.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+    this.m_music = this.application.sounds.music.get("Game-background-music");
+    this.m_music.play();
+    this.m_music.loop = true;
+    this.m_music.volume = 0.65;
     this.cameras.getCameraAt(0).fade.opacity = 1;
     this.cameras.getCameraAt(0).fade.in(1000);
 

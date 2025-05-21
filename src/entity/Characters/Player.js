@@ -91,7 +91,6 @@
      */
     this.isDowned = false;
 
-
     this.upKey = upKey;
 
     this.downKey = downKey;
@@ -103,6 +102,16 @@
     this.shootKey = shootKey;
 
     this.resKey = resKey;
+
+    this.m_helpSound;
+
+    this.m_damageSound;
+    this.m_shootSound;
+
+    this.m_shotgunSound;
+    this.m_minigunSound;
+
+    this.hitbox.set(5, 6, 14, 17);
 };
 
 //------------------------------------------------------------------------------
@@ -116,6 +125,14 @@ panicCity.entity.Player.prototype.constructor = panicCity.entity.Player;
  * @inheritDoc
  */
 panicCity.entity.Player.prototype.init = function () {
+    this.m_helpSound = this.application.sounds.sound.get("Help-sound");
+    this.m_damageSound = this.application.sounds.sound.get("Zombie-attack-sound");
+    this.m_shootSound = this.application.sounds.sound.get("Shoot-sound");
+    this.m_shotgunSound = this.application.sounds.sound.get("Shotgun-sound");
+    this.m_minigunSound = this.application.sounds.sound.get("Minigun-sound");
+
+    this.m_shootSound.volume = 0.4;
+
     this.m_initAnimations();
     this.m_initHealthBar();
 };
@@ -224,17 +241,21 @@ panicCity.entity.Player.prototype.m_updateInput = function () {
     }
     if (this.fullAuto) {
         if (this.keyboard.pressed(this.shootKey) || this.gamepad.pressed(2)) {
+            this.m_minigunSound.play();
             var bullet = new panicCity.entity.Bullet(this);
+            bullet.damage = 2;
             this.game.bullets.addMember(bullet);
         }
     }
     else if (this.shotgun) {
         if (this.keyboard.justPressed(this.shootKey) || this.gamepad.justPressed(2)) {
+            this.m_shotgunSound.play(true);
             var shells = new panicCity.entity.Shell(this, this.game);
         }
     }
     else {
         if (this.keyboard.justPressed(this.shootKey) || this.gamepad.justPressed(2)) {
+            this.m_shootSound.play(true);
             var bullet = new panicCity.entity.Bullet(this);
             this.game.bullets.addMember(bullet);
         }
@@ -297,6 +318,7 @@ panicCity.entity.Player.prototype.takeDamage = function (damage) {
     if (this.invincible) {
         return;
     }
+    this.m_damageSound.play();
     this.health -= damage;
     this.initFlicker(250, 64);
     this.gamepad.vibrate();
@@ -334,6 +356,7 @@ panicCity.entity.Player.prototype.heal = function (health) {
  */
 panicCity.entity.Player.prototype.m_downed = function () {
     this.animation.gotoAndPlay("downed");
+    this.m_helpSound.play();
     this.isDowned = true;
     this.health = 0;
 }
