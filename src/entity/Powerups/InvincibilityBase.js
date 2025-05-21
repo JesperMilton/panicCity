@@ -21,9 +21,14 @@
  */
 panicCity.entity.InvincibilityBase = function (x, y, width, height, texture, game) {
 
+    /**
+     * The type of powerup
+     * 
+     * @type {string}
+     * @public
+     */
     this.type = "INVINCIBILITY_BASE";
 
-    this.m_active = false;
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
@@ -37,6 +42,14 @@ panicCity.entity.InvincibilityBase = function (x, y, width, height, texture, gam
 panicCity.entity.InvincibilityBase.prototype = Object.create(panicCity.entity.Powerups.prototype);
 panicCity.entity.InvincibilityBase.prototype.constructor = panicCity.entity.InvincibilityBase;
 
+/**
+ * Makes base invincible for 10 seconds
+ * 
+ * @param {Object} target - The target to be affected
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.InvincibilityBase.prototype.initPower = function (target) {
     panicCity.entity.Powerups.prototype.initPower.call(this);
     target.forEachMember(function (target) {

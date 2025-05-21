@@ -64,7 +64,6 @@ panicCity.entity.Shell.prototype.constructor = panicCity.entity.Shell;
  * @private
  * @returns {undefined}
  */
-
  panicCity.entity.Shell.prototype.m_updateMotion = function () {
     const directionMap = {
         "UP":       ["UP", "UP-RIGHT", "UP-LEFT"],
@@ -85,6 +84,7 @@ panicCity.entity.Shell.prototype.constructor = panicCity.entity.Shell;
  * Spawns three bullets and adds it to the stage and array
  * 
  * @param {string} directions - The list of directions
+ * 
  * @private
  * @returns {undefined}
  */

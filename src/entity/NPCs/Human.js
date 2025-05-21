@@ -96,8 +96,20 @@ panicCity.entity.Human = function (x, y, game) {
      */
     this.time = 1;
 
+    /**
+     * Sound file for when human is in position
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_helpSound;
 
+    /**
+     * Sound file for when human gets saved
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_saveSound;
 };
 

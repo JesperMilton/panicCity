@@ -112,6 +112,14 @@ panicCity.managers.WaveManager = function (game, cameras) {
      */
     this.textAnnouncement.autoSize = true;
 
+    /**
+     * Sound file for when new wave is initiated
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_newWaveSound = this.game.application.sounds.sound.get("New-wave-sound");
+
 
     this.m_cameras.getCameraAt(0).addChild(this.text);
     this.m_startnewWave();
@@ -159,6 +167,7 @@ panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
  * 
  */
 panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
+    this.m_newWaveSound.play();
     this.waveAmount += 4;
     this.currentWave++;
     this.currentZombies = 0;

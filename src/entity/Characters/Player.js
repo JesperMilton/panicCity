@@ -16,6 +16,12 @@
  * @param {string} texture - texture resource
  * @param {rune.scene.Scene} game - The Game object
  * @param {number} gamepadIndex - GamepadIndex
+ * @param {string} upKey - Control for up
+ * @param {string} downKey - Control for down
+ * @param {string} leftKey - Control for left
+ * @param {string} rightKey - Control for right
+ * @param {string} shootKey - Control for shooting
+ * @param {string} resKey - Control for reviving
  * 
  * Class for creating "Hibba"-character, includes methods for basic movement and basic functions such as heal and downed
  */
@@ -91,26 +97,100 @@
      */
     this.isDowned = false;
 
+    /**
+     * Control for upward movement
+     * 
+     * @type {string}
+     * @public
+     */
     this.upKey = upKey;
 
+    /**
+     * Control for downward movement
+     * 
+     * @type {string}
+     * @public
+     */
     this.downKey = downKey;
 
+    /**
+     * Control for left movement
+     * 
+     * @type {string}
+     * @public
+     */
     this.leftKey = leftKey;
 
+    /**
+     * Control for right movement
+     * 
+     * @type {string}
+     * @public
+     */
     this.rightKey = rightKey;
 
+    /**
+     * Control for shooting
+     * 
+     * @type {string}
+     * @public
+     */
     this.shootKey = shootKey;
 
+    /**
+     * Control for reviving
+     * 
+     * @type {string}
+     * @public
+     */
     this.resKey = resKey;
 
+    /**
+     * Sound file for when player gets downed
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_helpSound;
 
+    /**
+     * Sound file for when player gets hit
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_damageSound;
+
+    /**
+     * Sound file for when player shoots normal gun
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_shootSound;
 
+    /**
+     * Sound file for when player shoots shotgun
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_shotgunSound;
+
+    /**
+     * Sound file for when player shoots minigun
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_minigunSound;
 
+    /**
+     * Hitbox for the player
+     * 
+     * @type {Object}
+     * @public
+     */
     this.hitbox.set(5, 6, 14, 17);
 };
 
@@ -409,6 +489,14 @@ panicCity.entity.Player.prototype.getRessed = function () {
     this.health += 100;
 }
 
+/**
+ * Changes the color of the healthbar
+ * 
+ * @param {string} color - the color to be changed to
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.Player.prototype.changeHealthColor = function (color) {
     if(this.health <= 1){
         this.health++;
@@ -426,6 +514,15 @@ panicCity.entity.Player.prototype.changeHealthColor = function (color) {
     }
 }
 
+/**
+ * Starts a flicker effect
+ * 
+ * @param {int} time - Total amount of time the flicker should be active for
+ * @param {int} amount - The frequency of the flicker
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.Player.prototype.initFlicker = function(time, amount){
     this.flicker.start(time, amount);
 }

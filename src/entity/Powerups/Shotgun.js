@@ -21,6 +21,12 @@
  */
  panicCity.entity.Shotgun = function (x, y, width, height, texture, game) {
 
+    /**
+     * The type of powerup
+     * 
+     * @type {string}
+     * @public
+     */
     this.type = "SHOTGUN";
 
     //--------------------------------------------------------------------------
@@ -36,6 +42,14 @@
 panicCity.entity.Shotgun.prototype = Object.create(panicCity.entity.Powerups.prototype);
 panicCity.entity.Shotgun.prototype.constructor = panicCity.entity.Shotgun;
 
+/**
+ * Gives player a shotgun for 5 seconds
+ * 
+ * @param {Object} target - The target to be affected
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.Shotgun.prototype.initPower = function(target){
     panicCity.entity.Powerups.prototype.initPower.call(this);
     target.shotgun = true;

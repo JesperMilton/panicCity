@@ -18,6 +18,13 @@ panicCity.scene.Gameover = function (game) {
      * @public
      */
     this.game = game;
+
+    /**
+     * Background music
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_backgroundSound;
 }
 

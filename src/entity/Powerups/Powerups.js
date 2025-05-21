@@ -27,6 +27,12 @@
      */
     this.game = game;
 
+    /**
+     * Sound file for when powerup gets picked up
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_pickUpSound;
 
     //--------------------------------------------------------------------------
@@ -58,6 +64,11 @@ panicCity.entity.Powerups.prototype.constructor = panicCity.entity.Powerups;
     });
 };
 
+/**
+ * 
+ * @inheritDoc
+ * @returns {undefined}
+ */
 panicCity.entity.Powerups.prototype.update = function(step){
     panicCity.entity.Entity.prototype.update.call(this, step);
     if(this.timer.elapsed <= 2000){
@@ -74,18 +85,23 @@ panicCity.entity.Powerups.prototype.update = function(step){
     }
 }
 
+/**
+ * Starts a flicker effect
+ * 
+ * @param {int} amount - Frequency of the flicker
+ * 
+ * @returns {undefined}
+ * @public
+ */
 panicCity.entity.Powerups.prototype.initFlicker = function(amount){
     if (this.flickerActive) {
         return;
     }
-
     this.flickerActive = true;
-
     this.flicker.start(1000, amount, function() {
         this.flickerActive = false;
     }, this);
 }
-
 
 /**
  * Initialize the animations.

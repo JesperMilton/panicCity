@@ -25,7 +25,20 @@ panicCity.scene.Menu = function () {
      */
     this.m_menu = null;
 
+    /**
+     * Background music
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_backgroundSound;
+
+    /**
+     * Sound file for movement in menu select
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_moveSound;
 
     rune.scene.Scene.call(this);

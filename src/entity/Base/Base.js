@@ -59,8 +59,20 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
      */
     this.health = 500;
 
+    /**
+     * Sound file for when base gets hit
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_damageSound;
 
+    /**
+     * Hitbox for the base
+     * 
+     * @type {Object}
+     * @public
+     */
     this.hitbox.set(6, 10, 35, 35);
 
 };
@@ -77,6 +89,7 @@ panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;
  */
 panicCity.entity.Base.prototype.init = function () {
     this.m_damageSound = this.application.sounds.sound.get("Zombie-attack-sound");
+    console.log(this.m_damageSound);
     this.m_initAnimations();
     this.m_initHealthBar();
 };
@@ -175,6 +188,14 @@ panicCity.entity.Base.prototype.heal = function (health) {
     }
 }
 
+/**
+ * Changes the color of the healthbar
+ * 
+ * @param {string} color - the color to be changed to
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.Base.prototype.changeHealthColor = function (color) {
     if(this.health <= 1){
         this.health++;
@@ -198,6 +219,15 @@ panicCity.entity.Base.prototype.changeHealthColor = function (color) {
     
 }
 
+/**
+ * Starts a flicker effect
+ * 
+ * @param {int} time - Total amount of time the flicker should be active for
+ * @param {int} amount - The frequency of the flicker
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.Base.prototype.initFlicker = function(time, amount){
     this.flicker.start(time, amount);
 }

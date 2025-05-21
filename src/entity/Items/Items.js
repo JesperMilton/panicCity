@@ -52,6 +52,12 @@ panicCity.entity.Items = function (x, y, width, height, texture, game, type, hp,
      */
     this.pointValue = points;
 
+    /**
+     * Sound file for when item gets picked up
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_pickUpSound;
 
     //--------------------------------------------------------------------------
@@ -98,6 +104,14 @@ panicCity.entity.Items.prototype.update = function (step) {
     }
 };
 
+/**
+ * Starts a flicker effect
+ * 
+ * @param {int} amount - The frequency of the flicker
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.Items.prototype.initFlicker = function(amount){
     if (this.flickerActive) {
         return;

@@ -91,6 +91,12 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
      */
     this.coolDown = 2000;
 
+    /**
+     * Sound file for when boss gets hit
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_damageSound;
 };
 

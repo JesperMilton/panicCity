@@ -91,6 +91,12 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
      */
     this.coolDown = 2000;
 
+    /**
+     * Sound file for when zombie gets hit
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
     this.m_damageSound;
 
     /**
@@ -119,7 +125,15 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
         minRotation: -2,
         maxRotation: 2
     });
+
+    /**
+     * Hitbox for the zombie
+     * 
+     * @type {Object}
+     * @public
+     */
     this.hitbox.set(5, 6, 14, 17);
+
     this.game.stage.addChild(this.bloodEmitter);
 };
 
