@@ -59,7 +59,7 @@ panicCity.scene.Menu.prototype.init = function () {
 
     this.m_backgroundSound = this.application.sounds.master.get("Menu-music");
     this.m_backgroundSound.loop = true;
-    this.m_backgroundSound.volume = 0.5;
+    this.m_backgroundSound.volume = 0.4;
     this.m_backgroundSound.play();
 
     this.m_moveSound = this.application.sounds.sound.get("Menu-move-sound");
