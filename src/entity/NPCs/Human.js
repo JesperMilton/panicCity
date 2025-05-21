@@ -95,6 +95,22 @@ panicCity.entity.Human = function (x, y, game) {
      * @public
      */
     this.time = 1;
+
+    /**
+     * Sound file for when human is in position
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_helpSound;
+
+    /**
+     * Sound file for when human gets saved
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_saveSound;
 };
 
 //------------------------------------------------------------------------------
@@ -108,6 +124,8 @@ panicCity.entity.Human.prototype.constructor = panicCity.entity.Human;
  * @inheritDoc
  */
 panicCity.entity.Human.prototype.init = function () {
+    this.m_helpSound = this.application.sounds.sound.get("Help-sound");
+    this.m_saveSound = this.application.sounds.sound.get("Save-human-sound");
     this.m_initProgressbar();
     this.m_initAnimations();
     this.m_initStats();
@@ -221,6 +239,7 @@ panicCity.entity.Human.prototype.m_initTimer = function () {
     }
     else {
         this.started = true;
+        this.m_helpSound.play();
         var self = this;
         this.timer = this.game.timers.create({
             duration: this.despawnTime,
@@ -280,7 +299,8 @@ panicCity.entity.Human.prototype.m_die = function () {
  * @param {panicCity.entity.Base} base - the Base object
  */
 panicCity.entity.Human.prototype.getSaved = function (base) {
-    new panicCity.entity.ShowScore(this, 40, this.game);
+    this.m_saveSound.play();
+    new panicCity.entity.ShowScore(this, 20, this.game);
     this.game.humans.removeMember(this, true);
     this.game.stage.removeChild(this.timerBar);
     this.game.updateScoretext(20);

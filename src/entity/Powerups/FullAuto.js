@@ -21,6 +21,12 @@
  */
  panicCity.entity.FullAuto = function (x, y, width, height, texture, game) {
 
+    /**
+     * The type of powerup
+     * 
+     * @type {string}
+     * @public
+     */
     this.type = "FULL_AUTO";
 
     //--------------------------------------------------------------------------
@@ -36,6 +42,14 @@
 panicCity.entity.FullAuto.prototype = Object.create(panicCity.entity.Powerups.prototype);
 panicCity.entity.FullAuto.prototype.constructor = panicCity.entity.FullAuto;
 
+/**
+ * Gives player a minigun for 5 seconds
+ * 
+ * @param {Object} target - The target to be affected
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.FullAuto.prototype.initPower = function(target){
     panicCity.entity.Powerups.prototype.initPower.call(this);
     target.fullAuto = true;

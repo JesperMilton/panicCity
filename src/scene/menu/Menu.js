@@ -25,6 +25,22 @@ panicCity.scene.Menu = function () {
      */
     this.m_menu = null;
 
+    /**
+     * Background music
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_backgroundSound;
+
+    /**
+     * Sound file for movement in menu select
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_moveSound;
+
     rune.scene.Scene.call(this);
 };
 
@@ -40,6 +56,13 @@ panicCity.scene.Menu.prototype.constructor = panicCity.scene.Menu;
  */
 panicCity.scene.Menu.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
+
+    this.m_backgroundSound = this.application.sounds.master.get("Menu-music");
+    this.m_backgroundSound.loop = true;
+    this.m_backgroundSound.volume = 0.5;
+    this.m_backgroundSound.play();
+
+    this.m_moveSound = this.application.sounds.sound.get("Menu-move-sound");
 
     this.cameras.getCameraAt(0).fade.opacity = 1;
     this.cameras.getCameraAt(0).fade.in(1000);
@@ -99,10 +122,12 @@ panicCity.scene.Menu.prototype.m_initBackground = function () {
  */
 panicCity.scene.Menu.prototype.m_updateInput = function (step) {
     if (this.keyboard.justPressed("W") || this.gamepads.stickLeftJustUp) {
+        this.m_moveSound.play();
         this.m_menu.up()
     }
 
     if (this.keyboard.justPressed("S") || this.gamepads.stickLeftJustDown) {
+        this.m_moveSound.play();
         this.m_menu.down()
     }
 
@@ -123,6 +148,7 @@ panicCity.scene.Menu.prototype.m_onMenuSelect = function (elem) {
     switch (elem.text) {
         case "GAME":
             this.application.scenes.load([new panicCity.scene.Game()])
+            this.m_backgroundSound.stop();
             break;
 
         case "TUTORIAL":

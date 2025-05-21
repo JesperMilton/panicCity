@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * Instances of the CollisionManger class.
+ * Instances of the CollisionManager class.
  *
  * @constructor
  *
@@ -166,6 +166,13 @@ panicCity.managers.CollisionManager.prototype.m_rescuees = function () {
     }, this);
 }
 
+/**
+ * Controls the collision for the powerups DisplayGroup.
+ *
+ * @return {undefined}
+ * @private
+ * 
+ */
 panicCity.managers.CollisionManager.prototype.m_powerups = function () {
     this.game.powerups.hitTestGroup(this.game.players, function (item, player) {
         if (item.type === "INVINCIBILITY_BASE") {

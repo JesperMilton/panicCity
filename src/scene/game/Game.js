@@ -35,9 +35,36 @@ panicCity.scene.Game = function () {
      */
     this.rescueeTime = 10000;
 
+    /**
+     * Timer for powerups, used to call a method that spawns a powerup every 10 seconds
+     * @public
+     * @type {number}
+     */
     this.powerupTime = 10000;
 
+    /**
+     * Flag to check if game is over
+     * 
+     * @public
+     * @type {boolean}
+     */
     this.startTest = false;
+
+    /**
+     * Background music
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_music;
+
+    /**
+     * The base
+     * 
+     * @type {Object}
+     * @public
+     */
+    this.base;
 };
 
 //------------------------------------------------------------------------------
@@ -53,6 +80,10 @@ panicCity.scene.Game.prototype.constructor = panicCity.scene.Game;
 panicCity.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+    this.m_music = this.application.sounds.music.get("Game-background-music");
+    this.m_music.play();
+    this.m_music.loop = true;
+    this.m_music.volume = 0.5;
     this.cameras.getCameraAt(0).fade.opacity = 1;
     this.cameras.getCameraAt(0).fade.in(1000);
 
@@ -237,6 +268,11 @@ panicCity.scene.Game.prototype.spawnHuman = function () {
     });
 }
 
+/**
+ * Spawns a powerup
+ * @public
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.spawnPowerup = function () {
     this.powerupSpawner.spawn();
     this.timers.create({

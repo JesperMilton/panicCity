@@ -90,6 +90,14 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
      * @public
      */
     this.coolDown = 2000;
+
+    /**
+     * Sound file for when boss gets hit
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_damageSound;
 };
 
 //------------------------------------------------------------------------------
@@ -103,6 +111,7 @@ panicCity.entity.ZombieBoss.prototype.constructor = panicCity.entity.ZombieBoss;
  * @inheritdoc
  */
 panicCity.entity.ZombieBoss.prototype.init = function () {
+    this.m_damageSound = this.application.sounds.sound.get("Zombie-hurt-sound");
     this.m_initAnimations();
     this.m_initStats();
     this.m_initHealthBar();
@@ -116,7 +125,7 @@ panicCity.entity.ZombieBoss.prototype.init = function () {
  * 
  */
 panicCity.entity.ZombieBoss.prototype.m_initStats = function () {
-    this.hitbox.set(10, 20, 60, 50);
+    this.hitbox.set(15, 20, 40, 50);
     this.health = 500;
     this.damage = 15;
 
@@ -288,6 +297,7 @@ panicCity.entity.ZombieBoss.prototype.m_updateHealthbar = function () {
  * 
  */
 panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
+    this.m_damageSound.play();
     this.flicker.start(250);
     this.health -= damage;
     if (this.health <= 0) {

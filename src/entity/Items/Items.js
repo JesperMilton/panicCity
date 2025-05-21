@@ -52,6 +52,14 @@ panicCity.entity.Items = function (x, y, width, height, texture, game, type, hp,
      */
     this.pointValue = points;
 
+    /**
+     * Sound file for when item gets picked up
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_pickUpSound;
+
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
@@ -70,6 +78,7 @@ panicCity.entity.Items.prototype.constructor = panicCity.entity.Items;
  * @inheritDoc
  */
 panicCity.entity.Items.prototype.init = function () {
+    this.m_pickUpSound = this.application.sounds.sound.get("Pickup-item-sound");
     this.m_initAnimations();
     this.timer = this.game.timers.create({
         duration: 6000,
@@ -95,6 +104,14 @@ panicCity.entity.Items.prototype.update = function (step) {
     }
 };
 
+/**
+ * Starts a flicker effect
+ * 
+ * @param {int} amount - The frequency of the flicker
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.Items.prototype.initFlicker = function(amount){
     if (this.flickerActive) {
         return;
@@ -128,6 +145,7 @@ panicCity.entity.Items.prototype.m_initAnimations = function () {
  */
 panicCity.entity.Items.prototype.heal = function (target) {
     new panicCity.entity.ShowScore(this, this.pointValue, this.game);
+    this.m_pickUpSound.play(true);
     target.forEachMember(function (target) {
         target.heal(this.hp);
     }, this);

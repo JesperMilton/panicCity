@@ -92,6 +92,14 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
     this.coolDown = 2000;
 
     /**
+     * Sound file for when zombie gets hit
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_damageSound;
+
+    /**
      * Used for dropping items from the zombies.
      * 
      * @type {panicCity.managers.ItemSpawner}
@@ -118,6 +126,14 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
         maxRotation: 2
     });
 
+    /**
+     * Hitbox for the zombie
+     * 
+     * @type {Object}
+     * @public
+     */
+    this.hitbox.set(5, 6, 14, 17);
+
     this.game.stage.addChild(this.bloodEmitter);
 };
 
@@ -133,6 +149,7 @@ panicCity.entity.Zombie.prototype.constructor = panicCity.entity.Zombie;
  */
 panicCity.entity.Zombie.prototype.init = function () {
     this.useQaudtree = true;
+    this.m_damageSound = this.application.sounds.sound.get("Zombie-hurt-sound");
     this.m_initAnimations();
     this.m_initStats();
 };
@@ -267,6 +284,7 @@ panicCity.entity.Zombie.prototype.attack = function (target) {
  * 
  */
 panicCity.entity.Zombie.prototype.takeDamage = function (damage) {
+    this.m_damageSound.play();
     this.flicker.start(250);
     this.health -= damage;
     if (this.health <= 0) {

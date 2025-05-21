@@ -20,7 +20,12 @@
  * The class for the basic Zombie, includes methods such as initStatus and movement logic
  */
 panicCity.entity.InvincibilityPlayer = function (x, y, width, height, texture, game) {
-
+    /**
+     * The type of powerup
+     * 
+     * @type {string}
+     * @public
+     */
     this.type = "INVINCIBILITY_PLAYER";
 
     //--------------------------------------------------------------------------
@@ -36,6 +41,14 @@ panicCity.entity.InvincibilityPlayer = function (x, y, width, height, texture, g
 panicCity.entity.InvincibilityPlayer.prototype = Object.create(panicCity.entity.Powerups.prototype);
 panicCity.entity.InvincibilityPlayer.prototype.constructor = panicCity.entity.InvincibilityPlayer;
 
+/**
+ * Makes player invincible for 5 seconds
+ * 
+ * @param {Object} target - The target to be affected
+ * 
+ * @return {undefined}
+ * @public
+ */
 panicCity.entity.InvincibilityPlayer.prototype.initPower = function (target) {
     panicCity.entity.Powerups.prototype.initPower.call(this);
     target.changeHealthColor("#27dcf5");
