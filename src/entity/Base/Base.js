@@ -90,7 +90,6 @@ panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;
  */
 panicCity.entity.Base.prototype.init = function () {
     this.m_damageSound = this.application.sounds.sound.get("Zombie-attack-sound");
-    console.log(this.m_damageSound);
     this.m_initAnimations();
     this.m_initHealthBar();
 };
@@ -147,18 +146,6 @@ panicCity.entity.Base.prototype.takeDamage = function (damage) {
 panicCity.entity.Base.prototype.m_die = function () {
     this.animation.gotoAndPlay("dead");
     this.game.checkHighscore();
-    // if (!this.startTest) {
-    //     this.startTest = true;
-    //     this.game.cameras.getCameraAt(0).fade.out(4000, function () {
-    //         this.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
-    //     }, this);
-    // }
-    // this.game.timers.create({
-    //     duration: 4000,
-    //     onComplete: function () {
-    //         this.game.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
-    //     }.bind(this)
-    // });
 }
 
 /**

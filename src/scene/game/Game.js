@@ -48,7 +48,15 @@ panicCity.scene.Game = function () {
      * @public
      * @type {boolean}
      */
-    this.startTest = false;
+    this.ifGameover = false;
+
+    /**
+     * Flag to check if game is over
+     * 
+     * @public
+     * @type {boolean}
+     */
+    this.ifGameoverHighscore = false;
 
     /**
      * Background music
@@ -284,11 +292,16 @@ panicCity.scene.Game.prototype.spawnPowerup = function () {
 }
 
 panicCity.scene.Game.prototype.checkHighscore = function () {
-    if (this.application.highscores.test(this.score) < 5) {
-        this.application.scenes.load([new panicCity.scene.VirtualKeyboard(this)]);
+    if (this.application.highscores.test(this.score) < 5 && this.application.highscores.test(this.score) != -1) {
+        if (!this.ifGameoverHighscore) {
+            this.ifGameoverHighscore = true;
+            this.cameras.getCameraAt(0).fade.out(4000, function () {
+                this.application.scenes.load([new panicCity.scene.VirtualKeyboard(this)]);
+            }, this);
+        }
     } else {
-        if (!this.startTest) {
-            this.startTest = true;
+        if (!this.ifGameover) {
+            this.ifGameover = true;
             this.cameras.getCameraAt(0).fade.out(4000, function () {
                 this.application.scenes.load([new panicCity.scene.Gameover(this)]);
             }, this);

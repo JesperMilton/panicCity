@@ -9,25 +9,36 @@
  *
  * @class
  * 
+ * @return {Array}
  * 
  * Class for Keys used for the keyboard in the game.
  */
 panicCity.components.Keys = function () {
 
-    this.letters = [
+    /**
+     * Array for all the character that will be used for the virtualKeyboard
+     * @private
+     * @type {Array}
+     */
+    this.m_letters = [
         "A", "B", "C", "D", "E", "F", "G",
         "H", "I", "J", "K", "L", "M", "N",
         "O", "P", "Q", "R", "S", "T", "U",
         "V", "W", "X", "Y", "Z", "$", "#"
     ];
 
-    this.keyFields = [];
+    /**
+     * Array for BitmapField that represents all the characters.
+     * @private
+     * @type {Array}
+     */
+    this.m_keyFields = [];
 
-    this.letters.forEach(function (letter) {
-        this.keyFields.push(new rune.text.BitmapField(letter, "Font"));
+    this.m_letters.forEach(function (letter) {
+        this.m_keyFields.push(new rune.text.BitmapField(letter, "Font"));
     }.bind(this));
 
-    return this.keyFields;
+    return this.m_keyFields;
 };
 
 

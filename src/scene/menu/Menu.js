@@ -109,7 +109,7 @@ panicCity.scene.Menu.prototype.m_initBackground = function () {
         0,
         400,
         225,
-        "Menu_Blood-Empty"
+        "image_Menu"
     );
     this.stage.addChild(this.m_background);
 };

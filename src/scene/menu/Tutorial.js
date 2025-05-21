@@ -66,7 +66,7 @@ panicCity.scene.Tutorial.prototype.m_initBackground = function () {
         0,
         400,
         225,
-        "Tutorial"
+        "image_Tutorial"
     );
     this.stage.addChild(this.m_background);
 };

@@ -65,7 +65,7 @@ panicCity.entity.Shell.prototype.constructor = panicCity.entity.Shell;
  * @returns {undefined}
  */
  panicCity.entity.Shell.prototype.m_updateMotion = function () {
-    const directionMap = {
+    var directionMap = {
         "UP":       ["UP", "UP-RIGHT", "UP-LEFT"],
         "DOWN":     ["DOWN", "DOWN-RIGHT", "DOWN-LEFT"],
         "LEFT":     ["LEFT", "DOWN-LEFT", "UP-LEFT"],
@@ -76,7 +76,7 @@ panicCity.entity.Shell.prototype.constructor = panicCity.entity.Shell;
         "DOWN-RIGHT":["RIGHT", "DOWN", "DOWN-RIGHT"]
     };
 
-    const directions = directionMap[this.direction] || ["UP", "UP-RIGHT", "UP-LEFT"];
+    var directions = directionMap[this.direction] || ["UP", "UP-RIGHT", "UP-LEFT"];
     this.m_spawnBullets(directions);
 };
 
@@ -90,9 +90,9 @@ panicCity.entity.Shell.prototype.constructor = panicCity.entity.Shell;
  */
 panicCity.entity.Shell.prototype.m_spawnBullets = function (directions) {
     directions.forEach(function(dir){
-        const originalDirection = this.player.direction;
+        var originalDirection = this.player.direction;
         this.player.direction = dir;
-        const bullet = new panicCity.entity.Bullet(this.player);
+        var bullet = new panicCity.entity.Bullet(this.player);
         this.game.bullets.addMember(bullet);
         this.bulletsArray.push(bullet);
         this.player.direction = originalDirection;

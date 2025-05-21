@@ -10,6 +10,7 @@
  *
  * @class
  * 
+ * @param {rune.scene.Scene} game - The game object
  */
 panicCity.scene.VirtualKeyboard = function (game) {
 
@@ -17,15 +18,36 @@ panicCity.scene.VirtualKeyboard = function (game) {
     // Super call
     //--------------------------------------------------------------------------
 
+    rune.scene.Scene.call(this);
+    
+    /**
+     * The Game object.
+     * 
+     * @type {rune.scene.Scene}
+     * @public
+     */
     this.game = game;
 
+    /**
+     * Keeps track of current letter being selected.
+     * @private
+     * @type {number}
+     */
     this.m_currentkeyIndex = 0;
 
-    this.teamName = [];
+    /**
+     * Array for the selected characters.
+     * @private
+     * @type {Array}
+     */
+    this.m_teamName = [];
 
-    this.displayedLetters = [];
-
-    rune.scene.Scene.call(this);
+    /**
+     * The letters which are displayed on screen based on the players inputs.
+     * @private
+     * @type {Array}
+     */
+    this.m_displayedLetters = [];
 };
 
 //------------------------------------------------------------------------------
@@ -92,17 +114,17 @@ panicCity.scene.VirtualKeyboard.prototype.update = function (step) {
     if (this.keyboard.justPressed("SPACE") || this.gamepads.justPressed(0)) {
         var selectedChar = this.keyboardKeys[this.m_currentkeyIndex].text;
 
-        if (selectedChar == "$" && this.teamName.length > 0) {
-            this.teamName.pop();
-        } else if (this.teamName.length < 3 && selectedChar !== "$") {
-            this.teamName.push(selectedChar);
+        if (selectedChar == "$" && this.m_teamName.length > 0) {
+            this.m_teamName.pop();
+        } else if (this.m_teamName.length < 3 && selectedChar !== "$") {
+            this.m_teamName.push(selectedChar);
         }
 
-        if (selectedChar == "#" && this.teamName.length > 0) {
-            this.m_saveName(this.teamName);
+        if (selectedChar == "#" && this.m_teamName.length > 0) {
+            this.m_saveName(this.m_teamName);
         }
 
-        this.m_displayteamName(this.teamName);
+        this.m_displaym_teamName(this.m_teamName);
     }
 };
 
@@ -116,38 +138,37 @@ panicCity.scene.VirtualKeyboard.prototype.dispose = function () {
 /**
  * Handles routing for selecting on the menu.
  * 
- * @param {Array} nameText - Array containing the letter for the teamName.
+ * @param {Array} nameText - Array containing the letter for the m_teamName.
  * 
  * @private
  * @returns {undefined}
  */
-panicCity.scene.VirtualKeyboard.prototype.m_displayteamName = function (nameText) {
+panicCity.scene.VirtualKeyboard.prototype.m_displaym_teamName = function (nameText) {
 
-    this.displayedLetters.forEach(function (key) {
+    this.m_displayedLetters.forEach(function (key) {
         this.stage.removeChild(key);
     }.bind(this));
 
-    this.displayedLetters = [];
+    this.m_displayedLetters = [];
 
     nameText.forEach(function (text, index) {
         var key = new rune.text.BitmapField(text, "Font");
         key.x = 180 + index * 14;
         key.y = 150;
         this.stage.addChild(key);
-        this.displayedLetters.push(key);
+        this.m_displayedLetters.push(key);
     }.bind(this));
 };
 
 /**
  * Handles routing for selecting on the menu.
  * 
- * @param {Array} nameText - Array containing the letter for the teamName.
+ * @param {Array} nameText - Array containing the letter for the m_teamName.
  * 
  * @private
  * @returns {undefined}
  */
 panicCity.scene.VirtualKeyboard.prototype.m_saveName = function (nameText) {
-    console.log(nameText);
     this.nameT = "";
     nameText.forEach(function (letter) {
         this.nameT += letter;

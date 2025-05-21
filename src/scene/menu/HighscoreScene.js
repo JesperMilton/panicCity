@@ -44,16 +44,17 @@ panicCity.scene.HighscoreScene.prototype.init = function () {
     text.centerX = this.application.screen.centerX;
     text.y = 20;
 
-    for (let i = 0; i <= 4; i++) {
-        let test = new rune.text.BitmapField(
-            `${i + 1}: ${this.application.highscores.get(i).name} SCORE: ${this.application.highscores.get(i).score}`,
+    for (var i = 0; i <= 4; i++) {
+        var rankings = new rune.text.BitmapField(
+            (i + 1) + ": " + this.application.highscores.get(i).name + " SCORE: " + this.application.highscores.get(i).score,
             "Font"
         );
-        test.centerX = this.application.screen.centerX;
-        test.width = 144;
-        test.y = 65 + i * 15;
 
-        this.stage.addChild(test);
+        rankings.centerX = this.application.screen.centerX;
+        rankings.width = 144;
+        rankings.y = 65 + i * 15;
+
+        this.stage.addChild(rankings);
     }
     this.stage.addChild(text);
 };
