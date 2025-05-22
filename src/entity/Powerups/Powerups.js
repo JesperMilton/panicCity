@@ -138,3 +138,4 @@ panicCity.entity.Powerups.prototype.initPower = function () {
 panicCity.entity.Powerups.prototype.m_delete = function () {
     this.game.powerups.removeMember(this, true);
 }
+
