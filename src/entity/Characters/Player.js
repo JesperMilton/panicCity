@@ -206,7 +206,7 @@ panicCity.entity.Player.prototype.constructor = panicCity.entity.Player;
  */
 panicCity.entity.Player.prototype.init = function () {
     this.m_helpSound = this.application.sounds.sound.get("Help-sound");
-    this.m_damageSound = this.application.sounds.sound.get("Zombie-attack-sound");
+    this.m_damageSound = this.application.sounds.sound.get("new-hit");
     this.m_shootSound = this.application.sounds.sound.get("Shoot-sound");
     this.m_shotgunSound = this.application.sounds.sound.get("Shotgun-sound");
     this.m_minigunSound = this.application.sounds.sound.get("Minigun-sound");

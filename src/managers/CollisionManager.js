@@ -40,6 +40,14 @@ panicCity.managers.CollisionManager = function (game) {
         wall.immovable = true;
         this.game.walls.addMember(wall);
     }, this);
+
+    /**
+     * Sound file for when projectile hits target
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_hitSound = this.game.application.sounds.sound.get("throw-attack");
 };
 
 /**
@@ -124,11 +132,13 @@ panicCity.managers.CollisionManager.prototype.m_projectiles = function () {
             return;
         }
         player.takeDamage(projectile.damage);
+        this.m_hitSound.play("true");
         this.game.projectiles.removeMember(projectile, true);
     }, this);
 
     this.game.projectiles.hitTestGroup(this.game.baseSta, function (projectile, base) {
         base.takeDamage(projectile.damage);
+        this.m_hitSound.play("true");
         this.game.projectiles.removeMember(projectile, true);
     }, this);
 };
