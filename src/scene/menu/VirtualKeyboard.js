@@ -19,7 +19,7 @@ panicCity.scene.VirtualKeyboard = function (game) {
     //--------------------------------------------------------------------------
 
     rune.scene.Scene.call(this);
-    
+
     /**
      * The Game object.
      * 
@@ -66,15 +66,38 @@ panicCity.scene.VirtualKeyboard.prototype.init = function () {
     this.cameras.getCameraAt(0).fade.opacity = 1;
     this.cameras.getCameraAt(0).fade.in(1000);
 
+    this.m_initBackground();
+
+    var tet = new rune.text.BitmapField("NEW HIGHSCORE!!!", "Font");
+    tet.autoSize = true;
+    tet.centerX = this.application.screen.centerX;
+    tet.y = 60;
+
+    this.stage.addChild(tet);
+
+    var text = new rune.text.BitmapField("YOUR SCORE:" + this.game.score, "Font");
+    text.autoSize = true;
+    text.centerX = this.application.screen.centerX;
+    text.y = 80;
+
+    this.stage.addChild(text);
+
+    var te = new rune.text.BitmapField("ENTER NAME", "Font");
+    te.autoSize = true;
+    te.centerX = this.application.screen.centerX;
+    te.y = 110;
+
+    this.stage.addChild(te);
+
     this.keyboardKeys = new panicCity.components.Keys();
     this.keyboardKeys.forEach(function (key, index) {
         if (index < 13) {
-            key.x = 115 + index * 14;
-            key.y = 80;
+            key.x = 110 + index * 14;
+            key.y = 160;
         } else {
             var secondRowIndex = index - 13;
-            key.x = 115 + secondRowIndex * 14;
-            key.y = 100;
+            key.x = 110 + secondRowIndex * 14;
+            key.y = 175;
         }
 
         this.stage.addChild(key);
@@ -116,15 +139,19 @@ panicCity.scene.VirtualKeyboard.prototype.update = function (step) {
 
         if (selectedChar == "$" && this.m_teamName.length > 0) {
             this.m_teamName.pop();
-        } else if (this.m_teamName.length < 3 && selectedChar !== "$") {
+        } else if (this.m_teamName.length < 3 && selectedChar !== "$" && selectedChar !== "#") {
             this.m_teamName.push(selectedChar);
         }
 
-        if (selectedChar == "#" && this.m_teamName.length > 0) {
+        if (selectedChar == "#" && this.m_teamName.length <= 0) {
+            this.m_displayError();
+
+
+        } else if (selectedChar == "#" && this.m_teamName.length > 0) {
             this.m_saveName(this.m_teamName);
         }
 
-        this.m_displaym_teamName(this.m_teamName);
+        this.m_displayteamName(this.m_teamName);
     }
 };
 
@@ -136,6 +163,42 @@ panicCity.scene.VirtualKeyboard.prototype.dispose = function () {
 };
 
 /**
+ * Initializes the background
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.VirtualKeyboard.prototype.m_initBackground = function () {
+    this.m_background = new rune.display.Graphic(
+        0,
+        0,
+        400,
+        225,
+        "image_NewHighscore"
+    );
+    this.stage.addChild(this.m_background);
+};
+
+/**
+ * Handles showing of the error message.
+ * 
+ * 
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.VirtualKeyboard.prototype.m_displayError = function () {
+    if (this.m_errorMessage) {
+        this.stage.removeChild(this.m_errorMessage);
+    }
+
+    this.m_errorMessage = new rune.text.BitmapField("YOU MUST ENTER A NAME", "Font");
+    this.m_errorMessage.autoSize = true;
+    this.m_errorMessage.centerX = this.application.screen.centerX;
+    this.m_errorMessage.y = 195;
+
+    this.stage.addChild(this.m_errorMessage);
+};
+
+/**
  * Handles routing for selecting on the menu.
  * 
  * @param {Array} nameText - Array containing the letter for the m_teamName.
@@ -143,7 +206,7 @@ panicCity.scene.VirtualKeyboard.prototype.dispose = function () {
  * @private
  * @returns {undefined}
  */
-panicCity.scene.VirtualKeyboard.prototype.m_displaym_teamName = function (nameText) {
+panicCity.scene.VirtualKeyboard.prototype.m_displayteamName = function (nameText) {
 
     this.m_displayedLetters.forEach(function (key) {
         this.stage.removeChild(key);
@@ -154,14 +217,14 @@ panicCity.scene.VirtualKeyboard.prototype.m_displaym_teamName = function (nameTe
     nameText.forEach(function (text, index) {
         var key = new rune.text.BitmapField(text, "Font");
         key.x = 180 + index * 14;
-        key.y = 150;
+        key.y = 130;
         this.stage.addChild(key);
         this.m_displayedLetters.push(key);
     }.bind(this));
 };
 
 /**
- * Handles routing for selecting on the menu.
+ * Handle routing for selecting on the menu.
  * 
  * @param {Array} nameText - Array containing the letter for the m_teamName.
  * 

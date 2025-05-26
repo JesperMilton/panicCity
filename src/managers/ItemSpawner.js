@@ -35,6 +35,10 @@ panicCity.managers.ItemSpawner = function (game) {
  * 
  */
 panicCity.managers.ItemSpawner.prototype.spawnItem = function(x, y){
+    console.log(this.game.items.numMembers)
+    if (this.game.items > 10) {
+        return;
+    }
     var item;
     if(this.m_randomChance(60)){
         if (this.m_randomChance(20)) {

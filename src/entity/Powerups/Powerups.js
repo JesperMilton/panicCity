@@ -55,6 +55,7 @@ panicCity.entity.Powerups.prototype.constructor = panicCity.entity.Powerups;
  panicCity.entity.Powerups.prototype.init = function () {
     this.flickerActive = false;
     this.m_pickUpSound = this.application.sounds.sound.get("Pickup-powerup-sound");
+    this.m_initAnimations();
 
     this.timer = this.game.timers.create({
         duration: 8000,

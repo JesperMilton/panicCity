@@ -99,6 +99,7 @@ panicCity.scene.Game.prototype.init = function () {
     this.m_initCamera();
     this.m_initUI();
     this.m_initScore();
+    this.m_initSort();    
 
     this.players = this.groups.create(this.stage);
     this.enemies = this.groups.create(this.stage);
@@ -228,9 +229,20 @@ panicCity.scene.Game.prototype.m_initBackground = function () {
         0,
         475,
         300,
-        "image_Background"
+        "newBackground"
     );
     this.stage.addChild(this.m_background);
+};
+
+panicCity.scene.Game.prototype.m_initSort = function() {
+    var m_this = this;
+    this.stage.sort = function(a, b) {
+        if (b == m_this.m_background) {
+            return Number.POSITIVE_INFINITY;
+        }
+        
+        return a.bottom - b.bottom;
+    };
 };
 
 /**

@@ -225,7 +225,7 @@ panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
     var now = Date.now();
     if (this.velocity.x == 0.0 && now > this.lastThow) {
         this.animation.gotoAndPlay("attack");
-        var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, 35, "image_Stone", this.game);
+        var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, 50, "image_Stone", this.game);
         this.game.projectiles.addMember(projectile);
 
         this.lastThow = now + this.coolDown;
