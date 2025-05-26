@@ -51,18 +51,15 @@ panicCity.entity.Shotgun.prototype.constructor = panicCity.entity.Shotgun;
  * @public
  */
 panicCity.entity.Shotgun.prototype.initPower = function(target){
+    this.target = target;
     panicCity.entity.Powerups.prototype.initPower.call(this);
-    target.shotgun = true;
-    this.game.timers.create({
-        duration: 3000,
-        onComplete: function () {
-                target.initFlicker(2000, 150);
-        }
-    });
-    this.game.timers.create({
-        duration: 5000,
-        onComplete: function () {
-            target.shotgun = false;
-        },
-    });
+    this.target.shotgun = true;
+}
+
+/**
+ * @inheritdoc
+ */
+panicCity.entity.Shotgun.prototype.revertPower = function () {
+    this.target.shotgun = false;
+    panicCity.entity.Powerups.prototype.revertPower.call(this);
 }

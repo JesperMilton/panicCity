@@ -186,7 +186,7 @@ panicCity.managers.CollisionManager.prototype.m_rescuees = function () {
 panicCity.managers.CollisionManager.prototype.m_powerups = function () {
     this.game.powerups.hitTestGroup(this.game.players, function (item, player) {
         if (item.type === "INVINCIBILITY_BASE") {
-            item.initPower(this.game.baseSta);
+            item.initPower(this.game.base);
         }
         else{
             item.initPower(player);
