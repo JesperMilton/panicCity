@@ -6,6 +6,7 @@
  *  Class to give the player feedback on the amount of score earned.
  * 
  * @constructor
+ * @extends rune.text.BitmapField
  *
  * @class
  *  
@@ -27,10 +28,10 @@ panicCity.entity.ShowScore = function (origin, score, game) {
     /**
      * The amount of score.
      *
-     * @type {number}
+     * @type {string}
      * @public
      */
-    this.score = score;
+    this.m_score = score.toString();
 
     /**
      * The origin of the score.
@@ -38,28 +39,64 @@ panicCity.entity.ShowScore = function (origin, score, game) {
      * @type {panicCity.entity.Entity}
      * @public
      */
-    this.origin = origin;
+    this.m_origin = origin;
 
-    /**
-     * New text to represent the score earned.
-     *
-     * @type {rune.text.BitmapField}
-     * @public
+     /**
+     * The time it takes for the score to dispose.
+     * 
+     * @type {number}
+     * @private
      */
-    this.scoreText = new rune.text.BitmapField(score.toString(), "Font");
+    this.m_deleteTime = 1000;
 
-    this.scoreText.autoSize = true;
+    //--------------------------------------------------------------------------
+    // Super call
+    //--------------------------------------------------------------------------
 
-    this.scoreText.centerX = this.origin.centerX;
-    
-    this.scoreText.centerY = this.origin.centerY;
+    rune.text.BitmapField.call(this, this.m_score, "Font");
 
-    this.game.stage.addChild(this.scoreText);
+    this.game.stage.addChild(this);
 
-    this.game.timers.create({
-        duration: 1000,
-        onComplete: function () {
-            this.game.stage.removeChild(this.scoreText);
-        }.bind(this)
-    });
+};
+
+//------------------------------------------------------------------------------
+// Inheritance
+//------------------------------------------------------------------------------
+
+panicCity.entity.ShowScore.prototype = Object.create(rune.text.BitmapField.prototype);
+panicCity.entity.ShowScore.prototype.constructor = panicCity.entity.ShowScore;
+
+/**
+ * @inheritDoc
+ */
+panicCity.entity.ShowScore.prototype.init = function () {
+    rune.text.BitmapField.prototype.init.call(this);
+
+    this.autoSize = true;
+    this.centerX = this.m_origin.centerX;
+    this.centerY = this.m_origin.centerY;
+
+    this.m_createdAt = Date.now();
+};
+
+/**
+ * @inheritDoc
+ */
+panicCity.entity.ShowScore.prototype.update = function (step) {
+    rune.text.BitmapField.prototype.update.call(this, step);
+
+    var now = Date.now();
+    if (now > this.m_createdAt + this.m_deleteTime) {
+        this.m_removeScoreText();
+    }
+};
+
+/**
+ * Removes the ShowScore from the stage.
+ * 
+ * @returns {undefined}
+ * @private
+ */
+panicCity.entity.ShowScore.prototype.m_removeScoreText = function () {
+    this.game.stage.removeChild(this, true);
 };

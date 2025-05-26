@@ -94,6 +94,13 @@ panicCity.entity.Bullet.prototype.constructor = panicCity.entity.Bullet;
 /**
  * @inheritDoc
  */
+panicCity.entity.Bullet.prototype.init = function () {
+    this.useQaudtree = true;
+};
+
+/**
+ * @inheritDoc
+ */
 panicCity.entity.Bullet.prototype.update = function (step) {
     this.m_updateMotion();
 };

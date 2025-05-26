@@ -28,7 +28,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
      * The Cameras object.
      * 
      * @type {rune.camera.Camera}
-     * @public
+     * @private
      */
     this.m_cameras = cameras;
 
@@ -36,41 +36,49 @@ panicCity.managers.WaveManager = function (game, cameras) {
      * Keeps track of the current wave.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.currentWave = 0;
+    this.m_currentWave = 0;
 
     /**
      * The amount enemies to be spawned during current wave.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.waveAmount = 5;
+    this.m_waveAmount = 5;
 
     /**
      * Keeps track of the current zombies in the wave.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.currentZombies = 0;
+    this.m_currentZombies = 0;
 
     /**
      * Flag to control that the spawn is completed for a wave.
      * 
      * @type {boolean}
-     * @public
+     * @private
      */
-    this.spawnComplete = false;
+    this.m_spawnComplete = false;
 
     /**
-     * Flag to control the enemy spawner.
+     * Used for the timestamp, which controls when zombies are spawned.
      * 
-     * @type {boolean}
-     * @public
+     * @type {number}
+     * @private
      */
-    this.coolDown = false;
+    this.m_lastSpawned = 0;
+
+    /**
+     * The cooldown of the m_callSpawner.
+     * 
+     * @type {number}
+     * @private
+     */
+    this.m_spawnCooldown = 500;
 
     /**
      * The ZombieSpawner object.
@@ -84,17 +92,17 @@ panicCity.managers.WaveManager = function (game, cameras) {
      * Text to represent the current wave.
      * 
      * @type {rune.text.BitmapField}
-     * @public
+     * @private
      */
-    this.text = new rune.text.BitmapField("text", "Font");
+    this.m_currentWaveText = new rune.text.BitmapField("text", "Font");
 
     /**
      * Use for the size of the text.
      * 
      * @type {boolean}
-     * @public
+     * @private
      */
-    this.text.autoSize = true;
+    this.m_currentWaveText.autoSize = true;
 
     /**
      * Text to represent the current wave.
@@ -102,7 +110,7 @@ panicCity.managers.WaveManager = function (game, cameras) {
      * @type {rune.text.BitmapField}
      * @public
      */
-    this.textAnnouncement = new rune.text.BitmapField("text", "Font");
+    this.m_textAnnouncement = new rune.text.BitmapField("text", "Font");
 
     /**
      * Use for the size of the text.
@@ -110,7 +118,11 @@ panicCity.managers.WaveManager = function (game, cameras) {
      * @type {boolean}
      * @public
      */
-    this.textAnnouncement.autoSize = true;
+    this.m_textAnnouncement.autoSize = true;
+
+    this.m_textAnnouncement.alpha = 0;
+
+    this.m_cameras.getCameraAt(0).addChild(this.m_textAnnouncement);
 
     /**
      * Sound file for when new wave is initiated
@@ -121,7 +133,8 @@ panicCity.managers.WaveManager = function (game, cameras) {
     this.m_newWaveSound = this.game.application.sounds.sound.get("New-wave-sound");
 
 
-    this.m_cameras.getCameraAt(0).addChild(this.text);
+    this.m_cameras.getCameraAt(0).addChild(this.m_currentWaveText);
+
     this.m_startnewWave();
 };
 
@@ -133,12 +146,12 @@ panicCity.managers.WaveManager = function (game, cameras) {
  * 
  */
 panicCity.managers.WaveManager.prototype.updateSpawner = function () {
-    if (this.spawnComplete && this.game.enemies.numMembers == 0) {
-        this.spawnComplete = false;
+    if (this.m_spawnComplete && this.game.enemies.numMembers == 0) {
+        this.m_spawnComplete = false;
         this.m_startWaveCountdown();
     }
 
-    if (!this.spawnComplete) {
+    if (!this.m_spawnComplete) {
         this.m_callSpawner();
     }
 };
@@ -152,7 +165,7 @@ panicCity.managers.WaveManager.prototype.updateSpawner = function () {
  */
 panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
     this.waveTimer = this.game.timers.create({
-        duration: 5000,
+        duration: 2500,
         onComplete: function () {
             this.m_startnewWave();
         }.bind(this)
@@ -168,61 +181,58 @@ panicCity.managers.WaveManager.prototype.m_startWaveCountdown = function () {
  */
 panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     this.m_newWaveSound.play();
-    this.waveAmount += 4;
-    this.currentWave++;
-    this.currentZombies = 0;
+    this.m_waveAmount += 4;
+    this.m_currentWave++;
+    this.m_currentZombies = 0;
 
-    if (this.currentWave % 3 == 0) {
+    if (this.m_currentWave % 3 == 0) {
         this.zombieSpawner.spawnZombieBoss();
-        this.currentZombies++;
-        for (var i = 0; i < 5; i++) {
+        this.m_currentZombies++;
+        for (var i = 0; i < 10; i++) {
             this.zombieSpawner.spawnZombie();
-            this.currentZombies++;
+            this.m_currentZombies++;
         }
-        this.spawnComplete = true;
+        this.m_spawnComplete = true;
     }
 
     // For testing of ZombieBoss
-    // if (this.currentWave == 1) {
+    // if (this.m_currentWave == 1) {
     //     this.zombieSpawner.spawnZombieBoss();
-    //     this.currentZombies++;
-    //     this.spawnComplete = true;
+    //     this.m_currentZombies++;
+    //     this.m_spawnComplete = true;
     // }
 
-    if (this.currentWave !== 1) {
-        if (this.currentWave % 3 === 0) {
+    if (this.m_currentWave !== 1) {
+        if (this.m_currentWave % 3 === 0) {
             this.m_waveAnnouncement("BOSS WAVE!");
         } else {
             this.m_waveAnnouncement("NEW WAVE!");
         }
     }
 
-    this.text.text = "WAVE:" + this.currentWave;
-    this.text.centerX = this.game.application.screen.centerX;
-    this.text.y = 7;
+    this.m_currentWaveText.text = "WAVE:" + this.m_currentWave;
+    this.m_currentWaveText.centerX = this.game.application.screen.centerX;
+    this.m_currentWaveText.y = 7;
 };
 
 /**
- * Spawns the number of zombies based on this.waveAmount.
+ * Spawns the number of zombies based on this.m_waveAmount.
  *
  * @return {undefined}
  * @private
  * 
  */
 panicCity.managers.WaveManager.prototype.m_callSpawner = function () {
-    if (!this.coolDown && (this.waveAmount > this.currentZombies) && this.currentWave % 3 != 0) {
-        this.coolDown = true;
-        this.game.timers.create({
-            duration: 500,
-            onComplete: function () {
-                this.zombieSpawner.spawnZombie();
-                this.currentZombies++;
-                this.coolDown = false;
-                if (this.currentZombies >= this.waveAmount) {
-                    this.spawnComplete = true;
-                }
-            }.bind(this)
-        });
+    if ((this.m_waveAmount > this.m_currentZombies) && this.m_currentWave % 3 != 0) {
+        var now = Date.now();
+        if (now > this.m_lastSpawned) {
+            this.zombieSpawner.spawnZombie();
+            this.m_currentZombies++;
+            if (this.m_currentZombies >= this.m_waveAmount) {
+                this.m_spawnComplete = true;
+            }
+            this.m_lastSpawned = now + this.m_spawnCooldown;
+        }
     }
 };
 
@@ -236,25 +246,21 @@ panicCity.managers.WaveManager.prototype.m_callSpawner = function () {
  * 
  */
 panicCity.managers.WaveManager.prototype.m_waveAnnouncement = function (announcementText) {
-    this.textAnnouncement.text = announcementText;
-    this.textAnnouncement.center = this.game.application.screen.center;
-
-    this.textAnnouncement.alpha = 0;
-
-    this.m_cameras.getCameraAt(0).addChild(this.textAnnouncement);
+    this.m_textAnnouncement.text = announcementText;
+    this.m_textAnnouncement.center = this.game.application.screen.center;
+    this.m_textAnnouncement.alpha = 0;
 
     this.game.timers.create({
         duration: 1800,
         onUpdate: function () {
-            this.textAnnouncement.alpha += 0.03;
-            if (this.textAnnouncement.alpha > 1.0) {
-                this.textAnnouncement.alpha = 1.0;
+            this.m_textAnnouncement.alpha += 0.03;
+            if (this.m_textAnnouncement.alpha > 1.0) {
+                this.m_textAnnouncement.alpha = 1.0;
             }
 
         }.bind(this),
         onComplete: function () {
-            this.m_cameras.getCameraAt(0).removeChild(this.textAnnouncement);
+            this.m_textAnnouncement.alpha = 0;
         }.bind(this)
     });
-
 };

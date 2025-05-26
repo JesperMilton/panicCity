@@ -59,6 +59,7 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
      */
     this.health = 500;
 
+    this.startTest = false;
     /**
      * Sound file for when base gets hit
      * 
@@ -144,12 +145,7 @@ panicCity.entity.Base.prototype.takeDamage = function (damage) {
  */
 panicCity.entity.Base.prototype.m_die = function () {
     this.animation.gotoAndPlay("dead");
-    this.game.timers.create({
-        duration: 4000,
-        onComplete: function () {
-            this.game.application.scenes.load([new panicCity.scene.Gameover(this.game)]);
-        }.bind(this)
-    });
+    this.game.checkHighscore();
 }
 
 /**
@@ -196,26 +192,26 @@ panicCity.entity.Base.prototype.heal = function (health) {
  * @public
  */
 panicCity.entity.Base.prototype.changeHealthColor = function (color) {
-    if(this.health <= 1){
+    if (this.health <= 1) {
         this.health++;
         this.healthBar.progress = (this.health / 500);
         this.healthBar.forgroundColor = color;
         this.health--;
         this.healthBar.progress = (this.health / 500);
     }
-    else{
+    else {
         this.health--;
         this.healthBar.progress = (this.health / 500);
         this.healthBar.forgroundColor = color;
         this.health++;
         this.healthBar.progress = (this.health / 500);
     }
-    if(color == "red") {
+    if (color == "red") {
         this.animation.gotoAndPlay("idle");
-    }else{
+    } else {
         this.animation.gotoAndPlay("invincibility");
     }
-    
+
 }
 
 /**

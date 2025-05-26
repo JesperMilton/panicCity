@@ -60,6 +60,8 @@ panicCity.entity.Items = function (x, y, width, height, texture, game, type, hp,
      */
     this.m_pickUpSound;
 
+    this.duration = 6000;
+
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
@@ -144,6 +146,7 @@ panicCity.entity.Items.prototype.m_initAnimations = function () {
  * @param {panicCity.entity.Entity} target - The target to be healed
  */
 panicCity.entity.Items.prototype.heal = function (target) {
+    new panicCity.entity.ShowScore(this, this.pointValue, this.game);
     this.m_pickUpSound.play(true);
     target.forEachMember(function (target) {
         target.heal(this.hp);

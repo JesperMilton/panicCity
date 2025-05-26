@@ -48,7 +48,15 @@ panicCity.scene.Game = function () {
      * @public
      * @type {boolean}
      */
-    this.startTest = false;
+    this.ifGameover = false;
+
+    /**
+     * Flag to check if game is over
+     * 
+     * @public
+     * @type {boolean}
+     */
+    this.ifGameoverHighscore = false;
 
     /**
      * Background music
@@ -91,6 +99,7 @@ panicCity.scene.Game.prototype.init = function () {
     this.m_initCamera();
     this.m_initUI();
     this.m_initScore();
+    this.m_initSort();    
 
     this.players = this.groups.create(this.stage);
     this.enemies = this.groups.create(this.stage);
@@ -149,14 +158,7 @@ panicCity.scene.Game.prototype.update = function (step) {
     this.waveManager.updateSpawner();
 
     if (this.playerJesper.isDowned && this.playerHibba.isDowned) {
-        if (!this.startTest) {
-            this.startTest = true;
-            this.cameras.getCameraAt(0).fade.out(4000, function () {
-                console.log("inside the fadeout callback");
-                this.application.scenes.load([new panicCity.scene.Gameover(this)]);
-            }, this);
-
-        }
+        this.checkHighscore();
     }
 };
 
@@ -227,9 +229,20 @@ panicCity.scene.Game.prototype.m_initBackground = function () {
         0,
         475,
         300,
-        "image_Background"
+        "newBackground"
     );
     this.stage.addChild(this.m_background);
+};
+
+panicCity.scene.Game.prototype.m_initSort = function() {
+    var m_this = this;
+    this.stage.sort = function(a, b) {
+        if (b == m_this.m_background) {
+            return Number.POSITIVE_INFINITY;
+        }
+        
+        return a.bottom - b.bottom;
+    };
 };
 
 /**
@@ -288,4 +301,22 @@ panicCity.scene.Game.prototype.spawnPowerup = function () {
             this.spawnPowerup();
         },
     });
+}
+
+panicCity.scene.Game.prototype.checkHighscore = function () {
+    if (this.application.highscores.test(this.score) < 5 && this.application.highscores.test(this.score) != -1) {
+        if (!this.ifGameoverHighscore) {
+            this.ifGameoverHighscore = true;
+            this.cameras.getCameraAt(0).fade.out(4000, function () {
+                this.application.scenes.load([new panicCity.scene.VirtualKeyboard(this)]);
+            }, this);
+        }
+    } else {
+        if (!this.ifGameover) {
+            this.ifGameover = true;
+            this.cameras.getCameraAt(0).fade.out(4000, function () {
+                this.application.scenes.load([new panicCity.scene.Gameover(this)]);
+            }, this);
+        }
+    }
 }

@@ -59,7 +59,7 @@ panicCity.scene.Menu.prototype.init = function () {
 
     this.m_backgroundSound = this.application.sounds.master.get("Menu-music");
     this.m_backgroundSound.loop = true;
-    this.m_backgroundSound.volume = 0.5;
+    this.m_backgroundSound.volume = 0.4;
     this.m_backgroundSound.play();
 
     this.m_moveSound = this.application.sounds.sound.get("Menu-move-sound");
@@ -80,16 +80,19 @@ panicCity.scene.Menu.prototype.update = function (step) {
 };
 
 /**
- * @inheritDoc
+ * Initialize the Menu.
+ *
+ * @return {undefined}
+ * @private
+ * 
  */
 panicCity.scene.Menu.prototype.m_initMenu = function () {
-    this.m_menu = new rune.ui.VTMenu({ resource: "Font" });
+    this.m_menu = new rune.ui.VTMenu({ resource: "Font", pointer: panicCity.components.Pointer });
     this.m_menu.onSelect(this.m_onMenuSelect, this);
     this.m_menu.add("GAME");
     this.m_menu.add("TUTORIAL");
     this.m_menu.add("HIGHSCORE");
     this.m_menu.add("CREDITS");
-    this.m_menu.add("KEYBOARD");
     this.m_menu.centerX = this.cameras.getCameraAt(0).viewport.centerX;
     this.m_menu.y = 130;
     this.stage.addChild(this.m_menu);
@@ -106,7 +109,7 @@ panicCity.scene.Menu.prototype.m_initBackground = function () {
         0,
         400,
         225,
-        "Menu_Blood-Empty"
+        "image_Menu"
     );
     this.stage.addChild(this.m_background);
 };
@@ -158,9 +161,6 @@ panicCity.scene.Menu.prototype.m_onMenuSelect = function (elem) {
 
         case "CREDITS":
             this.application.scenes.load([new panicCity.scene.Credits()])
-            break;
-        case "KEYBOARD":
-            this.application.scenes.load([new panicCity.scene.KeyboardP()])
             break;
     }
 };

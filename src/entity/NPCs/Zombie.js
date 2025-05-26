@@ -149,6 +149,7 @@ panicCity.entity.Zombie.prototype.constructor = panicCity.entity.Zombie;
  */
 panicCity.entity.Zombie.prototype.init = function () {
     this.m_damageSound = this.application.sounds.sound.get("hitHurt");
+    this.useQaudtree = true;
     this.m_initAnimations();
     this.m_initStats();
 };

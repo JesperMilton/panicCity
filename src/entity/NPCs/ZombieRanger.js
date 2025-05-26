@@ -68,8 +68,8 @@ panicCity.entity.ZombieRanger.prototype.constructor = panicCity.entity.ZombieRan
  */
 panicCity.entity.ZombieRanger.prototype.m_initStats = function () {
     panicCity.entity.Zombie.prototype.m_initStats.call(this);
-    this.health = 10;
-    this.damage = 5;
+    this.health = 20;
+    this.damage = 10;
     this.acceleration = 0.4;
     this.speed = 0.3;
     this.velocity.max.x = 0.7;
@@ -153,7 +153,7 @@ panicCity.entity.ZombieRanger.prototype.m_throwAttack = function () {
     var now = Date.now();
     if (this.velocity.x == 0.0 && now > this.lastThrow) {
         this.animation.gotoAndPlay("attack");
-        var projectile = new panicCity.entity.Projectile(5, 13, this, this.newTarget, 10, "image_Bottle", this.game);
+        var projectile = new panicCity.entity.Projectile(5, 13, this, this.newTarget, 20, "image_Bottle", this.game);
         this.game.projectiles.addMember(projectile);
 
         this.m_throwSound.play(true);
