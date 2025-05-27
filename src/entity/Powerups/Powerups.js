@@ -130,7 +130,7 @@ panicCity.entity.Powerups.prototype.update = function (step) {
         else if (now > this.startTime + 4000 && now < this.startTime + 6000) {
             this.initFlicker(250);
         }
-        else {
+        else if(now > this.startTime + 6000){
             this.initFlicker(100);
         }
 

@@ -60,8 +60,6 @@ panicCity.entity.Items = function (x, y, width, height, texture, game, type, hp,
      */
     this.m_pickUpSound;
 
-    this.duration = 6000;
-
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
