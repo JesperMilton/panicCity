@@ -50,20 +50,17 @@ panicCity.entity.InvincibilityPlayer.prototype.constructor = panicCity.entity.In
  * @public
  */
 panicCity.entity.InvincibilityPlayer.prototype.initPower = function (target) {
+    this.target = target;
     panicCity.entity.Powerups.prototype.initPower.call(this);
-    target.changeHealthColor("#27dcf5");
-    target.invincible = true;
-    this.game.timers.create({
-        duration: 3000,
-        onComplete: function () {
-                target.initFlicker(2000, 150);
-        }
-    });
-    this.game.timers.create({
-        duration: 5000,
-        onComplete: function () {
-            target.invincible = false;
-            target.changeHealthColor("#6fff2c");
-        },
-    });
+    this.target.changeHealthColor("#27dcf5");
+    this.target.invincible = true;
+}
+
+/**
+ * @inheritdoc
+ */
+panicCity.entity.InvincibilityPlayer.prototype.revertPower = function () {
+    this.target.invincible = false;
+    this.target.changeHealthColor("#6fff2c");
+    panicCity.entity.Powerups.prototype.revertPower.call(this);
 }

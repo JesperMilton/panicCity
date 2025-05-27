@@ -92,6 +92,13 @@ panicCity.entity.Projectile = function (width, height, origin, target, damage, t
     });
 
     this.game.stage.addChild(this.dEmitter);
+    /**
+     * Sound file for when projectile hits ground
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_hitSound = this.application.sounds.sound.get("throw-attack");
 
     //--------------------------------------------------------------------------
     // Super call
@@ -139,6 +146,7 @@ panicCity.entity.Projectile.prototype.m_followTarget = function () {
             this.dEmitter.emit(20);
         }
         this.game.projectiles.removeMember(this);
+        this.m_hitSound.play(true);
     }
 
     var dirX = disX / distance;

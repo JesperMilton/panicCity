@@ -186,6 +186,14 @@ panicCity.entity.Player = function (x, y, width, height, texture, game, gamepadI
     this.m_minigunSound = null;
 
     /**
+     * Sound file for when player gets revived
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_reviveSound;
+
+    /**
      * Hitbox for the player
      * 
      * @type {Object}
@@ -206,10 +214,11 @@ panicCity.entity.Player.prototype.constructor = panicCity.entity.Player;
  */
 panicCity.entity.Player.prototype.init = function () {
     this.m_helpSound = this.application.sounds.sound.get("Help-sound");
-    this.m_damageSound = this.application.sounds.sound.get("Zombie-attack-sound");
+    this.m_damageSound = this.application.sounds.sound.get("new-hit");
     this.m_shootSound = this.application.sounds.sound.get("Shoot-sound");
     this.m_shotgunSound = this.application.sounds.sound.get("Shotgun-sound");
     this.m_minigunSound = this.application.sounds.sound.get("Minigun-sound");
+    this.m_reviveSound = this.application.sounds.sound.get("Revive-sound");
 
     this.m_shootSound.volume = 0.4;
 
@@ -506,6 +515,7 @@ panicCity.entity.Player.prototype.getRessed = function () {
     this.isDowned = false;
     this.rotation = 0;
     this.health += 100;
+    this.m_reviveSound.play();
 }
 
 /**

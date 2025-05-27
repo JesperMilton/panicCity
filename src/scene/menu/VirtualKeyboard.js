@@ -48,6 +48,14 @@ panicCity.scene.VirtualKeyboard = function (game) {
      * @type {Array}
      */
     this.m_displayedLetters = [];
+
+    /**
+     * Background music
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+     this.m_backgroundSound;
 };
 
 //------------------------------------------------------------------------------
@@ -62,6 +70,11 @@ panicCity.scene.VirtualKeyboard.prototype.constructor = panicCity.scene.VirtualK
  */
 panicCity.scene.VirtualKeyboard.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
+
+    this.m_backgroundSound = this.application.sounds.master.get("Menu-music");
+    this.m_backgroundSound.loop = true;
+    this.m_backgroundSound.volume = 0.5;
+    this.m_backgroundSound.play();
 
     this.cameras.getCameraAt(0).fade.opacity = 1;
     this.cameras.getCameraAt(0).fade.in(1000);

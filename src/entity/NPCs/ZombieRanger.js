@@ -42,6 +42,14 @@ panicCity.entity.ZombieRanger = function (x, y, width, height, texture, game) {
      * @public
      */
     this.throwCoolDown = 2000;
+    
+    /**
+     * Sound file for when projectile gets thrown
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_throwSound = this.application.sounds.sound.get("Throw-normal-attack");
 };
 
 //------------------------------------------------------------------------------
@@ -147,6 +155,8 @@ panicCity.entity.ZombieRanger.prototype.m_throwAttack = function () {
         this.animation.gotoAndPlay("attack");
         var projectile = new panicCity.entity.Projectile(5, 13, this, this.newTarget, 20, "image_Bottle", this.game);
         this.game.projectiles.addMember(projectile);
+
+        this.m_throwSound.play(true);
 
         this.lastThrow = now + this.throwCoolDown;
     }

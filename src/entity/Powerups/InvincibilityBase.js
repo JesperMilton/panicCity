@@ -33,6 +33,22 @@ panicCity.entity.InvincibilityBase = function (x, y, width, height, texture, gam
     // Super call
     //--------------------------------------------------------------------------
     panicCity.entity.Powerups.call(this, x, y, width, height, texture, game);
+
+    /**
+     * Delay time for flicker effect
+     * 
+     * @type {int}
+     * @public
+     */
+    this.flickerDelay = 8000;
+
+    /**
+    * Delay time for powerup revert effect
+    * 
+    * @type {int}
+    * @public
+    */
+    this.timeDelay = 10000;
 };
 
 //------------------------------------------------------------------------------
@@ -51,23 +67,17 @@ panicCity.entity.InvincibilityBase.prototype.constructor = panicCity.entity.Invi
  * @public
  */
 panicCity.entity.InvincibilityBase.prototype.initPower = function (target) {
+    this.target = target;
     panicCity.entity.Powerups.prototype.initPower.call(this);
-    target.forEachMember(function (target) {
-        target.changeHealthColor("#27dcf5");
-        target.invincible = true;
-        this.game.timers.create({
-            duration: 10000,
-            onComplete: function () {
-                this.touchable = true;
-                target.invincible = false;
-                target.changeHealthColor("red");
-            },
-        });
-        this.game.timers.create({
-            duration: 8000,
-            onComplete: function () {
-                    target.initFlicker(2000, 150);
-            }
-        });
-    }, this);
+    this.target.changeHealthColor("#27dcf5");
+    this.target.invincible = true;
+}
+
+/**
+ * @inheritdoc
+ */
+panicCity.entity.InvincibilityBase.prototype.revertPower = function () {
+    this.target.invincible = false;
+    this.target.changeHealthColor("red");
+    panicCity.entity.Powerups.prototype.revertPower.call(this);
 }

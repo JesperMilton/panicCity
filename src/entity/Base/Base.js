@@ -89,7 +89,7 @@ panicCity.entity.Base.prototype.constructor = panicCity.entity.Base;
  * @inheritDoc
  */
 panicCity.entity.Base.prototype.init = function () {
-    this.m_damageSound = this.application.sounds.sound.get("Zombie-attack-sound");
+    this.m_damageSound = this.application.sounds.sound.get("new-hit");
     this.m_initAnimations();
     this.m_initHealthBar();
 };

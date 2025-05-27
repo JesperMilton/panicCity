@@ -73,6 +73,10 @@ panicCity.scene.Game = function () {
      * @public
      */
     this.base;
+
+    this.nowScore;
+    this.nowNPC;
+    this.nowPowerup;
 };
 
 //------------------------------------------------------------------------------
@@ -88,10 +92,11 @@ panicCity.scene.Game.prototype.constructor = panicCity.scene.Game;
 panicCity.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
-    this.m_music = this.application.sounds.music.get("Game-background-music");
+    this.m_music = this.application.sounds.music.get("background-music");
     this.m_music.play();
     this.m_music.loop = true;
     this.m_music.volume = 0.5;
+
     this.cameras.getCameraAt(0).fade.opacity = 1;
     this.cameras.getCameraAt(0).fade.in(1000);
 
@@ -99,54 +104,21 @@ panicCity.scene.Game.prototype.init = function () {
     this.m_initCamera();
     this.m_initUI();
     this.m_initScore();
-    this.m_initSort();    
-
-    this.players = this.groups.create(this.stage);
-    this.enemies = this.groups.create(this.stage);
-    this.bullets = this.groups.create(this.stage);
-    this.baseSta = this.groups.create(this.stage);
-    this.projectiles = this.groups.create(this.stage);
-    this.items = this.groups.create(this.stage);
-    this.walls = this.groups.create(this.stage);
-    this.humans = this.groups.create(this.stage);
-    this.powerups = this.groups.create(this.stage);
-
-    this.playerJesper = new panicCity.entity.Player(320, 128, 27, 26, "Player1-Sheet", this, 0, "UP", "DOWN", "LEFT", "RIGHT", "P", "O");
-    this.playerHibba = new panicCity.entity.Player(140, 128, 27, 26, "Player2-Sheet", this, 1, "W", "S", "A", "D", "Q", "E");
-    this.base = new panicCity.entity.Base(220, 128, 47, 47, "Base-Sheet", this);
+    this.m_initSort();   
+    this.m_initGroups();
+    this.m_initObjects();
 
     this.cameras.getCameraAt(0).targets.add(this.playerJesper);
     this.cameras.getCameraAt(0).targets.add(this.playerHibba);
-
-    this.players.addMember(this.playerJesper);
-    this.players.addMember(this.playerHibba);
-    this.baseSta.addMember(this.base);
 
     this.collisionControl = new panicCity.managers.CollisionManager(this);
     this.waveManager = new panicCity.managers.WaveManager(this, this.cameras);
     this.rescueeSpawner = new panicCity.managers.RescueeSpawner(this);
     this.powerupSpawner = new panicCity.managers.PowerupSpawner(this);
 
-    this.timers.create({
-        duration: this.scoreTime,
-        onComplete: function () {
-            this.m_addScore();
-        },
-    });
-
-    this.timers.create({
-        duration: this.rescueeTime,
-        onComplete: function () {
-            this.spawnHuman();
-        },
-    });
-
-    this.timers.create({
-        duration: this.powerupTime,
-        onComplete: function () {
-            this.spawnPowerup();
-        },
-    });
+    this.nowScore = Date.now();
+    this.nowNPC = Date.now();
+    this.nowPowerup = Date.now();
 };
 
 /**
@@ -156,6 +128,22 @@ panicCity.scene.Game.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
     this.collisionControl.update();
     this.waveManager.updateSpawner();
+
+    var now = Date.now();
+
+    if(now > this.nowScore + this.scoreTime){
+        this.nowScore = Date.now();
+        this.m_addScore();
+    }
+    
+    if(now > this.nowNPC + this.rescueeTime){
+        this.nowNPC = Date.now();
+        this.spawnHuman();
+    }
+    if(now > this.nowPowerup + this.powerupTime){
+        this.nowPowerup = Date.now();
+        this.spawnPowerup();
+    }
 
     if (this.playerJesper.isDowned && this.playerHibba.isDowned) {
         this.checkHighscore();
@@ -188,6 +176,23 @@ panicCity.scene.Game.prototype.m_initScore = function () {
 
     this.cameras.getCameraAt(0).addChild(text);
     this.cameras.getCameraAt(0).addChild(this.counter);
+}
+
+/**
+ * Creates two players and a base and adds them to their respective groups
+ * 
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.Game.prototype.m_initObjects = function () {
+    this.playerJesper = new panicCity.entity.Player(320, 128, 27, 26, "Player1-Sheet", this, 0, "UP", "DOWN", "LEFT", "RIGHT", "P", "O");
+    this.playerHibba = new panicCity.entity.Player(140, 128, 27, 26, "Player2-Sheet", this, 1, "W", "S", "A", "D", "Q", "E");
+
+    this.base = new panicCity.entity.Base(220, 128, 47, 47, "Base-Sheet", this);
+
+    this.players.addMember(this.playerJesper);
+    this.players.addMember(this.playerHibba);
+    this.baseSta.addMember(this.base);
 }
 
 /**
@@ -265,12 +270,24 @@ panicCity.scene.Game.prototype.updateScoretext = function (points) {
  */
 panicCity.scene.Game.prototype.m_addScore = function () {
     this.updateScoretext(1);
-    this.timers.create({
-        duration: this.scoreTime,
-        onComplete: function () {
-            this.m_addScore();
-        },
-    });
+}
+
+/**
+ * Creates and assigns objects to groups
+ * 
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.Game.prototype.m_initGroups = function () {
+    this.players = this.groups.create(this.stage);
+    this.enemies = this.groups.create(this.stage);
+    this.bullets = this.groups.create(this.stage);
+    this.baseSta = this.groups.create(this.stage);
+    this.projectiles = this.groups.create(this.stage);
+    this.items = this.groups.create(this.stage);
+    this.walls = this.groups.create(this.stage);
+    this.humans = this.groups.create(this.stage);
+    this.powerups = this.groups.create(this.stage);
 }
 
 /**
@@ -280,12 +297,6 @@ panicCity.scene.Game.prototype.m_addScore = function () {
  */
 panicCity.scene.Game.prototype.spawnHuman = function () {
     this.rescueeSpawner.spawnRescuee();
-    this.timers.create({
-        duration: this.rescueeTime,
-        onComplete: function () {
-            this.spawnHuman();
-        },
-    });
 }
 
 /**
@@ -295,12 +306,6 @@ panicCity.scene.Game.prototype.spawnHuman = function () {
  */
 panicCity.scene.Game.prototype.spawnPowerup = function () {
     this.powerupSpawner.spawn();
-    this.timers.create({
-        duration: this.powerupTime,
-        onComplete: function () {
-            this.spawnPowerup();
-        },
-    });
 }
 
 panicCity.scene.Game.prototype.checkHighscore = function () {

@@ -61,10 +61,6 @@ panicCity.managers.PowerupSpawner.prototype.spawn = function () {
         return;
     };
 
-    //220 + 267 x
-    //128 + 175 y
-    //Change
-
     this.game.powerups.addMember(powerup);
 };
 

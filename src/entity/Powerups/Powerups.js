@@ -18,7 +18,7 @@
  * @param {rune.scene.Scene} game - The Game object
  * 
  */
- panicCity.entity.Powerups = function (x, y, width, height, texture, game) {
+panicCity.entity.Powerups = function (x, y, width, height, texture, game) {
     /**
      * The Game object
      * 
@@ -34,6 +34,46 @@
      * @private
      */
     this.m_pickUpSound;
+
+    /**
+     * Flag for checking if powerup has been picked up
+     * 
+     * @type {Boolean}
+     * @private
+     */
+    this.m_initiated = false;
+
+    /**
+     * Default delay time for flicker effect
+     * 
+     * @type {int}
+     * @public
+     */
+    this.flickerDelay = 3000;
+
+    /**
+     * Default delay time for powerup revert effect
+     * 
+     * @type {int}
+     * @public
+     */
+    this.timeDelay = 5000;
+
+    /**
+     * Flag for checking if flicker effect has started
+     * 
+     * @type {Boolean}
+     * @private
+     */
+    this.m_flickerStart = false;
+
+    /**
+     * Flag for checking if powerup effect has been reverted
+     * 
+     * @type {Boolean}
+     * @private
+     */
+    this.m_revertStart = false;
 
     //--------------------------------------------------------------------------
     // Super call
@@ -52,17 +92,12 @@ panicCity.entity.Powerups.prototype.constructor = panicCity.entity.Powerups;
 /**
  * @inheritDoc
  */
- panicCity.entity.Powerups.prototype.init = function () {
-    this.flickerActive = false;
+panicCity.entity.Powerups.prototype.init = function () {
+    this.m_flickerActive = false;
     this.m_pickUpSound = this.application.sounds.sound.get("Pickup-powerup-sound");
     this.m_initAnimations();
 
-    this.timer = this.game.timers.create({
-        duration: 8000,
-        onComplete: function () {
-            this.m_delete();
-        }.bind(this),
-    });
+    this.startTime = Date.now();
 };
 
 /**
@@ -70,20 +105,40 @@ panicCity.entity.Powerups.prototype.constructor = panicCity.entity.Powerups;
  * @inheritDoc
  * @returns {undefined}
  */
-panicCity.entity.Powerups.prototype.update = function(step){
+panicCity.entity.Powerups.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
-    if(this.timer.elapsed <= 2000){
-        return;
+
+    var now = Date.now();
+    if (this.m_initiated == true) {
+        if (now > this.initTime + this.flickerDelay && this.m_flickerStart == false) {
+            this.target.initFlicker(2000, 150);
+            this.m_flickerStart = true;
+        }
+
+        if (now > this.initTime + this.timeDelay && this.m_revertStart == false) {
+            this.m_revertStart = true;
+            this.revertPower();
+        }
     }
-    else if(this.timer.elapsed >= 2000 && this.timer.elapsed <= 4000){
-        this.initFlicker(500);
+    else {
+        if (now < this.startTime + 2000) {
+            return;
+        }
+        else if (now > this.startTime + 2000 && now < this.startTime + 4000) {
+            this.initFlicker(500);
+        }
+        else if (now > this.startTime + 4000 && now < this.startTime + 6000) {
+            this.initFlicker(250);
+        }
+        else if(now > this.startTime + 6000){
+            this.initFlicker(100);
+        }
+
+        if (now > this.startTime + 8000) {
+            this.m_delete();
+        }
     }
-    else if(this.timer.elapsed >= 4000 && this.timer.elapsed <= 6000){
-        this.initFlicker(250);
-    }
-    else{
-        this.initFlicker(100);
-    }
+
 }
 
 /**
@@ -94,12 +149,12 @@ panicCity.entity.Powerups.prototype.update = function(step){
  * @returns {undefined}
  * @public
  */
-panicCity.entity.Powerups.prototype.initFlicker = function(amount){
+panicCity.entity.Powerups.prototype.initFlicker = function (amount) {
     if (this.flickerActive) {
         return;
     }
     this.flickerActive = true;
-    this.flicker.start(1000, amount, function() {
+    this.flicker.start(1000, amount, function () {
         this.flickerActive = false;
     }, this);
 }
@@ -123,10 +178,26 @@ panicCity.entity.Powerups.prototype.m_initAnimations = function () {
  * 
  */
 panicCity.entity.Powerups.prototype.initPower = function () {
+    //@note: Override from child
+    if (this.m_initiated) {
+        return;
+    }
     new panicCity.entity.ShowScore(this, 10, this.game);
     this.game.updateScoretext(10);
-    //@note: Override from child
+    this.initTime = Date.now();
+    this.m_initiated = true;
+    this.visible = false;
     this.m_pickUpSound.play();
+}
+
+/**
+ * Reverts the powerup
+ * 
+ * @return {undefined}
+ * @public
+ */
+panicCity.entity.Powerups.prototype.revertPower = function () {
+    //@note: Override from child
     this.m_delete();
 }
 
@@ -139,4 +210,3 @@ panicCity.entity.Powerups.prototype.initPower = function () {
 panicCity.entity.Powerups.prototype.m_delete = function () {
     this.game.powerups.removeMember(this, true);
 }
-

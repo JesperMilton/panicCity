@@ -100,6 +100,14 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
     this.m_damageSound = null;
 
     this.dead = false;
+
+    /**
+     * Sound file for when projectile gets thrown
+     * 
+     * @type {rune.media.Sound}
+     * @private
+     */
+    this.m_throwSound;
 };
 
 //------------------------------------------------------------------------------
@@ -113,7 +121,8 @@ panicCity.entity.ZombieBoss.prototype.constructor = panicCity.entity.ZombieBoss;
  * @inheritdoc
  */
 panicCity.entity.ZombieBoss.prototype.init = function () {
-    this.m_damageSound = this.application.sounds.sound.get("Zombie-hurt-sound");
+    this.m_damageSound = this.application.sounds.sound.get("hitHurt");
+    this.m_throwSound = this.application.sounds.sound.get("throw-normal-attack");
     this.m_initAnimations();
     this.m_initStats();
     this.m_initHealthBar();
@@ -229,6 +238,7 @@ panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
         this.animation.gotoAndPlay("attack");
         var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, 50, "image_Stone", this.game);
         this.game.projectiles.addMember(projectile);
+        this.m_throwSound.play(true);
 
         this.lastThrow = now + this.coolDown;
     }
