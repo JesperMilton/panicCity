@@ -57,7 +57,7 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
      * @type {panicCity.entity.Entity}
      * @public
      */
-    this.newTarget;
+    this.newTarget = null;
 
     /**
      * Makes the zombieBoss immovable.
@@ -81,7 +81,7 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
      * @type {number}
      * @public
      */
-    this.lastThow = 0;
+    this.lastThrow = 0;
 
     /**
      * Cooldown for the zombieBoss attacks.
@@ -97,7 +97,9 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_damageSound;
+    this.m_damageSound = null;
+
+    this.dead = false;
 };
 
 //------------------------------------------------------------------------------
@@ -223,12 +225,12 @@ panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function () {
  */
 panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
     var now = Date.now();
-    if (this.velocity.x == 0.0 && now > this.lastThow) {
+    if (this.velocity.x == 0.0 && now > this.lastThrow) {
         this.animation.gotoAndPlay("attack");
         var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, 50, "image_Stone", this.game);
         this.game.projectiles.addMember(projectile);
 
-        this.lastThow = now + this.coolDown;
+        this.lastThrow = now + this.coolDown;
     }
 };
 
@@ -313,6 +315,7 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
  * 
  */
 panicCity.entity.ZombieBoss.prototype.m_die = function () {
+    this.dead = true;
     this.game.enemies.removeMember(this, true);
     this.game.cameras.getCameraAt(0).removeChild(this.healthBar, true);
     this.game.updateScoretext(50);

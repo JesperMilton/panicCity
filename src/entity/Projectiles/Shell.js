@@ -5,7 +5,6 @@
 /**
  *
  * @constructor
- * @extends rune.display.Graphic
  *
  * @class
  * 
@@ -51,13 +50,6 @@
     this.m_updateMotion();
     this.m_timer();
 };
-
-//------------------------------------------------------------------------------
-// Inheritance
-//------------------------------------------------------------------------------
-
-panicCity.entity.Shell.prototype = Object.create(rune.display.Graphic.prototype);
-panicCity.entity.Shell.prototype.constructor = panicCity.entity.Shell;
 
 /**
  * Checks which direction the player is facing and calls spawnBullets method

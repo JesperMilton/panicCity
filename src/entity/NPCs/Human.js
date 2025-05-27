@@ -102,7 +102,7 @@ panicCity.entity.Human = function (x, y, game) {
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_helpSound;
+    this.m_helpSound = null;
 
     /**
      * Sound file for when human gets saved
@@ -110,7 +110,7 @@ panicCity.entity.Human = function (x, y, game) {
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_saveSound;
+    this.m_saveSound = null;
 };
 
 //------------------------------------------------------------------------------

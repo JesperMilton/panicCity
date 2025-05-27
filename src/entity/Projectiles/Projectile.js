@@ -36,14 +36,14 @@ panicCity.entity.Projectile = function (width, height, origin, target, damage, t
      * @public
      */
     this.damage = damage;
-    
+
     /**
      * The targets Y value.
      *
      * @type {number}
      * @public
      */
-    this.tY = target.y;
+    this.tY = target.centerY;
 
     /**
      * The targets X value.
@@ -51,8 +51,8 @@ panicCity.entity.Projectile = function (width, height, origin, target, damage, t
      * @type {number}
      * @public
      */
-    this.tX = target.x;
-    
+    this.tX = target.centerX;
+
     /**
      * The projectiles speed.
      *
@@ -77,6 +77,21 @@ panicCity.entity.Projectile = function (width, height, origin, target, damage, t
      */
     var y = this.origin.y + 17;
     var x = this.origin.x + 13;
+
+    this.dEmitter = new rune.particle.Emitter(0, 0, 0, 0, {
+        particles: [panicCity.entity.Blood],
+        minLifespan: 500,
+        maxLifespan: 1000,
+        accelerationY: 0.025,
+        maxVelocityX: 0.625,
+        minVelocityX: -0.5,
+        maxVelocityY: -1.25,
+        minVelocityY: -0.85,
+        minRotation: -2,
+        maxRotation: 2
+    });
+
+    this.game.stage.addChild(this.dEmitter);
 
     //--------------------------------------------------------------------------
     // Super call
@@ -116,14 +131,19 @@ panicCity.entity.Projectile.prototype.m_followTarget = function () {
     var distance = currentPosition.distance(targetPosition);
 
     var threshold = 2;
-    
+
     if (distance < threshold) {
+        if (this.dEmitter) {
+            this.dEmitter.centerX = this.centerX;
+            this.dEmitter.centerY = this.centerY + 10;
+            this.dEmitter.emit(20);
+        }
         this.game.projectiles.removeMember(this);
     }
-    
+
     var dirX = disX / distance;
     var dirY = disY / distance;
-    
+
     this.x += dirX * this.m_speed;
     this.y += dirY * this.m_speed;
 

@@ -25,7 +25,7 @@
  * 
  * Class for creating "Hibba"-character, includes methods for basic movement and basic functions such as heal and downed
  */
- panicCity.entity.Player = function (x, y, width, height, texture, game, gamepadIndex, upKey, downKey, leftKey, rightKey, shootKey, resKey) {
+panicCity.entity.Player = function (x, y, width, height, texture, game, gamepadIndex, upKey, downKey, leftKey, rightKey, shootKey, resKey) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -151,7 +151,7 @@
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_helpSound;
+    this.m_helpSound = null;
 
     /**
      * Sound file for when player gets hit
@@ -159,7 +159,7 @@
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_damageSound;
+    this.m_damageSound = null;
 
     /**
      * Sound file for when player shoots normal gun
@@ -167,7 +167,7 @@
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_shootSound;
+    this.m_shootSound = null;
 
     /**
      * Sound file for when player shoots shotgun
@@ -175,7 +175,7 @@
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_shotgunSound;
+    this.m_shotgunSound = null;
 
     /**
      * Sound file for when player shoots minigun
@@ -183,7 +183,7 @@
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_minigunSound;
+    this.m_minigunSound = null;
 
     /**
      * Hitbox for the player
@@ -241,84 +241,103 @@ panicCity.entity.Player.prototype.m_updateInput = function () {
     this.gamepad = this.game.gamepads.get(this.gamepadIndex);
 
     if (!this.gamepad.pressed(7)) {
-        if (this.keyboard.pressed(this.upKey) || this.gamepad.stickLeftUp) {
+        var upPressed = this.keyboard.pressed(this.upKey) || this.gamepad.stickLeftUp;
+        var downPressed = this.keyboard.pressed(this.downKey) || this.gamepad.stickLeftDown;
+        var rightPressed = this.keyboard.pressed(this.rightKey) || this.gamepad.stickLeftRight;
+        var leftPressed = this.keyboard.pressed(this.leftKey) || this.gamepad.stickLeftLeft;
+
+        if (upPressed && rightPressed) {
+            this.direction = "UP-RIGHT";
+            this.moveUp();
+            this.moveRight();
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = true;
+        }
+        else if (upPressed && leftPressed) {
+            this.direction = "UP-LEFT";
+            this.moveUp();
+            this.moveLeft();
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = false;
+        }
+        else if (downPressed && rightPressed) {
+            this.direction = "DOWN-RIGHT";
+            this.moveDown();
+            this.moveRight();
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = true;
+        }
+        else if (downPressed && leftPressed) {
+            this.direction = "DOWN-LEFT";
+            this.moveDown();
+            this.moveLeft();
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = false;
+        }
+        else if (upPressed) {
             this.direction = "UP";
             this.moveUp();
             this.animation.gotoAndPlay("walkUp");
         }
-
-        if (this.keyboard.pressed(this.downKey) || this.gamepad.stickLeftDown) {
+        else if (downPressed) {
             this.direction = "DOWN";
             this.moveDown();
             this.animation.gotoAndPlay("walkDown");
         }
-
-        if (this.keyboard.pressed(this.rightKey) || this.gamepad.stickLeftRight) {
+        else if (rightPressed) {
             this.direction = "RIGHT";
             this.moveRight();
             this.animation.gotoAndPlay("walkSide");
+            this.flippedX = true;
         }
-
-        if (this.keyboard.pressed(this.leftKey) || this.gamepad.stickLeftLeft) {
+        else if (leftPressed) {
             this.direction = "LEFT";
             this.moveLeft();
             this.animation.gotoAndPlay("walkSide");
+            this.flippedX = false;
         }
-    }else{
-        if (this.gamepad.stickLeftUp) {
+    }
+    else {
+        if (this.gamepad.stickLeftUp && this.gamepad.stickLeftRight) {
+            this.direction = "UP-RIGHT";
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = true;
+        }
+        else if (this.gamepad.stickLeftUp && this.gamepad.stickLeftLeft) {
+            this.direction = "UP-LEFT";
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = false;
+        }
+        else if (this.gamepad.stickLeftDown && this.gamepad.stickLeftRight) {
+            this.direction = "DOWN-RIGHT";
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = true;
+        }
+        else if (this.gamepad.stickLeftDown && this.gamepad.stickLeftLeft) {
+            this.direction = "DOWN-LEFT";
+            this.animation.gotoAndPlay("walkSide");
+            this.flippedX = false;
+        }
+        else if (this.gamepad.stickLeftUp) {
             this.direction = "UP";
             this.animation.gotoAndPlay("walkUp");
         }
-    
-        if (this.gamepad.stickLeftDown) {
+        else if (this.gamepad.stickLeftDown) {
             this.direction = "DOWN";
             this.animation.gotoAndPlay("walkDown");
         }
-    
-        if (this.gamepad.stickLeftRight) {
+        else if (this.gamepad.stickLeftRight) {
             this.direction = "RIGHT";
             this.animation.gotoAndPlay("walkSide");
             this.flippedX = true;
         }
-    
-        if (this.gamepad.stickLeftLeft) {
+        else if (this.gamepad.stickLeftLeft) {
             this.direction = "LEFT";
             this.animation.gotoAndPlay("walkSide");
             this.flippedX = false;
         }
     }
 
-    if (this.gamepad.stickLeftUp) {
-        this.direction = "UP";
-    }
-
-    if (this.gamepad.stickLeftDown) {
-        this.direction = "DOWN";
-    }
-
-    if (this.gamepad.stickLeftRight) {
-        this.direction = "RIGHT";
-    }
-
-    if (this.gamepad.stickLeftLeft) {
-        this.direction = "LEFT";
-    }
-
-    if (this.gamepad.stickLeftUp && this.gamepad.stickLeftRight) {
-        this.direction = "UP-RIGHT";
-    }
-
-    if (this.gamepad.stickLeftUp && this.gamepad.stickLeftLeft) {
-        this.direction = "UP-LEFT";
-    }
-
-    if (this.gamepad.stickLeftDown && this.gamepad.stickLeftRight) {
-        this.direction = "DOWN-RIGHT";
-    }
-
-    if (this.gamepad.stickLeftDown && this.gamepad.stickLeftLeft) {
-        this.direction = "DOWN-LEFT";
-    }
     if (this.fullAuto) {
         if (this.keyboard.pressed(this.shootKey) || this.gamepad.pressed(2)) {
             this.m_minigunSound.play();
@@ -340,7 +359,7 @@ panicCity.entity.Player.prototype.m_updateInput = function () {
             this.game.bullets.addMember(bullet);
         }
     }
-};
+}
 
 /**
  * Initialize the animations.
@@ -498,14 +517,14 @@ panicCity.entity.Player.prototype.getRessed = function () {
  * @public
  */
 panicCity.entity.Player.prototype.changeHealthColor = function (color) {
-    if(this.health <= 1){
+    if (this.health <= 1) {
         this.health++;
         this.healthBar.progress = (this.health / 200);
         this.healthBar.forgroundColor = color;
         this.health--;
         this.healthBar.progress = (this.health / 200);
     }
-    else{
+    else {
         this.health--;
         this.healthBar.progress = (this.health / 200);
         this.healthBar.forgroundColor = color;
@@ -523,6 +542,6 @@ panicCity.entity.Player.prototype.changeHealthColor = function (color) {
  * @return {undefined}
  * @public
  */
-panicCity.entity.Player.prototype.initFlicker = function(time, amount){
+panicCity.entity.Player.prototype.initFlicker = function (time, amount) {
     this.flicker.start(time, amount);
 }

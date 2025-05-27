@@ -41,7 +41,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
      * @type {panicCity.entity.Entity}
      * @public
      */
-    this.newTarget;
+    this.newTarget = null;
 
     /**
      * Flag to control if the zombie is attacking.
@@ -49,7 +49,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
      * @type {boolean}
      * @public
      */
-    this.isAttacking;
+    this.isAttacking = false;
 
     /**
      * The mass of the zombie.
@@ -65,7 +65,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
      * @type {string}
      * @public
      */
-    this.direction;
+    this.direction = null;
 
     /**
      * A counter fo the animations ticks.
@@ -97,7 +97,7 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_damageSound;
+    this.m_damageSound = null;
 
     /**
      * Used for dropping items from the zombies.
@@ -302,7 +302,7 @@ panicCity.entity.Zombie.prototype.takeDamage = function (damage) {
 panicCity.entity.Zombie.prototype.m_die = function () {
     if (this.bloodEmitter) {
         this.bloodEmitter.centerX = this.centerX;
-        this.bloodEmitter.centerY = this.centerY + 10;
+        this.bloodEmitter.centerY = this.centerY;
         this.bloodEmitter.emit(20);
     }
     this.game.enemies.removeMember(this, true);

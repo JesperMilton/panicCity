@@ -66,7 +66,7 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_damageSound;
+    this.m_damageSound = null;
 
     /**
      * Hitbox for the base

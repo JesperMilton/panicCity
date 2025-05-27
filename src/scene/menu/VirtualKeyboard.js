@@ -139,7 +139,7 @@ panicCity.scene.VirtualKeyboard.prototype.update = function (step) {
 
         if (selectedChar == "$" && this.m_teamName.length > 0) {
             this.m_teamName.pop();
-        } else if (this.m_teamName.length < 3 && selectedChar !== "$" && selectedChar !== "#") {
+        } else if (this.m_teamName.length < 5 && selectedChar !== "$" && selectedChar !== "#") {
             this.m_teamName.push(selectedChar);
         }
 

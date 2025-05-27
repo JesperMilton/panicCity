@@ -100,5 +100,7 @@ panicCity.managers.ZombieSpawner.prototype.spawnZombieBoss = function () {
     zombieBoss.targets = this.bossTargets;
 
     this.game.enemies.addMember(zombieBoss);
+
+    return zombieBoss;
 };
 

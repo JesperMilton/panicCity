@@ -38,13 +38,7 @@ panicCity.scene.Credits.prototype.init = function () {
 
     this.m_initBackground();
     this.m_initMenu();
-
-    var text = new rune.text.BitmapField("HIBBA AND JESPER!!", "Font");
-    text.autoSize = true;
-    text.centerX = this.application.screen.centerX;
-    text.y = 100;
-
-    this.stage.addChild(text);
+    
 };
 
 /**
