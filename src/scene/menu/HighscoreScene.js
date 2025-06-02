@@ -45,27 +45,27 @@ panicCity.scene.HighscoreScene.prototype.init = function () {
     text.y = 20;
 
     for (var i = 0; i <= 4; i++) {
-    var highscore = this.application.highscores.get(i);
+        var highscore = this.application.highscores.get(i);
 
-    var rank = new rune.text.BitmapField((i + 1) + ":", "Font");
-    rank.autoSize = true;
-    rank.x = 120;
-    rank.y = 65 + i * 15;
+        var rank = new rune.text.BitmapField((i + 1) + ":", "Font");
+        rank.autoSize = true;
+        rank.x = 120;
+        rank.y = 65 + i * 15;
 
-    var name = new rune.text.BitmapField(highscore.name, "Font");
-    name.autoSize = true;
-    name.x = 140; 
-    name.y = rank.y;
+        var name = new rune.text.BitmapField(highscore.name, "Font");
+        name.autoSize = true;
+        name.x = 140;
+        name.y = rank.y;
 
-    var score = new rune.text.BitmapField("SCORE:" + highscore.score, "Font");
-    score.autoSize = true;
-    score.x = 200; 
-    score.y = rank.y;
+        var score = new rune.text.BitmapField("SCORE:" + highscore.score, "Font");
+        score.autoSize = true;
+        score.x = 200;
+        score.y = rank.y;
 
-    this.stage.addChild(rank);
-    this.stage.addChild(name);
-    this.stage.addChild(score);
-}
+        this.stage.addChild(rank);
+        this.stage.addChild(name);
+        this.stage.addChild(score);
+    }
     this.stage.addChild(text);
 };
 

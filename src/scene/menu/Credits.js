@@ -38,7 +38,23 @@ panicCity.scene.Credits.prototype.init = function () {
 
     this.m_initBackground();
     this.m_initMenu();
-    
+
+    var credits = [
+        "THE SOUND OF METAL-LESFM",
+        "DARK WAVE SYNTH INSTRUMENTAL-NICKPANEK620",
+        "HELP HELP 2-U/Q2B5LX2VQB",
+        "ZOMBIE-VILCHES86"
+    ];
+
+    for (var i = 0; i < credits.length; i++) {
+        var creditField = new rune.text.BitmapField(credits[i], "Font");
+        creditField.autoSize = true;
+        creditField.centerX = this.application.screen.centerX;
+        creditField.y = 150 + i * 10;
+
+        this.stage.addChild(creditField);
+    }
+
 };
 
 /**
