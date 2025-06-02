@@ -71,25 +71,25 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
      * Controls the delayed attack pattern of the zombieBoss.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.lastShot = 0;
+    this.m_lastAttack = 0;
 
     /**
      * Controls the delayed of the thorw attack.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.lastThrow = 0;
+    this.m_lastThrow = 0;
 
     /**
      * Cooldown for the zombieBoss attacks.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.coolDown = 2000;
+    this.m_coolDown = 2000;
 
     /**
      * Sound file for when boss gets hit
@@ -99,15 +99,13 @@ panicCity.entity.ZombieBoss = function (x, y, width, height, texture, game) {
      */
     this.m_damageSound = null;
 
-    this.dead = false;
-
     /**
      * Sound file for when projectile gets thrown
      * 
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_throwSound;
+    this.m_throwSound = null;
 };
 
 //------------------------------------------------------------------------------
@@ -234,13 +232,13 @@ panicCity.entity.ZombieBoss.prototype.m_findClosestPlayer = function () {
  */
 panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
     var now = Date.now();
-    if (this.velocity.x == 0.0 && now > this.lastThrow) {
+    if (this.velocity.x == 0.0 && now > this.m_lastThrow) {
         this.animation.gotoAndPlay("attack");
-        var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, 50, "image_Stone", this.game);
+        var projectile = new panicCity.entity.Projectile(15, 15, this, this.newTarget, 35, "image_Stone", this.game);
         this.game.projectiles.addMember(projectile);
         this.m_throwSound.play(true);
 
-        this.lastThrow = now + this.coolDown;
+        this.m_lastThrow = now + this.m_coolDown;
     }
 };
 
@@ -255,10 +253,10 @@ panicCity.entity.ZombieBoss.prototype.m_throwAttack = function () {
  */
 panicCity.entity.ZombieBoss.prototype.attack = function (target) {
     var now = Date.now();
-    if (target && now > this.lastShot) {
+    if (target && now > this.m_lastAttack) {
         target.takeDamage(this.damage);
 
-        this.lastShot = now + this.coolDown;
+        this.m_lastAttack = now + this.m_coolDown;
     }
 };
 
@@ -325,7 +323,6 @@ panicCity.entity.ZombieBoss.prototype.takeDamage = function (damage) {
  * 
  */
 panicCity.entity.ZombieBoss.prototype.m_die = function () {
-    this.dead = true;
     this.game.enemies.removeMember(this, true);
     this.game.cameras.getCameraAt(0).removeChild(this.healthBar, true);
     this.game.updateScoretext(50);

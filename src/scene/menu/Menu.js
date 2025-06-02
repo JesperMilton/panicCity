@@ -31,7 +31,7 @@ panicCity.scene.Menu = function () {
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_backgroundSound;
+    this.m_backgroundSound = null;
 
     /**
      * Sound file for movement in menu select
@@ -39,7 +39,7 @@ panicCity.scene.Menu = function () {
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_moveSound;
+    this.m_moveSound = null;
 
     rune.scene.Scene.call(this);
 };

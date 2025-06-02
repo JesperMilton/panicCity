@@ -29,7 +29,7 @@ panicCity.managers.ZombieSpawner = function (game) {
      * @type {{x: number, y: number}[]}
      * @public
      */
-    this.spawnPoints = [{ x: -50, y: 150 }, { x: 75, y: 330 }, { x: 525, y: 150 }, { x: 350, y: 330 }];
+    this.spawnPoints = [{ x: -50, y: 150 }, { x: 75, y: 330 }, { x: 525, y: 150 }, { x: 350, y: 330}, { x: 75, y: -30 }, { x: 350, y: -30 }];
 
     /**
      * Array for the different spawnpoints for the ZombieBoss.
@@ -58,7 +58,7 @@ panicCity.managers.ZombieSpawner = function (game) {
 panicCity.managers.ZombieSpawner.prototype.spawnZombie = function () {
     var ran = Math.floor(Math.random() * 3) + 1;
 
-    var randomNum = Math.floor(Math.random() * 4);
+    var randomNum = Math.floor(Math.random() * 6);
 
     if (ran == 1) {
         var zombieBasic = new panicCity.entity.ZombieBasic(this.spawnPoints[randomNum].x, this.spawnPoints[randomNum].y, 27, 26, "Zombie-Basic-Sheet", this.game);

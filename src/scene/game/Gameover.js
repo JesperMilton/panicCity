@@ -25,7 +25,7 @@ panicCity.scene.Gameover = function (game) {
      * @type {rune.media.Sound}
      * @private
      */
-    this.m_backgroundSound;
+    this.m_backgroundSound = null;
 }
 
 //------------------------------------------------------------------------------

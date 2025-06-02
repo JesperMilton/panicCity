@@ -55,7 +55,7 @@ panicCity.scene.VirtualKeyboard = function (game) {
      * @type {rune.media.Sound}
      * @private
      */
-     this.m_backgroundSound;
+    this.m_backgroundSound = null;
 };
 
 //------------------------------------------------------------------------------
@@ -81,26 +81,19 @@ panicCity.scene.VirtualKeyboard.prototype.init = function () {
 
     this.m_initBackground();
 
-    var tet = new rune.text.BitmapField("NEW HIGHSCORE!!!", "Font");
-    tet.autoSize = true;
-    tet.centerX = this.application.screen.centerX;
-    tet.y = 60;
+    var scoreText = new rune.text.BitmapField("YOUR SCORE:" + this.game.score, "Font");
+    scoreText.autoSize = true;
+    scoreText.centerX = this.application.screen.centerX;
+    scoreText.y = 90;
 
-    this.stage.addChild(tet);
+    this.stage.addChild(scoreText);
 
-    var text = new rune.text.BitmapField("YOUR SCORE:" + this.game.score, "Font");
-    text.autoSize = true;
-    text.centerX = this.application.screen.centerX;
-    text.y = 80;
+    var nameInput = new rune.text.BitmapField("ENTER NAME", "Font");
+    nameInput.autoSize = true;
+    nameInput.centerX = this.application.screen.centerX;
+    nameInput.y = 115;
 
-    this.stage.addChild(text);
-
-    var te = new rune.text.BitmapField("ENTER NAME", "Font");
-    te.autoSize = true;
-    te.centerX = this.application.screen.centerX;
-    te.y = 110;
-
-    this.stage.addChild(te);
+    this.stage.addChild(nameInput);
 
     this.keyboardKeys = new panicCity.components.Keys();
     this.keyboardKeys.forEach(function (key, index) {
@@ -125,26 +118,21 @@ panicCity.scene.VirtualKeyboard.prototype.init = function () {
  */
 panicCity.scene.VirtualKeyboard.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
-    if (this.keyboard.justPressed("A") || this.gamepads.justPressed(14)) {
-        this.m_currentkeyIndex--;
 
-        if (this.m_currentkeyIndex < 0) {
-            this.m_currentkeyIndex = 0;
-        }
-
-        this.selectBox.x = this.keyboardKeys[this.m_currentkeyIndex].x - 2;
-        this.selectBox.y = this.keyboardKeys[this.m_currentkeyIndex].y - 2;
+    if (this.keyboard.justPressed("D") || this.gamepads.stickLeftJustRight) {
+        this.m_moveRight();
     }
 
-    if (this.keyboard.justPressed("D") || this.gamepads.justPressed(15)) {
-        this.m_currentkeyIndex++;
+    if (this.keyboard.justPressed("A") || this.gamepads.stickLeftJustLeft) {
+        this.m_moveLeft();
+    }
 
-        if (this.m_currentkeyIndex >= this.keyboardKeys.length) {
-            this.m_currentkeyIndex = this.keyboardKeys.length - 1;
-        }
+    if (this.keyboard.justPressed("S") || this.gamepads.stickLeftJustDown) {
+        this.m_moveDown();
+    }
 
-        this.selectBox.x = this.keyboardKeys[this.m_currentkeyIndex].x - 2;
-        this.selectBox.y = this.keyboardKeys[this.m_currentkeyIndex].y - 2;
+    if (this.keyboard.justPressed("W") || this.gamepads.stickLeftJustUp) {
+        this.m_moveUp();
     }
 
     if (this.keyboard.justPressed("SPACE") || this.gamepads.justPressed(0)) {
@@ -177,6 +165,7 @@ panicCity.scene.VirtualKeyboard.prototype.dispose = function () {
 
 /**
  * Initializes the background
+ * 
  * @private
  * @returns {undefined}
  */
@@ -192,8 +181,82 @@ panicCity.scene.VirtualKeyboard.prototype.m_initBackground = function () {
 };
 
 /**
- * Handles showing of the error message.
+ * Moves the selectBox Right.
  * 
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.VirtualKeyboard.prototype.m_moveRight = function () {
+    this.m_currentkeyIndex++;
+
+    if (this.m_currentkeyIndex >= this.keyboardKeys.length) {
+        this.m_currentkeyIndex = this.keyboardKeys.length - 1;
+    }
+
+    this.selectBox.x = this.keyboardKeys[this.m_currentkeyIndex].x - 2;
+    this.selectBox.y = this.keyboardKeys[this.m_currentkeyIndex].y - 2;
+
+};
+
+/**
+ * Moves the selectBox Left.
+ * 
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.VirtualKeyboard.prototype.m_moveLeft = function () {
+    this.m_currentkeyIndex--;
+
+    if (this.m_currentkeyIndex < 0) {
+        this.m_currentkeyIndex = 0;
+    }
+
+    this.selectBox.x = this.keyboardKeys[this.m_currentkeyIndex].x - 2;
+    this.selectBox.y = this.keyboardKeys[this.m_currentkeyIndex].y - 2;
+
+};
+
+/**
+ * Moves the selectBox Down.
+ * 
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.VirtualKeyboard.prototype.m_moveDown = function () {
+    if (this.m_currentkeyIndex >= 13) {
+        return;
+    }
+
+    this.m_currentkeyIndex += 13;
+
+    this.selectBox.x = this.keyboardKeys[this.m_currentkeyIndex].x - 2;
+    this.selectBox.y = this.keyboardKeys[this.m_currentkeyIndex].y - 2;
+
+};
+
+/**
+ * Moves the selectBox Up.
+ * 
+ * @private
+ * @returns {undefined}
+ */
+panicCity.scene.VirtualKeyboard.prototype.m_moveUp = function () {
+    if (this.m_currentkeyIndex <= 12) {
+        return;
+    }
+
+    if (this.m_currentkeyIndex == 26 || this.m_currentkeyIndex == 27) {
+        return;
+    }
+
+    this.m_currentkeyIndex -= 13;
+
+    this.selectBox.x = this.keyboardKeys[this.m_currentkeyIndex].x - 2;
+    this.selectBox.y = this.keyboardKeys[this.m_currentkeyIndex].y - 2;
+};
+
+/**
+ * Handles showing of the error message.
  * 
  * @private
  * @returns {undefined}
@@ -229,8 +292,8 @@ panicCity.scene.VirtualKeyboard.prototype.m_displayteamName = function (nameText
 
     nameText.forEach(function (text, index) {
         var key = new rune.text.BitmapField(text, "Font");
-        key.x = 180 + index * 14;
-        key.y = 130;
+        key.x = 170 + index * 14;
+        key.y = 135;
         this.stage.addChild(key);
         this.m_displayedLetters.push(key);
     }.bind(this));

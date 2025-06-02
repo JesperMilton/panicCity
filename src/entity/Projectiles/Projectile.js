@@ -70,28 +70,21 @@ panicCity.entity.Projectile = function (width, height, origin, target, damage, t
     this.origin = origin;
 
     /**
-     * Where the projectile should be thrown from (DELETE??)
+     * Where the projectile should be thrown from.
      *
      * @type {number}
-     * @public
+     * @private
      */
     var y = this.origin.y + 17;
+
+    /**
+     * Where the projectile should be thrown from.
+     *
+     * @type {number}
+     * @private
+     */
     var x = this.origin.x + 13;
 
-    this.dEmitter = new rune.particle.Emitter(0, 0, 0, 0, {
-        particles: [panicCity.entity.Blood],
-        minLifespan: 500,
-        maxLifespan: 1000,
-        accelerationY: 0.025,
-        maxVelocityX: 0.625,
-        minVelocityX: -0.5,
-        maxVelocityY: -1.25,
-        minVelocityY: -0.85,
-        minRotation: -2,
-        maxRotation: 2
-    });
-
-    this.game.stage.addChild(this.dEmitter);
     /**
      * Sound file for when projectile hits ground
      * 
@@ -140,11 +133,6 @@ panicCity.entity.Projectile.prototype.m_followTarget = function () {
     var threshold = 2;
 
     if (distance < threshold) {
-        if (this.dEmitter) {
-            this.dEmitter.centerX = this.centerX;
-            this.dEmitter.centerY = this.centerY + 10;
-            this.dEmitter.emit(20);
-        }
         this.game.projectiles.removeMember(this);
         this.m_hitSound.play(true);
     }

@@ -77,7 +77,7 @@ panicCity.managers.CollisionManager.prototype.m_players = function () {
     this.game.players.hitTestAndSeparateGroup(this.game.baseSta);
     this.game.players.hitTestAndSeparateGroup(this.game.walls);
 
-    this.game.players.hitTest(this.game.players, function(player1, player2) {
+    this.game.players.hitTest(this.game.players, function (player1, player2) {
         player1.res(player2);
     })
 };
@@ -128,7 +128,7 @@ panicCity.managers.CollisionManager.prototype.m_bullets = function () {
  */
 panicCity.managers.CollisionManager.prototype.m_projectiles = function () {
     this.game.projectiles.hitTestGroup(this.game.players, function (projectile, player) {
-        if(player.isDowned) {
+        if (player.isDowned) {
             return;
         }
         player.takeDamage(projectile.damage);
@@ -170,8 +170,8 @@ panicCity.managers.CollisionManager.prototype.m_items = function () {
  */
 panicCity.managers.CollisionManager.prototype.m_rescuees = function () {
     this.game.humans.hitTestGroup(this.game.players, function (human, player) {
-        if(human.inPosition){
-            player.pickupNPC(human,this.game.baseSta);
+        if (human.inPosition) {
+            player.pickupNPC(human, this.game.baseSta);
         }
     }, this);
 }
@@ -188,7 +188,7 @@ panicCity.managers.CollisionManager.prototype.m_powerups = function () {
         if (item.type === "INVINCIBILITY_BASE") {
             item.initPower(this.game.base);
         }
-        else{
+        else {
             item.initPower(player);
         }
     }, this);

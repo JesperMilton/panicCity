@@ -9,7 +9,7 @@
  *
  * @class
  * 
- * @return {Array}
+ * @return {rune.text.BitmapField[]}
  * 
  * Class for Keys used for the keyboard in the game.
  */

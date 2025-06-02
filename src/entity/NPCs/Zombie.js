@@ -71,25 +71,25 @@ panicCity.entity.Zombie = function (x, y, width, height, texture, game) {
      * A counter fo the animations ticks.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.animationCounter = 0;
+    this.m_animationCounter = 0;
 
     /**
      * Controls the delayed attack pattern of the zombie.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.lastShot = 0;
+    this.m_lastAttack = 0;
 
     /**
      * Cooldown for the zombie attacks.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.coolDown = 2000;
+    this.m_coolDown = 2000;
 
     /**
      * Sound file for when zombie gets hit
@@ -205,10 +205,10 @@ panicCity.entity.Zombie.prototype.m_initStats = function () {
  * 
  */
 panicCity.entity.Zombie.prototype.m_updateAnimations = function () {
-    this.animationCounter++;
+    this.m_animationCounter++;
 
-    if (this.animationCounter >= 20) {
-        this.animationCounter = 0;
+    if (this.m_animationCounter >= 20) {
+        this.m_animationCounter = 0;
 
         if (this.isAttacking) {
             if (this.direction == "SIDE") {
@@ -267,10 +267,10 @@ panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
  */
 panicCity.entity.Zombie.prototype.attack = function (target) {
     var now = Date.now();
-    if (target && now > this.lastShot) {
+    if (target && now > this.m_lastAttack) {
         target.takeDamage(this.damage);
 
-        this.lastShot = now + this.coolDown;
+        this.m_lastAttack = now + this.m_coolDown;
     }
 };
 

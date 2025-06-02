@@ -36,11 +36,11 @@ panicCity.scene.Game = function () {
     this.rescueeTime = 10000;
 
     /**
-     * Timer for powerups, used to call a method that spawns a powerup every 10 seconds
+     * Timer for powerups, used to call a method that spawns a powerup every 20 seconds
      * @public
      * @type {number}
      */
-    this.powerupTime = 10000;
+    this.powerupTime = 20000;
 
     /**
      * Flag to check if game is over
@@ -74,8 +74,28 @@ panicCity.scene.Game = function () {
      */
     this.base;
 
+    /**
+     * Timestamp for the score system.
+     * 
+     * @public
+     * @type {number}
+     */
     this.nowScore;
+
+    /**
+     * Timestamp for the NPC system.
+     * 
+     * @public
+     * @type {number}
+     */
     this.nowNPC;
+
+    /**
+     * Timestamp for the Powerups system.
+     * 
+     * @public
+     * @type {number}
+     */
     this.nowPowerup;
 };
 
@@ -159,6 +179,7 @@ panicCity.scene.Game.prototype.dispose = function () {
 
 /**
  * Initializes score
+ * 
  * @private
  * @returns {undefined}
  */
@@ -197,6 +218,7 @@ panicCity.scene.Game.prototype.m_initObjects = function () {
 
 /**
  * Initializes the UI
+ * 
  * @private
  * @returns {undefined}
  */
@@ -207,6 +229,7 @@ panicCity.scene.Game.prototype.m_initUI = function () {
 
 /**
  * Initializes the camera
+ * 
  * @private
  * @returns {undefined}
  */
@@ -225,6 +248,7 @@ panicCity.scene.Game.prototype.m_initCamera = function () {
 
 /**
  * Initializes the background
+ * 
  * @private
  * @returns {undefined}
  */
@@ -234,11 +258,17 @@ panicCity.scene.Game.prototype.m_initBackground = function () {
         0,
         475,
         300,
-        "newBackground"
+        "image_Background"
     );
     this.stage.addChild(this.m_background);
 };
 
+/**
+ * Sorts the display objects on the stage.
+ * 
+ * @private
+ * @returns {number}
+ */
 panicCity.scene.Game.prototype.m_initSort = function() {
     var m_this = this;
     this.stage.sort = function(a, b) {
@@ -265,6 +295,7 @@ panicCity.scene.Game.prototype.updateScoretext = function (points) {
 
 /**
  * Adds points to the score
+ * 
  * @private
  * @returns {undefined}
  */
@@ -292,6 +323,7 @@ panicCity.scene.Game.prototype.m_initGroups = function () {
 
 /**
  * Spawns a human
+ * 
  * @private
  * @returns {undefined}
  */
@@ -301,6 +333,7 @@ panicCity.scene.Game.prototype.spawnHuman = function () {
 
 /**
  * Spawns a powerup
+ * 
  * @public
  * @returns {undefined}
  */
@@ -308,6 +341,12 @@ panicCity.scene.Game.prototype.spawnPowerup = function () {
     this.powerupSpawner.spawn();
 }
 
+/**
+ * Checks if the current score is a highscore.
+ * 
+ * @public
+ * @returns {undefined}
+ */
 panicCity.scene.Game.prototype.checkHighscore = function () {
     if (this.application.highscores.test(this.score) < 5 && this.application.highscores.test(this.score) != -1) {
         if (!this.ifGameoverHighscore) {

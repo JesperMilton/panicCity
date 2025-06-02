@@ -31,17 +31,17 @@ panicCity.entity.ZombieRanger = function (x, y, width, height, texture, game) {
      * Controls the delay of the throw attack.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.lastThrow = 0;
+    this.m_lastThrow = 0;
 
     /**
      * Cooldown for the zombies throw attacks.
      * 
      * @type {number}
-     * @public
+     * @private
      */
-    this.throwCoolDown = 2000;
+    this.m_throwCoolDown = 2000;
     
     /**
      * Sound file for when projectile gets thrown
@@ -151,13 +151,13 @@ panicCity.entity.ZombieRanger.prototype.m_throwAttack = function () {
         return;
     }
     var now = Date.now();
-    if (this.velocity.x == 0.0 && now > this.lastThrow) {
+    if (this.velocity.x == 0.0 && now > this.m_lastThrow) {
         this.animation.gotoAndPlay("attack");
-        var projectile = new panicCity.entity.Projectile(5, 13, this, this.newTarget, 20, "image_Bottle", this.game);
+        var projectile = new panicCity.entity.Projectile(5, 13, this, this.newTarget, 10, "image_Bottle", this.game);
         this.game.projectiles.addMember(projectile);
 
         this.m_throwSound.play(true);
 
-        this.lastThrow = now + this.throwCoolDown;
+        this.m_lastThrow = now + this.m_throwCoolDown;
     }
 };

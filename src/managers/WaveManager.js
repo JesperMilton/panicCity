@@ -186,8 +186,7 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
     this.m_currentZombies = 0;
 
     if (this.m_currentWave % 3 == 0) {
-        var zombieBoss = this.zombieSpawner.spawnZombieBoss();
-        console.log(zombieBoss);
+        this.zombieSpawner.spawnZombieBoss();
         this.m_currentZombies++;
         for (var i = 0; i < 10; i++) {
             this.zombieSpawner.spawnZombie();
@@ -195,13 +194,6 @@ panicCity.managers.WaveManager.prototype.m_startnewWave = function () {
         }
         this.m_spawnComplete = true;
     }
-
-    // For testing of ZombieBoss
-    // if (this.m_currentWave == 1) {
-    //     this.zombieSpawner.spawnZombieBoss();
-    //     this.m_currentZombies++;
-    //     this.m_spawnComplete = true;
-    // }
 
     if (this.m_currentWave !== 1) {
         if (this.m_currentWave % 3 === 0) {

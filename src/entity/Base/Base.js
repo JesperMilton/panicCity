@@ -58,8 +58,7 @@ panicCity.entity.Base = function (x, y, width, height, texture, game) {
      * @public
      */
     this.health = 500;
-
-    this.startTest = false;
+    
     /**
      * Sound file for when base gets hit
      * 

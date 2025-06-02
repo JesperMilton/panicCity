@@ -45,8 +45,8 @@ panicCity.entity.ZombieHunter.prototype.constructor = panicCity.entity.ZombieHun
  */
 panicCity.entity.ZombieHunter.prototype.m_initStats = function () {
     panicCity.entity.Zombie.prototype.m_initStats.call(this);
-    this.health = 30;
-    this.damage = 18;
+    this.health = 20;
+    this.damage = 12;
     this.acceleration = 0.6;
     this.speed = 0.6;
     this.velocity.max.x = 0.8;
