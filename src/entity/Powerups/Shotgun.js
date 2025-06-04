@@ -45,7 +45,7 @@ panicCity.entity.Shotgun.prototype.constructor = panicCity.entity.Shotgun;
 /**
  * Gives player a shotgun for 5 seconds
  * 
- * @param {Object} target - The target to be affected
+ * @param {panicCity.entity.Player} target - The target to be affected
  * 
  * @return {undefined}
  * @public

@@ -262,7 +262,7 @@ panicCity.entity.Zombie.prototype.m_findClosestPlayer = function () {
  * @param {panicCity.entity.Entity} target The closest player.
  *
  * @return {undefined}
- * @private
+ * @public
  * 
  */
 panicCity.entity.Zombie.prototype.attack = function (target) {

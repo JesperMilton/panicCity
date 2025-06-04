@@ -44,7 +44,7 @@ panicCity.entity.InvincibilityPlayer.prototype.constructor = panicCity.entity.In
 /**
  * Makes player invincible for 5 seconds
  * 
- * @param {Object} target - The target to be affected
+ * @param {panicCity.entity.Player} target - The target to be affected
  * 
  * @return {undefined}
  * @public

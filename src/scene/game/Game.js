@@ -40,7 +40,7 @@ panicCity.scene.Game = function () {
      * @public
      * @type {number}
      */
-    this.powerupTime = 20000;
+    this.powerupTime = 15000;
 
     /**
      * Flag to check if game is over

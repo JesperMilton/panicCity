@@ -46,7 +46,7 @@ panicCity.entity.Powerups = function (x, y, width, height, texture, game) {
     /**
      * Default delay time for flicker effect
      * 
-     * @type {int}
+     * @type {number}
      * @public
      */
     this.flickerDelay = 3000;
@@ -54,7 +54,7 @@ panicCity.entity.Powerups = function (x, y, width, height, texture, game) {
     /**
      * Default delay time for powerup revert effect
      * 
-     * @type {int}
+     * @type {number}
      * @public
      */
     this.timeDelay = 5000;
@@ -101,9 +101,7 @@ panicCity.entity.Powerups.prototype.init = function () {
 };
 
 /**
- * 
  * @inheritDoc
- * @returns {undefined}
  */
 panicCity.entity.Powerups.prototype.update = function (step) {
     panicCity.entity.Entity.prototype.update.call(this, step);
@@ -144,7 +142,7 @@ panicCity.entity.Powerups.prototype.update = function (step) {
 /**
  * Starts a flicker effect
  * 
- * @param {int} amount - Frequency of the flicker
+ * @param {number} amount - Frequency of the flicker
  * 
  * @returns {undefined}
  * @public

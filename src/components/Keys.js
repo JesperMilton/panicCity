@@ -18,7 +18,7 @@ panicCity.components.Keys = function () {
     /**
      * Array for all the character that will be used for the virtualKeyboard
      * @private
-     * @type {Array}
+     * @type {String[]}
      */
     this.m_letters = [
         "A", "B", "C", "D", "E", "F", "G",
@@ -30,7 +30,7 @@ panicCity.components.Keys = function () {
     /**
      * Array for BitmapField that represents all the characters.
      * @private
-     * @type {Array}
+     * @type {String[]}
      */
     this.m_keyFields = [];
 

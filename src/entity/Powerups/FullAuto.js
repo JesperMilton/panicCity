@@ -45,7 +45,7 @@ panicCity.entity.FullAuto.prototype.constructor = panicCity.entity.FullAuto;
 /**
  * Gives player a minigun for 5 seconds
  * 
- * @param {Object} target - The target to be affected
+ * @param {panicCity.entity.Player} target - The target to be affected
  * 
  * @return {undefined}
  * @public

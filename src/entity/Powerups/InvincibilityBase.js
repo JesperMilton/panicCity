@@ -37,7 +37,7 @@ panicCity.entity.InvincibilityBase = function (x, y, width, height, texture, gam
     /**
      * Delay time for flicker effect
      * 
-     * @type {int}
+     * @type {number}
      * @public
      */
     this.flickerDelay = 8000;
@@ -45,7 +45,7 @@ panicCity.entity.InvincibilityBase = function (x, y, width, height, texture, gam
     /**
     * Delay time for powerup revert effect
     * 
-    * @type {int}
+    * @type {number}
     * @public
     */
     this.timeDelay = 10000;
@@ -61,7 +61,7 @@ panicCity.entity.InvincibilityBase.prototype.constructor = panicCity.entity.Invi
 /**
  * Makes base invincible for 10 seconds
  * 
- * @param {Object} target - The target to be affected
+ * @param {panicCity.entity.Base} target - The target to be affected
  * 
  * @return {undefined}
  * @public
