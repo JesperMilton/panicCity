@@ -30,7 +30,7 @@ panicCity.system.Main = function() {
         useGamepads:true,
         useKeyboard:true,
         framerate: 60,
-        debug: true
+        debug: false
     });
 };
 
