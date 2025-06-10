@@ -206,8 +206,8 @@ panicCity.scene.Game.prototype.m_initScore = function () {
  * @returns {undefined}
  */
 panicCity.scene.Game.prototype.m_initObjects = function () {
-    this.playerJesper = new panicCity.entity.Player(320, 128, 27, 26, "Player1-Sheet", this, 0, "UP", "DOWN", "LEFT", "RIGHT", "P", "O");
-    this.playerHibba = new panicCity.entity.Player(140, 128, 27, 26, "Player2-Sheet", this, 1, "W", "S", "A", "D", "Q", "E");
+    this.playerJesper = new panicCity.entity.Player(320, 128, 27, 26, "new-Player1-Sheet", this, 0, "UP", "DOWN", "LEFT", "RIGHT", "P", "O");
+    this.playerHibba = new panicCity.entity.Player(140, 128, 27, 26, "new-Player2-Sheet", this, 1, "W", "S", "A", "D", "Q", "E");
 
     this.base = new panicCity.entity.Base(220, 128, 47, 47, "Base-Sheet", this);
 

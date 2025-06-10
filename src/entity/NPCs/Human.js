@@ -24,7 +24,7 @@ panicCity.entity.Human = function (x, y, game) {
      * @type {string[]}
      * @public
      */
-    this.humans = ["Human-Sheet-A", "Human-Sheet-B"]
+    this.humans = ["new-Human-Sheet-A", "new-Human-Sheet-B"]
 
     /**
      * Random number between 0 and 1.
