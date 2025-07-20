@@ -4,6 +4,13 @@ Players must work together to defend their base against endless waves of zombies
 
 PanicCity is written in Javascript (ES5) and built on the Rune SDK made by Henrik Andersen (aka Vector Panic).
 
+## Play the Game
+
+You can play **Panic City** here:  
+**[https://paniccity-game.netlify.app/](https://paniccity-game.netlify.app/)**
+
+PanicCity can only be played on **Google Chrome**.  
+
 ## Keyboard Controls 
 
 ### Player 1
